@@ -148,24 +148,11 @@
       <p class="section__subtitle" data-aos="fade-up" data-aos-delay="100">우리의 순간들</p>
     </div>
 
-    <!-- Swiper 슬라이더 -->
+    <!-- Swiper 슬라이더 (슬라이드는 gallery.js에서 동적 생성) -->
     <div class="swiper gallery-swiper" data-aos="fade-up" data-aos-delay="200">
-      <div class="swiper-wrapper">
-        <div class="swiper-slide">
-          <img src="/src/assets/images/gallery/gallery-01.jpg" alt="커플 사진 1" loading="lazy" />
-        </div>
-        <div class="swiper-slide">
-          <img src="/src/assets/images/gallery/gallery-02.jpg" alt="커플 사진 2" loading="lazy" />
-        </div>
-        <div class="swiper-slide">
-          <img src="/src/assets/images/gallery/gallery-03.jpg" alt="커플 사진 3" loading="lazy" />
-        </div>
-        <div class="swiper-slide">
-          <img src="/src/assets/images/gallery/gallery-04.jpg" alt="커플 사진 4" loading="lazy" />
-        </div>
-        <div class="swiper-slide">
-          <img src="/src/assets/images/gallery/gallery-05.jpg" alt="커플 사진 5" loading="lazy" />
-        </div>
+      <div class="swiper-wrapper" id="gallery-wrapper">
+        <!-- 로딩 스켈레톤 -->
+        <div class="swiper-slide gallery-skeleton"></div>
       </div>
       <div class="swiper-pagination"></div>
     </div>

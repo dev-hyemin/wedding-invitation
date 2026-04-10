@@ -17,7 +17,7 @@ initPetals(8)
 // D-Day 카운트다운
 initCountdown()
 
-// 갤러리 슬라이더 + 라이트박스
+// 갤러리 슬라이더 + 라이트박스 (Firebase Storage 비동기 로드)
 initGallery()
 
 // 카카오맵 + 교통 탭

@@ -42,13 +42,18 @@ export const CONFIG = {
     ],
   },
 
-  gallery: [
-    { src: '/src/assets/images/gallery/gallery-01.jpg', alt: '커플 사진 1' },
-    { src: '/src/assets/images/gallery/gallery-02.jpg', alt: '커플 사진 2' },
-    { src: '/src/assets/images/gallery/gallery-03.jpg', alt: '커플 사진 3' },
-    { src: '/src/assets/images/gallery/gallery-04.jpg', alt: '커플 사진 4' },
-    { src: '/src/assets/images/gallery/gallery-05.jpg', alt: '커플 사진 5' },
-  ],
+  // Firebase Storage 사용 시 storagePath만 설정하면 됩니다.
+  // Firebase 미설정 시 fallback 배열의 로컬 이미지가 사용됩니다.
+  gallery: {
+    // Firebase Storage 내 사진 폴더 경로
+    storagePath: 'gallery',
+    // Firebase 미설정 시 표시할 로컬 이미지 (fallback)
+    fallback: [
+      { src: '/src/assets/images/gallery/gallery-01.jpg', alt: '커플 사진 1' },
+      { src: '/src/assets/images/gallery/gallery-02.jpg', alt: '커플 사진 2' },
+      { src: '/src/assets/images/gallery/gallery-03.jpg', alt: '커플 사진 3' },
+    ],
+  },
 
   // Formspree 엔드포인트 (https://formspree.io 에서 발급)
   rsvp: {
