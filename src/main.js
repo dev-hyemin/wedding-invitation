@@ -1,6 +1,7 @@
 import './styles/main.css'
 
 import { initAnimations, initPetals } from './scripts/animations.js'
+import { initCalendar }               from './scripts/calendar.js'
 import { initCountdown }              from './scripts/countdown.js'
 import { initGallery }                from './scripts/gallery.js'
 import { initMap, initTransportTabs } from './scripts/map.js'
@@ -13,6 +14,9 @@ initAnimations()
 
 // 히어로 꽃잎 파티클
 initPetals(8)
+
+// 캘린더
+initCalendar()
 
 // D-Day 카운트다운
 initCountdown()
