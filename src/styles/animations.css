@@ -1,0 +1,40 @@
+/* ── 스크롤 화살표 bounce ── */
+@keyframes bounce {
+  0%, 100% { transform: translateY(0) rotate(45deg); }
+  50%       { transform: translateY(8px) rotate(45deg); }
+}
+
+/* ── 토스트 fade ── */
+@keyframes fadeInOut {
+  0%   { opacity: 0; transform: translateX(-50%) translateY(20px); }
+  15%  { opacity: 1; transform: translateX(-50%) translateY(0); }
+  85%  { opacity: 1; transform: translateX(-50%) translateY(0); }
+  100% { opacity: 0; transform: translateX(-50%) translateY(20px); }
+}
+
+/* ── 스피너 ── */
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ── 라이트박스 fade ── */
+@keyframes lightboxOpen {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* ── 꽃잎 낙하 (순수 CSS fallback) ── */
+@keyframes petalFall {
+  0%   { transform: translateY(-10px) rotate(0deg); opacity: 0.8; }
+  100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+}
+
+.petal {
+  position: fixed;
+  top: -20px;
+  pointer-events: none;
+  animation: petalFall linear infinite;
+  z-index: var(--z-overlay);
+  font-size: 1.2rem;
+  opacity: 0;
+}

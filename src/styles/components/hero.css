@@ -1,0 +1,146 @@
+/* ── 히어로 섹션 ── */
+.section--hero {
+  position: relative;
+  height: 100dvh;
+  min-height: 600px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  overflow: hidden;
+  color: #fff;
+}
+
+/* 배경 이미지 */
+.hero__bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.hero__bg-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.hero__overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(0,0,0,0.25) 0%,
+    rgba(0,0,0,0.45) 60%,
+    rgba(0,0,0,0.60) 100%
+  );
+}
+
+/* 콘텐츠 */
+.hero__content {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  padding: 0 var(--space-6);
+}
+
+.hero__label {
+  font-family: var(--font-en);
+  font-size: var(--font-size-sm);
+  letter-spacing: 0.25em;
+  opacity: 0.85;
+  margin-bottom: var(--space-6);
+  font-style: italic;
+}
+
+.hero__names {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-4);
+  margin-bottom: var(--space-6);
+}
+
+.hero__name {
+  font-family: var(--font-serif);
+  font-size: var(--font-size-hero);
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.3);
+}
+
+.hero__ampersand {
+  font-family: var(--font-en);
+  font-size: clamp(1.5rem, 6vw, 2.5rem);
+  font-weight: 400;
+  color: var(--color-primary);
+  opacity: 0.9;
+}
+
+.hero__date {
+  font-family: var(--font-serif);
+  font-size: var(--font-size-md);
+  letter-spacing: 0.08em;
+  opacity: 0.9;
+  margin-bottom: var(--space-2);
+}
+
+.hero__venue {
+  font-size: var(--font-size-sm);
+  opacity: 0.8;
+  letter-spacing: 0.1em;
+  margin-bottom: var(--space-10);
+}
+
+/* 카운트다운 */
+.countdown {
+  display: flex;
+  gap: var(--space-4);
+  justify-content: center;
+}
+
+.countdown__item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 52px;
+  background: rgba(255,255,255,0.15);
+  border: 1px solid rgba(255,255,255,0.25);
+  backdrop-filter: blur(4px);
+  border-radius: var(--radius-md);
+  padding: var(--space-3) var(--space-2);
+}
+
+.countdown__value {
+  font-family: var(--font-en);
+  font-size: var(--font-size-xl);
+  font-weight: 600;
+  line-height: 1;
+  margin-bottom: var(--space-1);
+}
+
+.countdown__label {
+  font-size: var(--font-size-xs);
+  opacity: 0.8;
+  letter-spacing: 0.05em;
+}
+
+/* 스크롤 힌트 화살표 */
+.hero__scroll-hint {
+  position: absolute;
+  bottom: var(--space-8);
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1;
+}
+
+.hero__scroll-arrow {
+  display: block;
+  width: 20px;
+  height: 20px;
+  border-right: 2px solid rgba(255,255,255,0.7);
+  border-bottom: 2px solid rgba(255,255,255,0.7);
+  transform: rotate(45deg);
+  animation: bounce 1.5s infinite;
+}

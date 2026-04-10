@@ -1,0 +1,85 @@
+/* ── 갤러리 섹션 ── */
+.section--gallery {
+  background: var(--color-bg-alt);
+  padding-bottom: 0;
+}
+
+.section--gallery .container {
+  padding-bottom: var(--space-6);
+}
+
+/* Swiper 커스텀 */
+.gallery-swiper {
+  width: 100%;
+  padding-bottom: var(--space-10) !important;
+}
+
+.gallery-swiper .swiper-slide {
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+}
+
+.gallery-swiper .swiper-slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform var(--transition-slow);
+  cursor: pointer;
+}
+
+.gallery-swiper .swiper-slide img:hover {
+  transform: scale(1.03);
+}
+
+.gallery-swiper .swiper-pagination-bullet {
+  background: var(--color-primary);
+  opacity: 0.4;
+}
+
+.gallery-swiper .swiper-pagination-bullet-active {
+  opacity: 1;
+  transform: scale(1.2);
+}
+
+/* 라이트박스 */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.92);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: var(--z-modal);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--transition-normal);
+}
+
+.lightbox--open {
+  opacity: 1;
+  pointer-events: all;
+  animation: lightboxOpen var(--transition-normal) ease;
+}
+
+.lightbox__close {
+  position: absolute;
+  top: var(--space-4);
+  right: var(--space-4);
+  color: #fff;
+  font-size: 2rem;
+  line-height: 1;
+  opacity: 0.8;
+  transition: opacity var(--transition-fast);
+  z-index: 1;
+}
+
+.lightbox__close:hover {
+  opacity: 1;
+}
+
+.lightbox__img {
+  max-width: 90vw;
+  max-height: 88dvh;
+  object-fit: contain;
+  border-radius: var(--radius-sm);
+}

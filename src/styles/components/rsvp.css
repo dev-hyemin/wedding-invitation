@@ -1,0 +1,48 @@
+/* ── RSVP 섹션 ── */
+.section--rsvp {
+  background: var(--color-bg-alt);
+}
+
+.rsvp-form {
+  background: var(--color-surface);
+  border-radius: var(--radius-lg);
+  padding: var(--space-6);
+  box-shadow: var(--shadow-md);
+}
+
+/* 제출 버튼 스피너 */
+.btn__spinner {
+  display: none;
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(255,255,255,0.4);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+
+.btn--loading .btn__text {
+  display: none;
+}
+
+.btn--loading .btn__spinner {
+  display: block;
+}
+
+/* 완료 메시지 */
+.rsvp-success {
+  text-align: center;
+  padding: var(--space-12) 0;
+}
+
+.rsvp-success__emoji {
+  font-size: 3rem;
+  margin-bottom: var(--space-4);
+}
+
+.rsvp-success__text {
+  font-family: var(--font-serif);
+  font-size: var(--font-size-lg);
+  color: var(--color-text);
+  line-height: 1.8;
+}
