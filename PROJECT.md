@@ -154,6 +154,88 @@ export const CONFIG = { ... }
 
 ---
 
+## 폰트 커스텀 방법
+
+폰트 관련 파일은 두 곳입니다.
+
+| 파일 | 역할 |
+|---|---|
+| `src/styles/reset.css` | `@font-face` 선언 (커스텀 폰트 로드) |
+| `src/styles/variables.css` | 폰트 변수 정의 (실제 적용) |
+| `index.html` | Google Fonts 링크 |
+
+---
+
+### 1. Google Fonts로 변경
+
+**① `index.html`** — 기존 링크를 원하는 폰트로 교체
+
+```html
+<!-- 예: Playfair Display + Nanum Myeongjo -->
+<link
+  rel="stylesheet"
+  href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Nanum+Myeongjo:wght@400;700&display=swap"
+/>
+```
+> [fonts.google.com](https://fonts.google.com) 에서 폰트 선택 → **Get embed code** → `<link>` 태그 복사
+
+**② `src/styles/variables.css`** — 변수에 폰트명 적용
+
+```css
+--font-serif: 'Nanum Myeongjo', serif;   /* 한글 제목/강조 */
+--font-sans:  'Nanum Myeongjo', serif;   /* 한글 본문 */
+--font-en:    'Playfair Display', serif; /* 영문 포인트 */
+```
+
+---
+
+### 2. 커스텀 폰트 파일(@font-face)로 변경
+
+현재 방식입니다. CDN URL 또는 로컬 파일 경로를 사용할 수 있습니다.
+
+**`src/styles/reset.css`** 상단의 `@font-face` 수정:
+
+```css
+/* CDN URL 사용 */
+@font-face {
+  font-family: '폰트이름';
+  src: url('https://cdn.example.com/font.woff2') format('woff2');
+  font-weight: normal;
+  font-display: swap;
+}
+
+/* 로컬 파일 사용 (src/assets/fonts/ 폴더에 파일 추가 후) */
+@font-face {
+  font-family: '폰트이름';
+  src: url('/src/assets/fonts/font.woff2') format('woff2');
+  font-weight: normal;
+  font-display: swap;
+}
+```
+
+**`src/styles/variables.css`** — 변수에 폰트명 적용:
+
+```css
+--font-en: '폰트이름', cursive;
+```
+
+> **무료 한국어 웹폰트 추천 사이트**
+> - [눈누 (noonnu.cc)](https://noonnu.cc) — `@font-face` 코드 바로 복사 가능
+> - [구름 폰트 (goomfonts.com)](https://www.goomfonts.com)
+> - [Google Fonts 한국어](https://fonts.google.com/?subset=korean)
+
+---
+
+### 3. 폰트가 적용되는 위치
+
+| 변수 | 적용 위치 |
+|---|---|
+| `--font-serif` | 히어로 이름, 초대 인사말, 모달 제목 등 강조 텍스트 |
+| `--font-sans` | 본문, 버튼, 폼, 카드 등 일반 텍스트 |
+| `--font-en` | `We are getting married`, 섹션 타이틀 영문(`Gallery`, `Ceremony` 등) |
+
+---
+
 ## 트러블슈팅
 
 ### npm run dev 실행 시 에러
