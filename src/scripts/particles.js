@@ -13,9 +13,9 @@ export function burstParticles(btn, total = 30) {
     el.style.setProperty('--y', rand(-80, -200) + 'px')
     el.style.setProperty('--r', rand(-360 * 3, 360 * 3) + 'deg')
     el.style.setProperty('--c', BURST_COLORS[rand(0, BURST_COLORS.length - 1)])
-    el.style.setProperty('--size', rand(4, 7) + 'px')
-    el.style.setProperty('--d', rand(400, 750) + 'ms')
+    el.style.setProperty('--size', rand(8, 14) + 'px')
+    el.style.setProperty('--d', rand(900, 1400) + 'ms')
     btn.appendChild(el)
-    setTimeout(() => el.remove(), 800)
+    setTimeout(() => el.remove(), 1500)
   }
 }
