@@ -25,7 +25,7 @@
 }
 
 .hero__intro-text {
-  font-family: var(--font-en);
+  font-family: var(--font-intro);
   font-size: clamp(2rem, 10vw, 3.5rem);
   font-weight: 300;
   letter-spacing: 0.3em;

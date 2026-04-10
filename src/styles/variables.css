@@ -26,6 +26,7 @@
   --font-serif:  'Gowun Dodum', 'Apple SD Gothic Neo', sans-serif;
   --font-sans:   'Escoredream', 'Gowun Dodum', 'Apple SD Gothic Neo', sans-serif;
   --font-en:     'Apple SD Gothic Neo', sans-serif, 'OkMallangW', cursive;
+  --font-intro:  var(--font-en);   /* Our Wedding 인트로 텍스트 전용 폰트 */
 
   --font-size-xs:    0.75rem;   /* 12px */
   --font-size-sm:    0.875rem;  /* 14px */
