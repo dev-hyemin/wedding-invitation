@@ -81,25 +81,31 @@
 
 /* ── 결혼식 날 셀 ── */
 .cal__cell--wedding {
-  height: 50px;
-  border-radius: var(--radius-md);
+  height: 36px;
+  border-radius: 50%;
+  position: relative;
 }
 
 .cal__cell--wedding .cal__date {
   font-family: var(--font-serif);
-  font-size: var(--font-size-base);
+  font-size: var(--font-size-sm);
   font-weight: 600;
   color: var(--color-primary-dark);
-  line-height: 1;
-  margin-bottom: 2px;
+  position: relative;
+  z-index: 1;
 }
 
-/* ── 손그림 하트 SVG ── */
+/* ── 손그림 하트 SVG (숫자 위에 절대 배치) ── */
 .cal__heart {
-  width: 26px;
-  height: 22px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 44px;
+  height: 40px;
   color: var(--color-primary);
-  flex-shrink: 0;
+  z-index: 0;
+  pointer-events: none;
 }
 
 /* ── 드로잉 애니메이션 ── */
