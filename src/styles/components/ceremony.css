@@ -25,11 +25,7 @@
 }
 
 .ceremony-card__icon {
-  font-size: var(--font-size-lg);
-  flex-shrink: 0;
-  width: 28px;
-  text-align: center;
-  margin-top: 2px;
+  display: none;
 }
 
 .ceremony-card__info {
