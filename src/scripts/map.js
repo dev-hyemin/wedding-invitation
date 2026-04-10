@@ -1,6 +1,9 @@
 import { CONFIG } from './config.js'
 
 export function initMap() {
+  // 길찾기 버튼 URL은 지도 로드와 무관하게 즉시 설정
+  setNaviLinks()
+
   // 카카오맵 API 키가 없으면 스킵
   if (!CONFIG.kakaoMapKey) {
     const container = document.getElementById('kakao-map')
@@ -20,6 +23,24 @@ export function initMap() {
   }, { threshold: 0.1 })
 
   observer.observe(mapSection)
+}
+
+function setNaviLinks() {
+  const { lat, lng, venue, address } = CONFIG.wedding
+
+  const kakaoBtn = document.getElementById('btn-kakao-navi')
+  const naverBtn = document.getElementById('btn-naver-navi')
+
+  if (kakaoBtn) {
+    kakaoBtn.href = `https://map.kakao.com/link/to/${encodeURIComponent(venue)},${lat},${lng}`
+    kakaoBtn.target = '_blank'
+    kakaoBtn.rel = 'noopener noreferrer'
+  }
+  if (naverBtn) {
+    naverBtn.href = `https://map.naver.com/v5/directions/-/-/-/transit?destination=${lng},${lat},${encodeURIComponent(venue)},${encodeURIComponent(address)}`
+    naverBtn.target = '_blank'
+    naverBtn.rel = 'noopener noreferrer'
+  }
 }
 
 function loadKakaoMap() {
@@ -81,16 +102,6 @@ function renderMap() {
     yAnchor: 1,
   })
 
-  // 길찾기 버튼 URL 설정
-  const kakaoBtn = document.getElementById('btn-kakao-navi')
-  const naverBtn = document.getElementById('btn-naver-navi')
-
-  if (kakaoBtn) {
-    kakaoBtn.href = `https://map.kakao.com/link/to/${encodeURIComponent(venue)},${lat},${lng}`
-  }
-  if (naverBtn) {
-    naverBtn.href = `https://map.naver.com/v5/directions/-/-/-/transit?c=${lng},${lat},15,0,0,0,dh&destination=${encodeURIComponent(address)}`
-  }
 }
 
 // 교통 안내 탭
