@@ -20,9 +20,10 @@
 | 스타일 | CSS (커스텀 프로퍼티 기반 디자인 시스템) |
 | 슬라이더 | Swiper 12 |
 | 스크롤 애니메이션 | AOS (Animate On Scroll) |
-| 방명록 DB | Firebase Firestore |
+| 갤러리 이미지 | Supabase Storage |
+| 방명록 DB | Supabase Database (PostgreSQL) |
 | RSVP 폼 전송 | Formspree |
-| 지도 | 카카오맵 JavaScript SDK |
+| 지도 | 카카오맵 지도 퍼가기 (Roughmap) |
 | 축하 효과 | canvas-confetti |
 | 배포 | GitHub Actions → GitHub Pages |
 
@@ -39,13 +40,14 @@ wedding/
 │   ├── main.js                 # 진입점 (모든 모듈 오케스트레이션)
 │   ├── scripts/
 │   │   ├── config.js           # 청첩장 데이터 중앙 설정 (이름/날짜/계좌 등)
+│   │   ├── animations.js       # AOS 초기화 + 꽃잎 파티클
+│   │   ├── calendar.js         # 캘린더 + 결혼식 날 하트 표시
 │   │   ├── countdown.js        # D-Day 카운트다운
-│   │   ├── gallery.js          # Swiper 갤러리 + 라이트박스
-│   │   ├── map.js              # 카카오맵 + 교통 안내 탭
+│   │   ├── gallery.js          # Swiper 갤러리 + 라이트박스 (Supabase Storage)
+│   │   ├── map.js              # 카카오맵 roughmap + 교통 안내 탭
 │   │   ├── account.js          # 계좌번호 탭 + 클립보드 복사
 │   │   ├── rsvp.js             # RSVP 폼 (Formspree 연동)
-│   │   ├── guestbook.js        # 방명록 (Firebase Firestore 연동)
-│   │   ├── animations.js       # AOS 초기화 + 꽃잎 파티클
+│   │   ├── guestbook.js        # 방명록 (Supabase DB CRUD)
 │   │   └── toast.js            # 토스트 알림 유틸리티
 │   └── styles/
 │       ├── main.css            # 전체 CSS import 진입점
@@ -56,13 +58,14 @@ wedding/
 │       └── components/
 │           ├── hero.css
 │           ├── invitation.css
+│           ├── calendar.css
 │           ├── gallery.css
 │           ├── ceremony.css
 │           ├── map.css
 │           ├── account.css
 │           ├── rsvp.css
 │           └── guestbook.css
-├── index.html                  # 단일 페이지 (8개 섹션)
+├── index.html                  # 단일 페이지 (9개 섹션)
 ├── package.json
 ├── vite.config.js
 ├── .env.example                # 환경 변수 템플릿
@@ -75,14 +78,15 @@ wedding/
 
 | # | 섹션 | 주요 기능 |
 |---|---|---|
-| 1 | 히어로 | 배경 이미지, 신랑신부 이름, D-Day 카운트다운, 꽃잎 파티클 |
+| 1 | 히어로 | 배경 이미지, 신랑신부 이름, 꽃잎 파티클 |
 | 2 | 초대 인사말 | 청첩장 본문, 양가 부모님 정보 |
-| 3 | 갤러리 | Swiper 슬라이더, 라이트박스 |
-| 4 | 예식 안내 | 일시/장소 카드, 카카오/네이버 길찾기 버튼 |
-| 5 | 지도 | 카카오맵, 자가용/대중교통/주차 안내 탭 |
-| 6 | 마음 전하기 | 신랑·신부측 계좌번호, 클립보드 복사 |
-| 7 | RSVP | 참석 여부 폼, Formspree 전송, confetti 효과 |
-| 8 | 방명록 | Firebase 실시간 CRUD, 비밀번호 삭제, 페이지네이션 |
+| 3 | 갤러리 | Swiper 슬라이더, 라이트박스 (Supabase Storage) |
+| 4 | 캘린더 | 결혼식 날 하트 표시, D-Day 카운트다운 |
+| 5 | 예식 안내 | 일시/장소 카드, 카카오/네이버 길찾기 버튼 |
+| 6 | 지도 | 카카오맵 roughmap, 자가용/대중교통/주차 안내 탭 |
+| 7 | 마음 전하기 | 신랑·신부측 계좌번호, 클립보드 복사 |
+| 8 | RSVP | 참석 여부 폼, Formspree 전송, confetti 효과 |
+| 9 | 방명록 | Supabase DB CRUD, 비밀번호 삭제, 페이지네이션 |
 
 ---
 
@@ -96,16 +100,53 @@ cp .env.example .env
 
 | 변수명 | 설명 | 발급처 |
 |---|---|---|
-| `VITE_KAKAO_MAP_KEY` | 카카오맵 JavaScript 키 | [developers.kakao.com](https://developers.kakao.com) |
-| `VITE_FIREBASE_API_KEY` | Firebase 프로젝트 API 키 | [console.firebase.google.com](https://console.firebase.google.com) |
-| `VITE_FIREBASE_AUTH_DOMAIN` | Firebase Auth 도메인 | 동일 |
-| `VITE_FIREBASE_PROJECT_ID` | Firebase 프로젝트 ID | 동일 |
-| `VITE_FIREBASE_STORAGE_BUCKET` | Firebase Storage 버킷 | 동일 |
-| `VITE_FIREBASE_MESSAGING_SENDER_ID` | Firebase 메시징 ID | 동일 |
-| `VITE_FIREBASE_APP_ID` | Firebase 앱 ID | 동일 |
+| `VITE_SUPABASE_URL` | Supabase 프로젝트 URL | [supabase.com](https://supabase.com) → Settings → API |
+| `VITE_SUPABASE_ANON_KEY` | Supabase anon public 키 | 동일 |
 | `VITE_FORMSPREE_ENDPOINT` | Formspree 폼 엔드포인트 | [formspree.io](https://formspree.io) |
 
 GitHub Actions 배포 시에는 **Settings → Secrets and variables → Actions** 에 동일한 키 등록.
+
+---
+
+## Supabase 초기 설정
+
+### 방명록 테이블 생성
+Supabase 대시보드 → **SQL Editor** 에서 실행:
+
+```sql
+create table guestbook (
+  id           uuid primary key default gen_random_uuid(),
+  name         text not null,
+  message      text not null,
+  password_hash text not null,
+  created_at   timestamptz default now()
+);
+
+alter table guestbook enable row level security;
+create policy "read all"   on guestbook for select using (true);
+create policy "insert all" on guestbook for insert with check (true);
+create policy "delete own" on guestbook for delete using (true);
+```
+
+### 갤러리 Storage 버킷 생성
+Supabase 대시보드 → **Storage** → New bucket → 이름: `gallery`, **Public** 체크
+
+---
+
+## 카카오맵 설정
+
+카카오맵은 **지도 퍼가기(Roughmap)** 방식 사용 (API 키/도메인 등록 불필요).
+
+### 값 발급
+1. [map.kakao.com](https://map.kakao.com) → 웨딩홀 검색
+2. 장소 클릭 → **지도 퍼가기** 클릭
+3. 생성 코드에서 `timestamp`, `key` 값 복사
+
+### 적용 위치
+- `src/scripts/config.js` → `kakaomap.timestamp`, `kakaomap.key`
+- `index.html` → roughmap 스크립트 블록의 `timestamp`, `key`
+
+> 자세한 내용은 `/kakao-map` 스킬 참고
 
 ---
 
@@ -121,14 +162,11 @@ nvm use 20
 # 의존성 설치
 npm install
 
-# 개발 서버 실행 (http://localhost:3000)
+# 개발 서버 실행
 npm run dev
 
 # 프로덕션 빌드
 npm run build
-
-# 빌드 결과 미리보기
-npm run preview
 ```
 
 ---
@@ -148,117 +186,47 @@ npm run preview
 `src/scripts/config.js` 파일 하나만 수정하면 청첩장 전체 내용이 변경됩니다.
 
 ```js
-// 신랑신부 정보, 예식 일시/장소, 계좌번호, 갤러리 이미지 등
-export const CONFIG = { ... }
+export const CONFIG = {
+  groom:   { name, englishName, father, mother, phone },
+  bride:   { name, englishName, father, mother, phone },
+  wedding: { datetime, dateDisplay, venue, hall, address, lat, lng },
+  accounts: { groom: [...], bride: [...] },
+  gallery:  { storageBucket, storageFolder, fallback },
+  kakaomap: { timestamp, key },
+  transport: { car, public, parking },
+}
 ```
 
 ---
 
 ## 폰트 커스텀 방법
 
-폰트 관련 파일은 두 곳입니다.
-
 | 파일 | 역할 |
 |---|---|
 | `src/styles/reset.css` | `@font-face` 선언 (커스텀 폰트 로드) |
-| `src/styles/variables.css` | 폰트 변수 정의 (실제 적용) |
-| `index.html` | Google Fonts 링크 |
-
----
-
-### 1. Google Fonts로 변경
-
-**① `index.html`** — 기존 링크를 원하는 폰트로 교체
-
-```html
-<!-- 예: Playfair Display + Nanum Myeongjo -->
-<link
-  rel="stylesheet"
-  href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Nanum+Myeongjo:wght@400;700&display=swap"
-/>
-```
-> [fonts.google.com](https://fonts.google.com) 에서 폰트 선택 → **Get embed code** → `<link>` 태그 복사
-
-**② `src/styles/variables.css`** — 변수에 폰트명 적용
-
-```css
---font-serif: 'Nanum Myeongjo', serif;   /* 한글 제목/강조 */
---font-sans:  'Nanum Myeongjo', serif;   /* 한글 본문 */
---font-en:    'Playfair Display', serif; /* 영문 포인트 */
-```
-
----
-
-### 2. 커스텀 폰트 파일(@font-face)로 변경
-
-현재 방식입니다. CDN URL 또는 로컬 파일 경로를 사용할 수 있습니다.
-
-**`src/styles/reset.css`** 상단의 `@font-face` 수정:
-
-```css
-/* CDN URL 사용 */
-@font-face {
-  font-family: '폰트이름';
-  src: url('https://cdn.example.com/font.woff2') format('woff2');
-  font-weight: normal;
-  font-display: swap;
-}
-
-/* 로컬 파일 사용 (src/assets/fonts/ 폴더에 파일 추가 후) */
-@font-face {
-  font-family: '폰트이름';
-  src: url('/src/assets/fonts/font.woff2') format('woff2');
-  font-weight: normal;
-  font-display: swap;
-}
-```
-
-**`src/styles/variables.css`** — 변수에 폰트명 적용:
-
-```css
---font-en: '폰트이름', cursive;
-```
-
-> **무료 한국어 웹폰트 추천 사이트**
-> - [눈누 (noonnu.cc)](https://noonnu.cc) — `@font-face` 코드 바로 복사 가능
-> - [구름 폰트 (goomfonts.com)](https://www.goomfonts.com)
-> - [Google Fonts 한국어](https://fonts.google.com/?subset=korean)
-
----
-
-### 3. 폰트가 적용되는 위치
+| `src/styles/variables.css` | 폰트 변수 정의 (`--font-serif`, `--font-sans`, `--font-en`) |
+| `index.html` | Google Fonts `<link>` 태그 |
 
 | 변수 | 적용 위치 |
 |---|---|
-| `--font-serif` | 히어로 이름, 초대 인사말, 모달 제목 등 강조 텍스트 |
-| `--font-sans` | 본문, 버튼, 폼, 카드 등 일반 텍스트 |
-| `--font-en` | `We are getting married`, 섹션 타이틀 영문(`Gallery`, `Ceremony` 등) |
+| `--font-serif` | 히어로 이름, 초대 인사말 등 강조 텍스트 |
+| `--font-sans` | 본문, 버튼, 폼 등 일반 텍스트 |
+| `--font-en` | 섹션 타이틀 영문 (`Gallery`, `Ceremony` 등) |
+
+> 무료 한국어 폰트: [눈누(noonnu.cc)](https://noonnu.cc) · [Google Fonts 한국어](https://fonts.google.com/?subset=korean)
 
 ---
 
 ## 트러블슈팅
 
-### npm run dev 실행 시 에러
+### npm run dev 실행 시 Node 버전 오류
 
 **증상:** `You are using Node.js 16.x. Vite requires Node.js 20.19+`
-
-**원인:** Node.js 버전이 낮음 (Vite 8은 Node 20+ 필요)
 
 **해결:**
 ```bash
 source ~/.nvm/nvm.sh
-nvm install 20   # 최초 1회만
+nvm install 20
 nvm use 20
 npm run dev
-```
-
-### Firebase 관련 에러
-
-**증상:** `Failed to resolve import "firebase/app"`
-
-**원인:** Firebase SDK 미설치
-
-**해결:**
-```bash
-npm install firebase
 ```
