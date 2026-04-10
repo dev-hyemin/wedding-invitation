@@ -9,9 +9,9 @@ export default defineConfig({
     assetsDir: 'assets',
     rollupOptions: {
       output: {
-        manualChunks: {
-          swiper: ['swiper'],
-          aos: ['aos'],
+        manualChunks(id) {
+          if (id.includes('node_modules/swiper')) return 'swiper'
+          if (id.includes('node_modules/aos')) return 'aos'
         }
       }
     }
