@@ -1,6 +1,25 @@
 import { CONFIG } from './config.js'
 import { showToast } from './toast.js'
 
+// 버튼 파티클 효과 (MIT © 2022 Evan Jin https://codepen.io/rudtjd2548/pen/yLveGmO)
+const BURST_COLORS = ['#C9A96E', '#E8D5C4', '#fff', '#A8844A']
+const rand = (min, max) => Math.floor(Math.random() * (max - min + 1) + min)
+
+function burstParticles(btn, total = 30) {
+  for (let i = 0; i < total; i++) {
+    const el = document.createElement('div')
+    el.className = 'burst-particle'
+    el.style.setProperty('--x', rand(-160, 160) + 'px')
+    el.style.setProperty('--y', rand(-80, -200) + 'px')
+    el.style.setProperty('--r', rand(-360 * 3, 360 * 3) + 'deg')
+    el.style.setProperty('--c', BURST_COLORS[rand(0, BURST_COLORS.length - 1)])
+    el.style.setProperty('--size', rand(4, 7) + 'px')
+    el.style.setProperty('--d', rand(400, 750) + 'ms')
+    btn.appendChild(el)
+    setTimeout(() => el.remove(), 800)
+  }
+}
+
 const PAGE_SIZE = 10
 
 let supabase     = null
@@ -157,6 +176,7 @@ export function initGuestbook() {
 
     const submitBtn = form.querySelector('[type=submit]')
     submitBtn.disabled = true
+    burstParticles(submitBtn)
 
     try {
       const sb = await getSupabase()
