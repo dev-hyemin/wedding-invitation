@@ -19,23 +19,6 @@
     href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap"
   />
 
-  <!-- 카카오맵 SDK (비동기 로드) -->
-  <script>
-    window.__kakaoMapLoaded = false;
-    function loadKakaoMap() {
-      if (window.__kakaoMapLoaded) return;
-      window.__kakaoMapLoaded = true;
-      const key = import.meta.env?.VITE_KAKAO_MAP_KEY || '';
-      const script = document.createElement('script');
-      script.src = `//dapi.kakao.com/v2/maps/sdk.js?appkey=${key}&libraries=services&autoload=false`;
-      script.onload = () => {
-        kakao.maps.load(() => {
-          document.dispatchEvent(new Event('kakaoMapReady'));
-        });
-      };
-      document.head.appendChild(script);
-    }
-  </script>
 
   <title>김민준 ♥ 이서연</title>
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />

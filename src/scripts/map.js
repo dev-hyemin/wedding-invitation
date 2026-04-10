@@ -44,16 +44,16 @@ function setNaviLinks() {
 }
 
 function loadKakaoMap() {
-  window.loadKakaoMap?.()
-
-  document.addEventListener('kakaoMapReady', () => {
-    renderMap()
-  }, { once: true })
-
   // 이미 로드된 경우 바로 렌더링
   if (window.kakao?.maps) {
     kakao.maps.load(renderMap)
+    return
   }
+
+  const script = document.createElement('script')
+  script.src = `//dapi.kakao.com/v2/maps/sdk.js?appkey=${CONFIG.kakaoMapKey}&libraries=services&autoload=false`
+  script.onload = () => kakao.maps.load(renderMap)
+  document.head.appendChild(script)
 }
 
 function renderMap() {
