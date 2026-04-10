@@ -30,6 +30,11 @@
        SECTION 1: 히어로 (Hero)
   ================================ -->
   <section id="hero" class="section section--hero">
+    <!-- 인트로 오버레이 -->
+    <div class="hero__intro" id="hero-intro">
+      <p class="hero__intro-text">Our<br>Wedding</p>
+    </div>
+
     <div class="hero__bg">
       <img
         src="/src/assets/images/hero-bg.jpg"
@@ -42,20 +47,13 @@
     </div>
 
     <div class="hero__content">
-      <p class="hero__label" data-aos="fade-down">We are getting married</p>
+      <p class="hero__label">We are getting married</p>
+    </div>
 
-      <div class="hero__names" data-aos="fade-up" data-aos-delay="200">
-        <span class="hero__name hero__name--groom">김민준</span>
-        <span class="hero__ampersand">&amp;</span>
-        <span class="hero__name hero__name--bride">이서연</span>
-      </div>
-
-      <div class="hero__date" data-aos="fade-up" data-aos-delay="400">
-        <time datetime="2026-05-16T14:00">
-          2026년 5월 16일 토요일 오후 2시
-        </time>
-      </div>
-
+    <div class="hero__bottom">
+      <time class="hero__date" datetime="2026-05-16T14:00">
+        2026년 5월 16일 토요일 오후 2시
+      </time>
     </div>
 
     <a class="hero__scroll-hint" href="#invitation" aria-label="아래로 스크롤">

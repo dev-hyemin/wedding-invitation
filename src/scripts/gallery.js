@@ -1,5 +1,5 @@
 import Swiper from 'swiper'
-import { Pagination, Autoplay } from 'swiper/modules'
+import { Pagination } from 'swiper/modules'
 import { CONFIG } from './config.js'
 
 // ── Supabase Storage에서 이미지 URL 목록 가져오기 ──
@@ -52,12 +52,8 @@ function buildSlides(wrapper, images) {
 // ── Swiper 초기화 ──
 function initSwiper(wrapper) {
   return new Swiper('.gallery-swiper', {
-    modules: [Pagination, Autoplay],
+    modules: [Pagination],
     loop: true,
-    autoplay: {
-      delay: 3500,
-      disableOnInteraction: false,
-    },
     pagination: {
       el: '.swiper-pagination',
       clickable: true,
