@@ -15,9 +15,9 @@
   --color-success:      #5A9E6F;
 
   /* ── 타이포그래피 ── */
-  --font-serif:  'Noto Serif KR', 'Cormorant Garamond', Georgia, serif;
-  --font-sans:   'Noto Sans KR', 'Apple SD Gothic Neo', sans-serif;
-  --font-en:     'Cormorant Garamond', Georgia, serif;
+  --font-serif:  'Gowun Dodum', 'Apple SD Gothic Neo', sans-serif;
+  --font-sans:   'Gowun Dodum', 'Apple SD Gothic Neo', sans-serif;
+  --font-en:     'Alex Brush', cursive;
 
   --font-size-xs:    0.75rem;   /* 12px */
   --font-size-sm:    0.875rem;  /* 14px */
