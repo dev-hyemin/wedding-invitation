@@ -35,7 +35,16 @@ function loadRoughmap(timestamp, key) {
   loaderScript.className = 'daum_roughmap_loader_script'
   loaderScript.src = 'https://ssl.daumcdn.net/dmaps/map_js_init/roughmapLoader.js'
   loaderScript.onload = () => {
-    new daum.roughmap.Lander({ timestamp, key }).render()
+    // roughmapLoader가 내부적으로 추가 스크립트를 비동기 로드하므로
+    // Lander 생성자가 준비될 때까지 polling
+    const tryRender = () => {
+      if (typeof daum !== 'undefined' && typeof daum.roughmap?.Lander === 'function') {
+        new daum.roughmap.Lander({ timestamp, key }).render()
+      } else {
+        setTimeout(tryRender, 50)
+      }
+    }
+    tryRender()
   }
   container.appendChild(loaderScript)
 }
