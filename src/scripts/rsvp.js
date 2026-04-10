@@ -1,6 +1,7 @@
 import { CONFIG } from './config.js'
 import { showToast } from './toast.js'
 import confetti from 'canvas-confetti'
+import { theme } from './theme.js'
 
 const STORAGE_KEY = 'rsvp_submitted'
 
@@ -149,13 +150,13 @@ function fireConfetti() {
       ...defaults,
       particleCount: 50,
       origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 },
-      colors: ['#C9A96E', '#E8D5C4', '#8B6F5E', '#fff'],
+      colors: theme.solid,
     })
     confetti({
       ...defaults,
       particleCount: 50,
       origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 },
-      colors: ['#C9A96E', '#E8D5C4', '#8B6F5E', '#fff'],
+      colors: theme.solid,
     })
   }, 250)
 

@@ -50,8 +50,9 @@ body {
 }
 
 .divider__icon {
+  display: flex;
+  align-items: center;
   color: var(--color-primary);
-  font-size: var(--font-size-md);
 }
 
 /* ── 버튼 시스템 ── */
@@ -159,7 +160,7 @@ body {
 .form-select:focus,
 .form-textarea:focus {
   border-color: var(--color-primary);
-  box-shadow: 0 0 0 3px rgba(201,169,110,0.15);
+  box-shadow: 0 0 0 3px var(--color-focus-ring);
 }
 
 .form-input::placeholder,

@@ -38,14 +38,14 @@
 .custom-select__trigger:focus {
   outline: none;
   border-color: var(--color-primary);
-  box-shadow: 0 0 0 3px rgba(201,169,110,0.15);
+  box-shadow: 0 0 0 3px var(--color-focus-ring);
 }
 
 .is-open .custom-select__trigger {
   border-color: var(--color-primary);
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
-  box-shadow: 0 0 0 3px rgba(201,169,110,0.15);
+  box-shadow: 0 0 0 3px var(--color-focus-ring);
 }
 
 .custom-select__arrow {
@@ -103,7 +103,7 @@
 .custom-select__option.is-selected {
   color: var(--color-primary-dark);
   font-weight: 500;
-  background: #fdf8f2;
+  background: #fffde7;
 }
 
 .custom-select__option.is-selected::after {

@@ -31,9 +31,13 @@
   100% { transform: translateY(105vh);  opacity: 0; }
 }
 
-@keyframes heartSway {
-  0%, 100% { transform: translateX(0)      rotate(-8deg); }
-  50%       { transform: translateX(18px)  rotate(8deg); }
+@keyframes heartSwayL {
+  0%, 100% { transform: translateX(0)     rotate(-6deg); }
+  50%       { transform: translateX(-14px) rotate(6deg); }
+}
+@keyframes heartSwayR {
+  0%, 100% { transform: translateX(0)    rotate(6deg); }
+  50%       { transform: translateX(14px) rotate(-6deg); }
 }
 
 .petal {
@@ -48,7 +52,7 @@
   position: relative;
   width: calc(var(--heart-size) * 2);
   height: calc(var(--heart-size) * 2.2);
-  animation: heartSway ease-in-out infinite;
+  animation: var(--sway-anim, heartSwayR) ease-in-out infinite;
   animation-duration: inherit;
 }
 

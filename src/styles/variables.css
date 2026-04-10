@@ -1,18 +1,26 @@
 :root {
   /* ── 색상 팔레트 ── */
-  --color-primary:      #C9A96E;   /* 골드/샴페인 */
-  --color-primary-dark: #A8844A;
-  --color-secondary:    #8B6F5E;   /* 로즈우드 */
-  --color-accent:       #E8D5C4;   /* 피치/살구 */
-  --color-bg:           #FAFAF8;   /* 아이보리 화이트 */
-  --color-bg-alt:       #F5F0EB;   /* 연한 베이지 */
+  --color-primary:      #D4A017;   /* 골든 옐로우 */
+  --color-primary-dark: #9A6F00;   /* 다크 앰버 */
+  --color-secondary:    #F0C040;   /* 미디엄 옐로우 */
+  --color-accent:       #FFF8E1;   /* 연노랑 */
+  --color-bg:           #FFFFFF;   /* 화이트 */
+  --color-bg-alt:       #FFFDF0;   /* 아주 연한 노랑 */
   --color-surface:      #FFFFFF;
   --color-text:         #2C2C2C;   /* 다크 차콜 */
   --color-text-light:   #7A7A7A;
   --color-text-muted:   #AAAAAA;
-  --color-border:       #E5DDD5;   /* 베이지 보더 */
+  --color-border:       #F5E6A3;   /* 연노랑 보더 */
   --color-danger:       #D64A4A;
   --color-success:      #5A9E6F;
+
+  /* ── rgba 포커스 링 (CSS에서 직접 사용) ── */
+  --color-focus-ring:   rgba(212, 160, 23, 0.20);
+
+  /* ── JS 파티클 색상 (animations.js, guestbook.js, rsvp.js에서 읽어옴) ── */
+  --particle-1: rgba(255, 233, 71, 0.537);  /* 골든 옐로우 */
+  --particle-2: rgba(255, 255, 255, 0.90);  /* 화이트 */
+  --particle-3: rgba(255, 236, 153, 0.80);  /* 연노랑 */
 
   /* ── 타이포그래피 ── */
   --font-serif:  'Gowun Dodum', 'Apple SD Gothic Neo', sans-serif;

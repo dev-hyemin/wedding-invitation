@@ -1,4 +1,5 @@
 import AOS from 'aos'
+import { theme } from './theme.js'
 
 export function initAnimations() {
   AOS.init({
@@ -9,15 +10,8 @@ export function initAnimations() {
   })
 }
 
-// 하트 낙하 파티클
+// 하트 낙하 파티클 (색상은 variables.css --particle-* 에서 관리)
 export function initPetals(count = 10) {
-  const colors = [
-    'rgba(201,169,110,0.75)',  // 골드
-    'rgba(255,255,255,0.85)',  // 화이트
-    'rgba(232,213,196,0.80)', // 피치
-    'rgba(201,169,110,0.45)', // 연한 골드
-  ]
-
   for (let i = 0; i < count; i++) {
     const el = document.createElement('div')
     el.className = 'petal'
@@ -27,20 +21,22 @@ export function initPetals(count = 10) {
         <div class="petal__right"></div>
       </div>`
 
-    const size     = 6 + Math.random() * 7          // 6~13px
-    const color    = colors[Math.floor(Math.random() * colors.length)]
-    const duration = 4000 + Math.random() * 5000    // 4~9s
-    const delay    = -(Math.random() * 8000)         // 즉시 시작 (음수 딜레이)
-    const left     = Math.random() * 100
+    const color     = theme.particles[i % theme.particles.length]
+    const size      = 5 + Math.random() * 4
+    const duration  = 9000 + Math.random() * 7000
+    const delay     = -(Math.random() * 10000)
+    const slotWidth = 100 / count
+    const left      = slotWidth * i + Math.random() * slotWidth
+    const swayAnim  = i % 2 === 0 ? 'heartSwayL' : 'heartSwayR'
 
     el.style.cssText = `
       left: ${left}%;
       --heart-size: ${size}px;
       --heart-color: ${color};
+      --sway-anim: ${swayAnim};
       animation-duration: ${duration}ms;
       animation-delay: ${delay}ms;
     `
-
     document.body.appendChild(el)
   }
 }

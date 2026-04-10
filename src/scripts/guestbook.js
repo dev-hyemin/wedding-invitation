@@ -1,8 +1,10 @@
 import { CONFIG } from './config.js'
 import { showToast } from './toast.js'
+import { theme } from './theme.js'
 
 // 버튼 파티클 효과 (MIT © 2022 Evan Jin https://codepen.io/rudtjd2548/pen/yLveGmO)
-const BURST_COLORS = ['#C9A96E', '#E8D5C4', '#fff', '#A8844A']
+// 색상은 variables.css에서 관리
+const BURST_COLORS = theme.solid
 const rand = (min, max) => Math.floor(Math.random() * (max - min + 1) + min)
 
 function burstParticles(btn, total = 30) {

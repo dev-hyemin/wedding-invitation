@@ -13,7 +13,7 @@ import { initGuestbook }              from './scripts/guestbook.js'
 initAnimations()
 
 // 히어로 꽃잎 파티클
-initPetals(8)
+initPetals(15)
 
 // 캘린더
 initCalendar()
