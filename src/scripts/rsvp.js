@@ -1,7 +1,6 @@
 import { CONFIG } from './config.js'
 import { showToast } from './toast.js'
-import confetti from 'canvas-confetti'
-import { theme } from './theme.js'
+import { burstParticles } from './particles.js'
 
 const STORAGE_KEY = 'rsvp_submitted'
 
@@ -27,6 +26,7 @@ export function initRsvp() {
 
     if (!validate(form)) return
 
+    burstParticles(submit)
     submit.classList.add('btn--loading')
     submit.disabled = true
 
@@ -51,7 +51,7 @@ export function initRsvp() {
       form.hidden = true
       if (success) success.hidden = false
 
-      fireConfetti()
+
     } catch {
       showToast('전송에 실패했습니다. 잠시 후 다시 시도해주세요.')
       submit.classList.remove('btn--loading')
@@ -139,26 +139,3 @@ function validate(form) {
   return true
 }
 
-function fireConfetti() {
-  const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0 }
-  function randomInRange(min, max) {
-    return Math.random() * (max - min) + min
-  }
-
-  const interval = setInterval(() => {
-    confetti({
-      ...defaults,
-      particleCount: 50,
-      origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 },
-      colors: theme.solid,
-    })
-    confetti({
-      ...defaults,
-      particleCount: 50,
-      origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 },
-      colors: theme.solid,
-    })
-  }, 250)
-
-  setTimeout(() => clearInterval(interval), 3000)
-}

@@ -24,7 +24,6 @@ export const theme = {
     get('--color-primary'),
     get('--color-accent'),
     get('--color-primary-dark'),
-    '#A0D264',   /* 연두 포인트 — particle-5와 동일 계열 */
     '#ffffff',
   ],
 }
