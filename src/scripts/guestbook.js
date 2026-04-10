@@ -3,60 +3,55 @@ import { showToast } from './toast.js'
 
 const PAGE_SIZE = 10
 
-let db           = null
-let lastDoc      = null
-let deleteTarget = null   // { docId, passwordHash }
-let pendingDeleteId = null
+let supabase     = null
+let offset       = 0
+let hasMore      = true
+let deleteTarget = null   // { id, passwordHash }
 
-// ── Firebase 동적 import ──
-async function getFirestore() {
-  if (db) return db
+// ── Supabase 클라이언트 초기화 ──
+async function getSupabase() {
+  if (supabase) return supabase
 
-  const cfg = CONFIG.firebase
-  if (!cfg.apiKey || !cfg.projectId) return null
+  const { url, anonKey } = CONFIG.supabase
+  if (!url || !anonKey) return null
 
-  const { initializeApp, getApps } = await import('firebase/app')
-  const { getFirestore: _getFs, collection, addDoc, getDocs, deleteDoc, doc, query, orderBy, limit, startAfter, serverTimestamp } = await import('firebase/firestore')
-
-  const app = getApps().length ? getApps()[0] : initializeApp(cfg)
-  db = _getFs(app)
-
-  // 모듈 레벨에 Firestore 함수 캐시
-  window.__fs = { collection, addDoc, getDocs, deleteDoc, doc, query, orderBy, limit, startAfter, serverTimestamp }
-
-  return db
+  const { createClient } = await import('@supabase/supabase-js')
+  supabase = createClient(url, anonKey)
+  return supabase
 }
 
 // ── 해시 (비밀번호 단방향 변환) ──
 async function hashPassword(password) {
-  const buf  = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(password))
+  const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(password))
   return [...new Uint8Array(buf)].map(b => b.toString(16).padStart(2, '0')).join('')
 }
 
 // ── 날짜 포맷 ──
 function formatDate(timestamp) {
-  const d = timestamp?.toDate ? timestamp.toDate() : new Date(timestamp)
-  return d.toLocaleDateString('ko-KR', { year: 'numeric', month: 'long', day: 'numeric' })
+  return new Date(timestamp).toLocaleDateString('ko-KR', {
+    year: 'numeric', month: 'long', day: 'numeric',
+  })
 }
 
 // ── 아이템 렌더 ──
-function renderItem(docId, data) {
+function renderItem(row) {
   const li = document.createElement('div')
   li.className = 'guestbook-item'
-  li.dataset.id = docId
+  li.dataset.id = row.id
 
   li.innerHTML = `
     <div class="guestbook-item__header">
-      <span class="guestbook-item__name">${escapeHtml(data.name)}</span>
+      <span class="guestbook-item__name">${escapeHtml(row.name)}</span>
       <div class="guestbook-item__meta">
-        <span class="guestbook-item__date">${formatDate(data.createdAt)}</span>
-        <button class="guestbook-item__delete btn--text" data-id="${docId}" aria-label="삭제">삭제</button>
+        <span class="guestbook-item__date">${formatDate(row.created_at)}</span>
+        <button class="guestbook-item__delete btn--text" data-id="${row.id}" aria-label="삭제">삭제</button>
       </div>
     </div>
-    <p class="guestbook-item__message">${escapeHtml(data.message)}</p>
+    <p class="guestbook-item__message">${escapeHtml(row.message)}</p>
   `
 
-  li.querySelector('.guestbook-item__delete').addEventListener('click', () => openDeleteModal(docId, data.passwordHash))
+  li.querySelector('.guestbook-item__delete')
+    .addEventListener('click', () => openDeleteModal(row.id, row.password_hash))
   return li
 }
 
@@ -70,25 +65,30 @@ async function loadEntries(reset = false) {
   const empty   = document.getElementById('guestbook-empty')
   const loadBtn = document.getElementById('guestbook-load-more')
 
-  const firestore = await getFirestore()
-  if (!firestore) {
-    // Firebase 미설정 시 데모 데이터
-    if (empty) empty.textContent = 'Firebase를 설정하면 방명록을 사용할 수 있습니다.'
+  const sb = await getSupabase()
+  if (!sb) {
+    if (empty) empty.textContent = 'Supabase를 설정하면 방명록을 사용할 수 있습니다.'
     return
   }
 
   if (reset) {
-    lastDoc = null
+    offset = 0
+    hasMore = true
     list.querySelectorAll('.guestbook-item').forEach(el => el.remove())
   }
 
-  const { collection, getDocs, query, orderBy, limit, startAfter } = window.__fs
-  let q = query(collection(firestore, 'guestbook'), orderBy('createdAt', 'desc'), limit(PAGE_SIZE))
-  if (lastDoc) q = query(collection(firestore, 'guestbook'), orderBy('createdAt', 'desc'), limit(PAGE_SIZE), startAfter(lastDoc))
+  const { data: rows, error } = await sb
+    .from('guestbook')
+    .select('*')
+    .order('created_at', { ascending: false })
+    .range(offset, offset + PAGE_SIZE - 1)
 
-  const snap = await getDocs(q)
+  if (error) {
+    showToast('방명록을 불러오지 못했습니다.')
+    return
+  }
 
-  if (snap.empty && reset) {
+  if (!rows.length && reset) {
     if (empty) empty.hidden = false
     if (loadBtn) loadBtn.hidden = true
     return
@@ -96,18 +96,16 @@ async function loadEntries(reset = false) {
 
   if (empty) empty.hidden = true
 
-  snap.forEach(docSnap => {
-    list.appendChild(renderItem(docSnap.id, docSnap.data()))
-  })
+  rows.forEach(row => list.appendChild(renderItem(row)))
 
-  lastDoc = snap.docs[snap.docs.length - 1]
-  if (loadBtn) loadBtn.hidden = snap.docs.length < PAGE_SIZE
+  offset += rows.length
+  hasMore = rows.length === PAGE_SIZE
+  if (loadBtn) loadBtn.hidden = !hasMore
 }
 
 // ── 삭제 모달 ──
-function openDeleteModal(docId, passwordHash) {
-  pendingDeleteId = docId
-  deleteTarget    = passwordHash
+function openDeleteModal(id, passwordHash) {
+  deleteTarget = { id, passwordHash }
 
   const modal = document.getElementById('delete-modal')
   const input = document.getElementById('modal-password')
@@ -126,8 +124,7 @@ function closeDeleteModal() {
     modal.setAttribute('aria-hidden', 'true')
   }
   if (input) input.value = ''
-  pendingDeleteId = null
-  deleteTarget    = null
+  deleteTarget = null
 }
 
 // ── 초기화 ──
@@ -135,7 +132,7 @@ export function initGuestbook() {
   const section = document.getElementById('guestbook')
   if (!section) return
 
-  // 섹션 진입 시 Firebase 동적 로드 + 목록 로드
+  // 섹션 진입 시 Supabase 동적 로드 + 목록 로드
   const observer = new IntersectionObserver(entries => {
     if (entries[0].isIntersecting) {
       observer.disconnect()
@@ -162,22 +159,17 @@ export function initGuestbook() {
     submitBtn.disabled = true
 
     try {
-      const firestore = await getFirestore()
+      const sb = await getSupabase()
+      if (!sb) { showToast('Supabase 설정이 필요합니다.'); return }
 
-      if (!firestore) {
-        showToast('Firebase 설정이 필요합니다.')
-        return
-      }
-
-      const { collection, addDoc, serverTimestamp } = window.__fs
       const passwordHash = await hashPassword(password)
-
-      await addDoc(collection(firestore, 'guestbook'), {
+      const { error } = await sb.from('guestbook').insert({
         name,
         message,
-        passwordHash,
-        createdAt: serverTimestamp(),
+        password_hash: passwordHash,
       })
+
+      if (error) throw error
 
       form.reset()
       showToast('방명록이 등록되었습니다.')
@@ -190,7 +182,8 @@ export function initGuestbook() {
   })
 
   // 더 보기
-  document.getElementById('guestbook-load-more')?.addEventListener('click', () => loadEntries(false))
+  document.getElementById('guestbook-load-more')
+    ?.addEventListener('click', () => loadEntries(false))
 
   // 모달
   document.getElementById('modal-cancel')?.addEventListener('click', closeDeleteModal)
@@ -202,17 +195,21 @@ export function initGuestbook() {
     if (!password) { showToast('비밀번호를 입력해주세요.'); return }
 
     const inputHash = await hashPassword(password)
-    if (inputHash !== deleteTarget) {
+    if (inputHash !== deleteTarget?.passwordHash) {
       showToast('비밀번호가 올바르지 않습니다.')
       return
     }
 
     try {
-      const firestore = await getFirestore()
-      const { doc, deleteDoc } = window.__fs
-      await deleteDoc(doc(firestore, 'guestbook', pendingDeleteId))
+      const sb = await getSupabase()
+      const { error } = await sb
+        .from('guestbook')
+        .delete()
+        .eq('id', deleteTarget.id)
 
-      document.querySelector(`.guestbook-item[data-id="${pendingDeleteId}"]`)?.remove()
+      if (error) throw error
+
+      document.querySelector(`.guestbook-item[data-id="${deleteTarget.id}"]`)?.remove()
       showToast('삭제되었습니다.')
       closeDeleteModal()
     } catch {

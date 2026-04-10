@@ -2,30 +2,34 @@ import Swiper from 'swiper'
 import { Pagination, Autoplay } from 'swiper/modules'
 import { CONFIG } from './config.js'
 
-// ── Firebase Storage에서 이미지 URL 목록 가져오기 ──
+// ── Supabase Storage에서 이미지 URL 목록 가져오기 ──
 async function fetchStorageImages() {
-  const cfg = CONFIG.firebase
-  if (!cfg.apiKey || !cfg.storageBucket) return null
+  const { url, anonKey } = CONFIG.supabase
+  if (!url || !anonKey) return null
 
   try {
-    const { initializeApp, getApps } = await import('firebase/app')
-    const { getStorage, ref, listAll, getDownloadURL } = await import('firebase/storage')
+    const { createClient } = await import('@supabase/supabase-js')
+    const supabase = createClient(url, anonKey)
 
-    const app = getApps().length ? getApps()[0] : initializeApp(cfg)
-    const storage = getStorage(app)
+    const { storageBucket, storageFolder } = CONFIG.gallery
+    const folder = storageFolder || ''
 
-    const folderRef = ref(storage, CONFIG.gallery.storagePath)
-    const result = await listAll(folderRef)
+    const { data: files, error } = await supabase.storage
+      .from(storageBucket)
+      .list(folder, { sortBy: { column: 'name', order: 'asc' } })
 
-    if (result.items.length === 0) return null
+    if (error || !files?.length) return null
 
-    // 파일명 기준 정렬 후 URL 일괄 요청
-    const sorted = [...result.items].sort((a, b) => a.name.localeCompare(b.name))
-    const urls = await Promise.all(sorted.map(item => getDownloadURL(item)))
+    // 폴더·숨김 파일 제외
+    const imageFiles = files.filter(f => f.id && !f.name.startsWith('.'))
 
-    return urls.map((url, i) => ({ src: url, alt: `커플 사진 ${i + 1}` }))
+    return imageFiles.map((file, i) => {
+      const path = folder ? `${folder}/${file.name}` : file.name
+      const { data } = supabase.storage.from(storageBucket).getPublicUrl(path)
+      return { src: data.publicUrl, alt: `커플 사진 ${i + 1}` }
+    })
   } catch (err) {
-    console.warn('[Gallery] Firebase Storage 로드 실패, fallback 사용:', err.message)
+    console.warn('[Gallery] Supabase Storage 로드 실패, fallback 사용:', err.message)
     return null
   }
 }
@@ -104,7 +108,7 @@ export async function initGallery() {
   const wrapper = document.getElementById('gallery-wrapper')
   if (!wrapper) return
 
-  // Firebase Storage에서 먼저 시도, 실패 시 fallback
+  // Supabase Storage에서 먼저 시도, 실패 시 fallback
   const storageImages = await fetchStorageImages()
   const images = storageImages ?? CONFIG.gallery.fallback
 

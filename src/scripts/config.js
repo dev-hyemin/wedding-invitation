@@ -42,12 +42,14 @@ export const CONFIG = {
     ],
   },
 
-  // Firebase Storage 사용 시 storagePath만 설정하면 됩니다.
-  // Firebase 미설정 시 fallback 배열의 로컬 이미지가 사용됩니다.
+  // Supabase Storage 사용 시 bucket 이름을 설정하면 됩니다.
+  // Supabase 미설정 시 fallback 배열의 로컬 이미지가 사용됩니다.
   gallery: {
-    // Firebase Storage 내 사진 폴더 경로
-    storagePath: 'gallery',
-    // Firebase 미설정 시 표시할 로컬 이미지 (fallback)
+    // Supabase Storage 버킷 이름
+    storageBucket: 'gallery',
+    // 버킷 내 폴더 경로 (루트라면 빈 문자열)
+    storageFolder: '',
+    // Supabase 미설정 시 표시할 로컬 이미지 (fallback)
     fallback: [
       { src: '/src/assets/images/gallery/gallery-01.jpg', alt: '커플 사진 1' },
       { src: '/src/assets/images/gallery/gallery-02.jpg', alt: '커플 사진 2' },
@@ -60,14 +62,10 @@ export const CONFIG = {
     formspreeEndpoint: import.meta.env.VITE_FORMSPREE_ENDPOINT || '',
   },
 
-  // Firebase 설정 (https://firebase.google.com 에서 발급)
-  firebase: {
-    apiKey:            import.meta.env.VITE_FIREBASE_API_KEY || '',
-    authDomain:        import.meta.env.VITE_FIREBASE_AUTH_DOMAIN || '',
-    projectId:         import.meta.env.VITE_FIREBASE_PROJECT_ID || '',
-    storageBucket:     import.meta.env.VITE_FIREBASE_STORAGE_BUCKET || '',
-    messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID || '',
-    appId:             import.meta.env.VITE_FIREBASE_APP_ID || '',
+  // Supabase 설정 (https://supabase.com 에서 발급)
+  supabase: {
+    url:     import.meta.env.VITE_SUPABASE_URL || '',
+    anonKey: import.meta.env.VITE_SUPABASE_ANON_KEY || '',
   },
 
   // 카카오맵 API 키 (https://developers.kakao.com 에서 발급)
