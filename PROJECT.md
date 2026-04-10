@@ -20,11 +20,10 @@
 | 스타일 | CSS (커스텀 프로퍼티 기반 디자인 시스템) |
 | 슬라이더 | Swiper 12 |
 | 스크롤 애니메이션 | AOS (Animate On Scroll) |
-| 갤러리 이미지 | Supabase Storage |
+| 이미지 | Supabase Storage (히어로 + 갤러리) |
 | 방명록 DB | Supabase Database (PostgreSQL) |
 | RSVP 폼 전송 | Formspree |
 | 지도 | 카카오맵 지도 퍼가기 (Roughmap) |
-| 축하 효과 | canvas-confetti |
 | 배포 | GitHub Actions → GitHub Pages |
 
 ---
@@ -40,10 +39,13 @@ wedding/
 │   ├── main.js                 # 진입점 (모든 모듈 오케스트레이션)
 │   ├── scripts/
 │   │   ├── config.js           # 청첩장 데이터 중앙 설정 (이름/날짜/계좌 등)
-│   │   ├── animations.js       # AOS 초기화 + 꽃잎 파티클
+│   │   ├── theme.js            # CSS 변수 → JS 브릿지 (색상 단일 출처)
+│   │   ├── particles.js        # 버튼 burst 파티클 유틸 (MIT © 2022 Evan Jin)
+│   │   ├── animations.js       # AOS 초기화 + 하트 파티클
+│   │   ├── hero.js             # 히어로 배경 이미지 (Supabase Storage)
 │   │   ├── calendar.js         # 캘린더 + 결혼식 날 하트 표시
 │   │   ├── countdown.js        # D-Day 카운트다운
-│   │   ├── gallery.js          # Swiper 갤러리 + 라이트박스 (Supabase Storage)
+│   │   ├── gallery.js          # Swiper 갤러리 (Supabase Storage, 수동 스와이프)
 │   │   ├── map.js              # 카카오맵 roughmap + 교통 안내 탭
 │   │   ├── account.js          # 계좌번호 탭 + 클립보드 복사
 │   │   ├── rsvp.js             # RSVP 폼 (Formspree 연동)
@@ -51,7 +53,7 @@ wedding/
 │   │   └── toast.js            # 토스트 알림 유틸리티
 │   └── styles/
 │       ├── main.css            # 전체 CSS import 진입점
-│       ├── variables.css       # 디자인 토큰 (색상/폰트/간격)
+│       ├── variables.css       # 디자인 토큰 (색상/폰트/간격) — 단일 출처
 │       ├── reset.css           # 브라우저 기본 스타일 초기화
 │       ├── layout.css          # 공통 레이아웃, 버튼, 폼, 토스트
 │       ├── animations.css      # 글로벌 키프레임 정의
@@ -78,14 +80,14 @@ wedding/
 
 | # | 섹션 | 주요 기능 |
 |---|---|---|
-| 1 | 히어로 | 배경 이미지, 신랑신부 이름, 꽃잎 파티클 |
+| 1 | 히어로 | Our Wedding 인트로 애니메이션, 배경 이미지(Supabase), 하트 파티클 |
 | 2 | 초대 인사말 | 청첩장 본문, 양가 부모님 정보 |
-| 3 | 갤러리 | Swiper 슬라이더, 라이트박스 (Supabase Storage) |
+| 3 | 갤러리 | Swiper 슬라이더, 수동 스와이프, 무한 루프 (Supabase Storage) |
 | 4 | 캘린더 | 결혼식 날 하트 표시, D-Day 카운트다운 |
 | 5 | 예식 안내 | 일시/장소 카드, 카카오/네이버 길찾기 버튼 |
 | 6 | 지도 | 카카오맵 roughmap, 자가용/대중교통/주차 안내 탭 |
 | 7 | 마음 전하기 | 신랑·신부측 계좌번호, 클립보드 복사 |
-| 8 | RSVP | 참석 여부 폼, Formspree 전송, confetti 효과 |
+| 8 | RSVP | 참석 여부 폼, Formspree 전송, burst 파티클 효과 |
 | 9 | 방명록 | Supabase DB CRUD, 비밀번호 삭제, 페이지네이션 |
 
 ---
@@ -128,8 +130,14 @@ create policy "insert all" on guestbook for insert with check (true);
 create policy "delete own" on guestbook for delete using (true);
 ```
 
-### 갤러리 Storage 버킷 생성
-Supabase 대시보드 → **Storage** → New bucket → 이름: `gallery`, **Public** 체크
+### Storage 버킷 생성
+
+| 버킷명 | 용도 | 설정 |
+|---|---|---|
+| `gallery` | 갤러리 사진 | Public, SELECT 정책 필요 |
+| `hero` | 히어로 배경 이미지 | Public |
+
+> 갤러리 버킷은 파일 목록 조회(`list()`)를 위해 Storage → Policies에서 SELECT 권한을 public으로 열어야 합니다.
 
 ---
 
@@ -147,6 +155,44 @@ Supabase 대시보드 → **Storage** → New bucket → 이름: `gallery`, **Pu
 - `index.html` → roughmap 스크립트 블록의 `timestamp`, `key`
 
 > 자세한 내용은 `/kakao-map` 스킬 참고
+
+---
+
+## 색상 커스텀 방법
+
+모든 색상은 `src/styles/variables.css` 한 곳에서 관리됩니다.
+
+| 변수 | 설명 |
+|---|---|
+| `--color-primary` | 메인 컬러 (버튼, 강조) |
+| `--color-primary-dark` | 호버/포커스용 진한 메인 컬러 |
+| `--color-secondary` | 버튼 배경 |
+| `--color-accent` | 연한 포인트 색상 |
+| `--color-bg` / `--color-bg-alt` | 섹션 배경 |
+| `--color-border` | 테두리 |
+| `--color-focus-ring` | 포커스 링 (rgba) |
+| `--particle-1` ~ `--particle-3` | 하트 파티클 색상 |
+
+JS에서 색상이 필요한 경우 `src/scripts/theme.js`를 통해 CSS 변수를 읽어 사용합니다 (confetti, burst 파티클 등).
+
+---
+
+## 폰트 커스텀 방법
+
+| 파일 | 역할 |
+|---|---|
+| `src/styles/reset.css` | `@font-face` 선언 (커스텀 폰트 로드) |
+| `src/styles/variables.css` | 폰트 변수 정의 |
+| `index.html` | Google Fonts `<link>` 태그 |
+
+| 변수 | 적용 위치 |
+|---|---|
+| `--font-serif` | 초대 인사말 등 강조 텍스트 |
+| `--font-sans` | 본문, 버튼, 폼 등 일반 텍스트 |
+| `--font-en` | 섹션 타이틀 영문 등 |
+| `--font-intro` | 히어로 "Our Wedding" 인트로 텍스트 전용 |
+
+> 무료 한국어 폰트: [눈누(noonnu.cc)](https://noonnu.cc) · [Google Fonts 한국어](https://fonts.google.com/?subset=korean)
 
 ---
 
@@ -191,29 +237,12 @@ export const CONFIG = {
   bride:   { name, englishName, father, mother, phone },
   wedding: { datetime, dateDisplay, venue, hall, address, lat, lng },
   accounts: { groom: [...], bride: [...] },
+  hero:     { storageBucket, storagePath, fallback },
   gallery:  { storageBucket, storageFolder, fallback },
   kakaomap: { timestamp, key },
   transport: { car, public, parking },
 }
 ```
-
----
-
-## 폰트 커스텀 방법
-
-| 파일 | 역할 |
-|---|---|
-| `src/styles/reset.css` | `@font-face` 선언 (커스텀 폰트 로드) |
-| `src/styles/variables.css` | 폰트 변수 정의 (`--font-serif`, `--font-sans`, `--font-en`) |
-| `index.html` | Google Fonts `<link>` 태그 |
-
-| 변수 | 적용 위치 |
-|---|---|
-| `--font-serif` | 히어로 이름, 초대 인사말 등 강조 텍스트 |
-| `--font-sans` | 본문, 버튼, 폼 등 일반 텍스트 |
-| `--font-en` | 섹션 타이틀 영문 (`Gallery`, `Ceremony` 등) |
-
-> 무료 한국어 폰트: [눈누(noonnu.cc)](https://noonnu.cc) · [Google Fonts 한국어](https://fonts.google.com/?subset=korean)
 
 ---
 
@@ -230,3 +259,7 @@ nvm install 20
 nvm use 20
 npm run dev
 ```
+
+### 갤러리 이미지가 안 불러와질 때
+
+Supabase Storage → gallery 버킷 → Policies에서 `objects` 테이블의 SELECT 권한을 public으로 열어야 합니다. 히어로 이미지는 `getPublicUrl()`을 사용하므로 별도 정책 불필요.
