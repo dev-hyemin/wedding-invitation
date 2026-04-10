@@ -53,7 +53,7 @@ function buildSlides(wrapper, images) {
 function initSwiper(wrapper) {
   const swiper = new Swiper('.gallery-swiper', {
     modules: [Pagination, Autoplay],
-    loop: wrapper.children.length > 1,
+    loop: wrapper.children.length >= 3,
     autoplay: {
       delay: 3500,
       disableOnInteraction: false,

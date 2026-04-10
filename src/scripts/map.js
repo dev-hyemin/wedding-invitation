@@ -2,51 +2,6 @@ import { CONFIG } from './config.js'
 
 export function initMap() {
   setNaviLinks()
-
-  const { timestamp, key } = CONFIG.kakaomap
-  if (!timestamp || !key) return
-
-  // 지도 섹션이 뷰포트에 들어올 때 로드
-  const mapSection = document.getElementById('map')
-  if (!mapSection) return
-
-  const observer = new IntersectionObserver(entries => {
-    if (entries[0].isIntersecting) {
-      observer.disconnect()
-      loadRoughmap(timestamp, key)
-    }
-  }, { threshold: 0.1 })
-
-  observer.observe(mapSection)
-}
-
-function loadRoughmap(timestamp, key) {
-  const container = document.getElementById('map-container')
-  if (!container) return
-
-  // 지도 노드 삽입
-  const mapNode = document.createElement('div')
-  mapNode.id = `daumRoughmapContainer${timestamp}`
-  mapNode.className = 'root_daum_roughmap root_daum_roughmap_landing'
-  container.appendChild(mapNode)
-
-  // roughmapLoader 스크립트 삽입
-  const loaderScript = document.createElement('script')
-  loaderScript.className = 'daum_roughmap_loader_script'
-  loaderScript.src = 'https://ssl.daumcdn.net/dmaps/map_js_init/roughmapLoader.js'
-  loaderScript.onload = () => {
-    // roughmapLoader가 내부적으로 추가 스크립트를 비동기 로드하므로
-    // Lander 생성자가 준비될 때까지 polling
-    const tryRender = () => {
-      if (typeof daum !== 'undefined' && typeof daum.roughmap?.Lander === 'function') {
-        new daum.roughmap.Lander({ timestamp, key }).render()
-      } else {
-        setTimeout(tryRender, 50)
-      }
-    }
-    tryRender()
-  }
-  container.appendChild(loaderScript)
 }
 
 function setNaviLinks() {
@@ -67,7 +22,6 @@ function setNaviLinks() {
   }
 }
 
-// 교통 안내 탭
 export function initTransportTabs() {
   const tabs     = document.querySelectorAll('.transport-tab')
   const contents = document.querySelectorAll('.transport-content')
@@ -76,10 +30,8 @@ export function initTransportTabs() {
     tab.addEventListener('click', () => {
       tabs.forEach(t => t.classList.remove('transport-tab--active'))
       contents.forEach(c => c.classList.remove('transport-content--active'))
-
       tab.classList.add('transport-tab--active')
-      const target = document.getElementById(`tab-${tab.dataset.tab}`)
-      if (target) target.classList.add('transport-content--active')
+      document.getElementById(`tab-${tab.dataset.tab}`)?.classList.add('transport-content--active')
     })
   })
 }
