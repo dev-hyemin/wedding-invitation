@@ -1,6 +1,7 @@
 import './styles/main.css'
 
 import { initAnimations, initPetals } from './scripts/animations.js'
+import { initHero }                   from './scripts/hero.js'
 import { initCalendar }               from './scripts/calendar.js'
 import { initCountdown }              from './scripts/countdown.js'
 import { initGallery }                from './scripts/gallery.js'
@@ -8,6 +9,9 @@ import { initMap, initTransportTabs } from './scripts/map.js'
 import { initAccount }                from './scripts/account.js'
 import { initRsvp }                   from './scripts/rsvp.js'
 import { initGuestbook }              from './scripts/guestbook.js'
+
+// 히어로 배경 이미지 (Supabase Storage)
+initHero()
 
 // 스크롤 애니메이션 초기화
 initAnimations()

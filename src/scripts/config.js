@@ -42,6 +42,15 @@ export const CONFIG = {
     ],
   },
 
+  // 히어로 배경 이미지 (Supabase Storage)
+  // storageBucket: 버킷 이름, storagePath: 버킷 내 파일 경로
+  // Supabase 미설정 시 fallback 경로의 로컬 이미지가 사용됩니다.
+  hero: {
+    storageBucket: 'gallery',
+    storagePath:   'hero/hero-bg.jpg',
+    fallback:      '/src/assets/images/hero-bg.jpg',
+  },
+
   // Supabase Storage 사용 시 bucket 이름을 설정하면 됩니다.
   // Supabase 미설정 시 fallback 배열의 로컬 이미지가 사용됩니다.
   gallery: {

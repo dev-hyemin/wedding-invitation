@@ -51,9 +51,9 @@ function buildSlides(wrapper, images) {
 
 // ── Swiper 초기화 ──
 function initSwiper(wrapper) {
-  const swiper = new Swiper('.gallery-swiper', {
+  return new Swiper('.gallery-swiper', {
     modules: [Pagination, Autoplay],
-    loop: wrapper.children.length >= 3,
+    loop: true,
     autoplay: {
       delay: 3500,
       disableOnInteraction: false,
@@ -63,43 +63,8 @@ function initSwiper(wrapper) {
       clickable: true,
     },
     grabCursor: true,
-    centeredSlides: true,
-    slidesPerView: 1.1,
-    spaceBetween: 12,
-  })
-  return swiper
-}
-
-// ── 라이트박스 ──
-function initLightbox(swiper) {
-  const lightbox = document.getElementById('lightbox')
-  const lbImg    = document.getElementById('lightbox-img')
-  const lbClose  = document.getElementById('lightbox-close')
-
-  document.querySelectorAll('.gallery-swiper .swiper-slide img').forEach(img => {
-    img.addEventListener('click', () => {
-      lbImg.src = img.src
-      lbImg.alt = img.alt
-      lightbox.classList.add('lightbox--open')
-      lightbox.setAttribute('aria-hidden', 'false')
-      document.body.style.overflow = 'hidden'
-      swiper.autoplay.stop()
-    })
-  })
-
-  function closeLightbox() {
-    lightbox.classList.remove('lightbox--open')
-    lightbox.setAttribute('aria-hidden', 'true')
-    document.body.style.overflow = ''
-    swiper.autoplay.start()
-  }
-
-  lbClose.addEventListener('click', closeLightbox)
-  lightbox.addEventListener('click', e => {
-    if (e.target === lightbox) closeLightbox()
-  })
-  document.addEventListener('keydown', e => {
-    if (e.key === 'Escape') closeLightbox()
+    slidesPerView: 1,
+    spaceBetween: 0,
   })
 }
 
@@ -113,7 +78,5 @@ export async function initGallery() {
   const images = storageImages ?? CONFIG.gallery.fallback
 
   buildSlides(wrapper, images)
-
-  const swiper = initSwiper(wrapper)
-  initLightbox(swiper)
+  initSwiper(wrapper)
 }
