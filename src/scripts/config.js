@@ -26,9 +26,9 @@ export const CONFIG = {
     venue: '그랜드볼룸 웨딩홀',
     hall: '3층 그랜드홀',
     address: '서울특별시 강남구 테헤란로 123',
-    // 카카오맵 마커 좌표
-    lat: 37.4981,
-    lng: 127.0276,
+    // 지도 좌표 (구글 지도에서 확인)
+    lat: 37.499743,
+    lng: 127.031477,
   },
 
   accounts: {
@@ -67,9 +67,6 @@ export const CONFIG = {
     url:     import.meta.env.VITE_SUPABASE_URL || '',
     anonKey: import.meta.env.VITE_SUPABASE_ANON_KEY || '',
   },
-
-  // 카카오맵 API 키 (https://developers.kakao.com 에서 발급)
-  kakaoMapKey: import.meta.env.VITE_KAKAO_MAP_KEY || '',
 
   // 교통 안내 텍스트
   transport: {
