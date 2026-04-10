@@ -1,3 +1,10 @@
+@font-face {
+  font-family: 'OkMallangW';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2603-1@1.0/OkMallangW-Regular.woff2') format('woff2');
+  font-weight: normal;
+  font-display: swap;
+}
+
 *, *::before, *::after {
   box-sizing: border-box;
   margin: 0;
