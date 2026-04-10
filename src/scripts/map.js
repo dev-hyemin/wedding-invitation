@@ -3,36 +3,41 @@ import { CONFIG } from './config.js'
 export function initMap() {
   setNaviLinks()
 
+  const { timestamp, key } = CONFIG.kakaomap
+  if (!timestamp || !key) return
+
+  // 지도 섹션이 뷰포트에 들어올 때 로드
   const mapSection = document.getElementById('map')
   if (!mapSection) return
 
   const observer = new IntersectionObserver(entries => {
     if (entries[0].isIntersecting) {
       observer.disconnect()
-      renderGoogleMap()
+      loadRoughmap(timestamp, key)
     }
   }, { threshold: 0.1 })
 
   observer.observe(mapSection)
 }
 
-function renderGoogleMap() {
+function loadRoughmap(timestamp, key) {
   const container = document.getElementById('map-container')
   if (!container) return
 
-  const { lat, lng, address } = CONFIG.wedding
+  // 지도 노드 삽입
+  const mapNode = document.createElement('div')
+  mapNode.id = `daumRoughmapContainer${timestamp}`
+  mapNode.className = 'root_daum_roughmap root_daum_roughmap_landing'
+  container.appendChild(mapNode)
 
-  const iframe = document.createElement('iframe')
-  iframe.src = `https://maps.google.com/maps?q=${lat},${lng}&z=16&output=embed`
-  iframe.width = '100%'
-  iframe.height = '100%'
-  iframe.style.border = 'none'
-  iframe.loading = 'lazy'
-  iframe.allowFullscreen = true
-  iframe.referrerPolicy = 'no-referrer-when-downgrade'
-  iframe.title = address
-
-  container.appendChild(iframe)
+  // roughmapLoader 스크립트 삽입
+  const loaderScript = document.createElement('script')
+  loaderScript.className = 'daum_roughmap_loader_script'
+  loaderScript.src = 'https://ssl.daumcdn.net/dmaps/map_js_init/roughmapLoader.js'
+  loaderScript.onload = () => {
+    new daum.roughmap.Lander({ timestamp, key }).render()
+  }
+  container.appendChild(loaderScript)
 }
 
 function setNaviLinks() {

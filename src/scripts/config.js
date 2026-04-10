@@ -68,6 +68,12 @@ export const CONFIG = {
     anonKey: import.meta.env.VITE_SUPABASE_ANON_KEY || '',
   },
 
+  // 카카오맵 지도 퍼가기 (map.kakao.com → 장소 검색 → 지도 퍼가기)
+  kakaomap: {
+    timestamp: '1775844961551',
+    key:       'kutbtynwt9s',
+  },
+
   // 교통 안내 텍스트
   transport: {
     car:     '강남대로에서 테헤란로 방면으로 직진, 우측 건물 지하주차장 이용',
