@@ -2,6 +2,8 @@
 .section--invitation {
   background: var(--color-bg);
   text-align: center;
+  padding-top: calc(var(--space-12) * 2);
+  padding-bottom: var(--space-16);
 }
 
 .invitation__text {
