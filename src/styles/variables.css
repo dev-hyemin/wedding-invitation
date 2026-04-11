@@ -26,8 +26,8 @@
   /* ── 타이포그래피 ── */
   --font-serif:  'Gowun Batang', serif;
   --font-sans:   'Gowun Batang', 'Apple SD Gothic Neo', sans-serif;
-  --font-en:     'Playfair Display', 'Apple SD Gothic Neo', sans-serif, cursive;
-  --font-intro:  'Imperial Script', cursive;   /* 히어로 인트로 손글씨 전용 폰트 */
+  --font-en:     'Gowun Batang', 'Apple SD Gothic Neo', sans-serif, cursive;
+  --font-intro:  'Playfair Display', cursive;   /* 히어로 인트로 손글씨 전용 폰트 */
   --font-dday:   'Fredoka', sans-serif;   /* D-Day 배너 전용 폰트 (config.js에서 덮어씀) */
 
   --font-size-xs:    0.75rem;   /* 12px */
