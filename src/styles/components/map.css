@@ -31,9 +31,11 @@
 .map__container {
   width: 100%;
   height: 280px;
-  background: var(--color-border);
+  background: #fff;
   overflow: hidden;
+  padding: var(--space-2) var(--space-4);
 }
+
 
 /* roughmap 하단 장소 정보 패널 숨김 */
 .root_daum_roughmap .wrap_place_info,
