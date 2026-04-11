@@ -1,6 +1,7 @@
 :root {
   /* ── 색상 팔레트 ── */
   --color-primary:      #7A9078;   /* 세이지 그린 */
+  --color-primary-mid:  #647964;   /* 미드 세이지 (primary ↔ dark 중간) */
   --color-primary-dark: #4E6250;   /* 다크 포레스트 세이지 */
   --color-secondary:    #A8BCA6;   /* 라이트 세이지 */
   --color-accent:       #ECE8DF;   /* 웜 크림 액센트 */

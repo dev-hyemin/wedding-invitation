@@ -1,7 +1,7 @@
 import './styles/main.css'
 
 import { initContent }                from './scripts/content.js'
-import { initAnimations, initPetals } from './scripts/animations.js'
+import { initAnimations/*, initPetals*/ } from './scripts/animations.js'
 import { initHero }                   from './scripts/hero.js'
 import { initMusic }                  from './scripts/music.js'
 import { initCalendar }               from './scripts/calendar.js'
@@ -24,8 +24,8 @@ initMusic()
 // 스크롤 애니메이션 초기화
 initAnimations()
 
-// 히어로 꽃잎 파티클
-initPetals(15)
+// 히어로 꽃잎 파티클 (off: 아래 주석 해제 시 활성화)
+// initPetals(15)
 
 // 캘린더
 initCalendar()
