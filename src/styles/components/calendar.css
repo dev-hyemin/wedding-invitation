@@ -55,8 +55,8 @@
   letter-spacing: 0.04em;
 }
 
-.cal__day-name--sun { color: #e57373; }
-.cal__day-name--sat { color: #64b5f6; }
+.cal__day-name--sun { color: #B0786E; }
+.cal__day-name--sat { color: #7A9078; }
 
 /* ── 날짜 셀 ── */
 .cal__cell {
@@ -76,8 +76,8 @@
 
 .cal__cell--empty { pointer-events: none; }
 
-.cal__cell--sun .cal__date { color: #e57373; }
-.cal__cell--sat .cal__date { color: #64b5f6; }
+.cal__cell--sun .cal__date { color: #B0786E; }
+.cal__cell--sat .cal__date { color: #7A9078; }
 
 /* ── 결혼식 날 셀 ── */
 .cal__cell--wedding {

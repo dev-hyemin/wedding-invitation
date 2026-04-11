@@ -7,8 +7,8 @@
 
   <!-- Open Graph (SNS 공유) -->
   <meta property="og:type" content="website" />
-  <meta property="og:title" content="김민준 & 이서연의 결혼식에 초대합니다" />
-  <meta property="og:description" content="2026년 5월 16일 토요일 오후 2시 · 그랜드볼룸 웨딩홀" />
+  <meta property="og:title" content="" />
+  <meta property="og:description" content="" />
   <meta property="og:image" content="/og-image.jpg" />
 
   <!-- 폰트 프리로드 -->
@@ -20,7 +20,7 @@
   />
 
 
-  <title>김민준 ♥ 이서연</title>
+  <title></title>
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   <link rel="stylesheet" href="/src/styles/main.css" />
 </head>
@@ -44,7 +44,7 @@
   <section id="hero" class="section section--hero">
     <!-- 인트로 오버레이 -->
     <div class="hero__intro" id="hero-intro">
-      <p class="hero__intro-text">Our<br>Wedding</p>
+      <p class="hero__intro-text"><span class="intro-typed"></span><span class="intro-cursor"></span></p>
     </div>
 
     <div class="hero__bg">
@@ -61,17 +61,15 @@
     <div class="hero__content">
       <p class="hero__label">We are getting married</p>
       <div class="hero__names">
-        <span class="hero__name">김민준</span>
+        <span class="hero__name"></span>
         <span class="hero__heart">♥</span>
-        <span class="hero__name">이서연</span>
+        <span class="hero__name"></span>
       </div>
     </div>
 
     <div class="hero__bottom">
-      <time class="hero__date" datetime="2026-05-16T14:00">
-        2026년 5월 16일 토요일 오후 2시
-      </time>
-      <p class="hero__venue">그랜드볼룸 웨딩홀 3층 그랜드홀</p>
+      <time class="hero__date" id="hero-date"></time>
+      <p class="hero__venue" id="hero-venue"></p>
     </div>
 
 
@@ -113,14 +111,14 @@
 
       <div class="family-info" data-aos="fade-up" data-aos-delay="300">
         <div class="family-info__row">
-          <span class="family-info__parents">김부친 · 김모친</span>
+          <span class="family-info__parents" id="groom-parents"></span>
           <span class="family-info__role">의 아들</span>
-          <span class="family-info__name">민준</span>
+          <span class="family-info__name" id="groom-firstname"></span>
         </div>
         <div class="family-info__row">
-          <span class="family-info__parents">이부친 · 이모친</span>
+          <span class="family-info__parents" id="bride-parents"></span>
           <span class="family-info__role">의 딸</span>
-          <span class="family-info__name">서연</span>
+          <span class="family-info__name" id="bride-firstname"></span>
         </div>
       </div>
     </div>
@@ -132,12 +130,8 @@
   <section id="ceremony" class="section section--ceremony">
     <div class="container">
       <h2 class="section__title" data-aos="fade-up">예식 안내</h2>
-      <p class="ceremony__datetime" data-aos="fade-up" data-aos-delay="100">
-        2026년 4월 11일 토요일 낮 12시
-      </p>
-      <p class="ceremony__venue" data-aos="fade-up" data-aos-delay="150">
-        서울중앙교회 교육원 6층
-      </p>
+      <p class="ceremony__datetime" id="ceremony-datetime" data-aos="fade-up" data-aos-delay="100"></p>
+      <p class="ceremony__venue" id="ceremony-venue" data-aos="fade-up" data-aos-delay="150"></p>
 
       <div id="hero-calendar" data-aos="fade-up" data-aos-delay="200"></div>
 
@@ -148,12 +142,12 @@
        D-Day 사진 배너
   ================================ -->
   <div class="dday-banner">
-    <img src="/src/assets/images/hero-bg.jpg" alt="웨딩 사진" class="dday-banner__img" id="dday-banner-img" />
+    <img src="/src/assets/images/countdown-bg.jpg" alt="웨딩 사진" class="dday-banner__img" id="dday-banner-img" />
     <div class="dday-banner__overlay"></div>
     <div class="dday-banner__content">
       <p class="dday-banner__label">Wedding Day</p>
       <p class="dday-banner__dday" id="hero-dday">D-DAY</p>
-      <p class="dday-banner__date">2026년 4월 11일</p>
+      <p class="dday-banner__date" id="dday-date"></p>
     </div>
   </div>
 
@@ -164,9 +158,9 @@
     <div class="container">
       <h2 class="section__title" data-aos="fade-up">오시는 길</h2>
       <div class="map-venue" data-aos="fade-up" data-aos-delay="100">
-        <p class="map-venue__name">서울중앙교회</p>
-        <p class="map-venue__hall">교육원 6층</p>
-        <p class="map-venue__address">경기 안양시 동안구 관양로 305</p>
+        <p class="map-venue__name" id="map-venue-name"></p>
+        <p class="map-venue__hall" id="map-venue-hall"></p>
+        <p class="map-venue__address" id="map-venue-address"></p>
       </div>
     </div>
 
@@ -176,16 +170,20 @@
       <script>new daum.roughmap.Lander({"timestamp":"1775844961551","key":"kutbtynwt9s"}).render();</script>
     </div>
 
-    <!-- 길찾기 버튼 -->
-    <div class="container">
-      <div class="ceremony-actions" data-aos="fade-up">
-        <a class="btn btn--outline" id="btn-kakao-navi" href="#" target="_blank" rel="noopener">
-          카카오맵 길찾기
-        </a>
-        <a class="btn btn--outline" id="btn-naver-navi" href="#" target="_blank" rel="noopener">
-          네이버 길찾기
-        </a>
-      </div>
+    <!-- 길찾기 아이콘 버튼 -->
+    <div class="map-navi-btns">
+      <a class="map-navi-btn map-navi-btn--kakao" id="btn-kakao-navi" href="#" target="_blank" rel="noopener noreferrer" aria-label="카카오맵 길찾기">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+        </svg>
+        <span>카카오</span>
+      </a>
+      <a class="map-navi-btn map-navi-btn--naver" id="btn-naver-navi" href="#" target="_blank" rel="noopener noreferrer" aria-label="네이버맵 길찾기">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+        </svg>
+        <span>네이버</span>
+      </a>
     </div>
 
     <!-- 교통 안내 탭 -->
@@ -196,17 +194,9 @@
         <button class="transport-tab" data-tab="parking">주차 안내</button>
       </div>
 
-      <div class="transport-content transport-content--active" id="tab-car">
-        <p>강남대로에서 테헤란로 방면으로 직진, 우측 건물 지하주차장 이용</p>
-      </div>
-      <div class="transport-content" id="tab-public">
-        <p>지하철 2호선 강남역 3번 출구에서 도보 5분</p>
-        <p>버스: 146, 341, 3412번 강남역 정류장 하차</p>
-      </div>
-      <div class="transport-content" id="tab-parking">
-        <p>지하 1~3층 주차장 이용 가능 (2시간 무료)</p>
-        <p>이후 30분당 2,000원</p>
-      </div>
+      <div class="transport-content transport-content--active" id="tab-car"></div>
+      <div class="transport-content" id="tab-public"></div>
+      <div class="transport-content" id="tab-parking"></div>
     </div>
   </section>
 
@@ -216,7 +206,6 @@
   <section id="gallery" class="section section--gallery">
     <div class="container">
       <h2 class="section__title" data-aos="fade-up">Gallery</h2>
-      <p class="section__subtitle" data-aos="fade-up" data-aos-delay="100">우리의 순간들</p>
     </div>
 
     <!-- Swiper 슬라이더 (슬라이드는 gallery.js에서 동적 생성) -->
@@ -241,9 +230,6 @@
   <section id="account" class="section section--account">
     <div class="container">
       <h2 class="section__title" data-aos="fade-up">마음 전하실 곳</h2>
-      <p class="section__subtitle" data-aos="fade-up" data-aos-delay="100">
-        멀리서도 축하의 마음을 전하고 싶으신 분들을 위해<br />계좌번호를 안내드립니다.
-      </p>
 
       <!-- 신랑/신부 탭 -->
       <div class="account-tabs" data-aos="fade-up" data-aos-delay="200">
@@ -251,51 +237,9 @@
         <button class="account-tab" data-side="bride">신부측</button>
       </div>
 
-      <div class="account-list account-list--active" id="account-groom">
-        <div class="account-card">
-          <div class="account-card__info">
-            <span class="account-card__bank">국민은행</span>
-            <span class="account-card__name">김민준 (신랑)</span>
-            <span class="account-card__number">123-456-78901234</span>
-          </div>
-          <button class="btn btn--copy" data-account="123-456-78901234" aria-label="계좌번호 복사">
-            복사
-          </button>
-        </div>
-        <div class="account-card">
-          <div class="account-card__info">
-            <span class="account-card__bank">신한은행</span>
-            <span class="account-card__name">김부친 (신랑 부)</span>
-            <span class="account-card__number">110-234-567890</span>
-          </div>
-          <button class="btn btn--copy" data-account="110-234-567890" aria-label="계좌번호 복사">
-            복사
-          </button>
-        </div>
-      </div>
-
-      <div class="account-list" id="account-bride">
-        <div class="account-card">
-          <div class="account-card__info">
-            <span class="account-card__bank">하나은행</span>
-            <span class="account-card__name">이서연 (신부)</span>
-            <span class="account-card__number">234-5678-90123</span>
-          </div>
-          <button class="btn btn--copy" data-account="234-5678-90123" aria-label="계좌번호 복사">
-            복사
-          </button>
-        </div>
-        <div class="account-card">
-          <div class="account-card__info">
-            <span class="account-card__bank">우리은행</span>
-            <span class="account-card__name">이부친 (신부 부)</span>
-            <span class="account-card__number">1002-345-678901</span>
-          </div>
-          <button class="btn btn--copy" data-account="1002-345-678901" aria-label="계좌번호 복사">
-            복사
-          </button>
-        </div>
-      </div>
+      <!-- 카드는 content.js에서 동적 렌더링 -->
+      <div class="account-list account-list--active" id="account-groom"></div>
+      <div class="account-list" id="account-bride"></div>
     </div>
   </section>
 
@@ -305,9 +249,6 @@
   <section id="rsvp" class="section section--rsvp">
     <div class="container">
       <h2 class="section__title" data-aos="fade-up">참석 여부</h2>
-      <p class="section__subtitle" data-aos="fade-up" data-aos-delay="100">
-        5월 1일까지 알려주시면 감사하겠습니다.
-      </p>
 
       <form class="rsvp-form" id="rsvp-form" data-aos="fade-up" data-aos-delay="200" novalidate>
         <div class="form-group">
@@ -388,9 +329,6 @@
   <section id="guestbook" class="section section--guestbook">
     <div class="container">
       <h2 class="section__title" data-aos="fade-up">방명록</h2>
-      <p class="section__subtitle" data-aos="fade-up" data-aos-delay="100">
-        따뜻한 축하 인사를 남겨주세요.
-      </p>
 
       <!-- 방명록 작성 폼 -->
       <form class="guestbook-form" id="guestbook-form" data-aos="fade-up" data-aos-delay="200" novalidate>
@@ -465,9 +403,7 @@
        푸터
   ================================ -->
   <footer class="footer">
-    <p class="footer__copy">
-      © 2026 김민준 &amp; 이서연. All rights reserved.
-    </p>
+    <p class="footer__copy" id="footer-copy"></p>
   </footer>
 
   <!-- 토스트 알림 -->

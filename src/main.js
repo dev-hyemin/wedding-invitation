@@ -1,6 +1,7 @@
 import './styles/main.css'
 
-import { initAnimations, initPetals } from './scripts/animations.js'
+import { initContent }                from './scripts/content.js'
+import { initAnimations, initPetals, initTypewriter } from './scripts/animations.js'
 import { initHero }                   from './scripts/hero.js'
 import { initMusic }                  from './scripts/music.js'
 import { initCalendar }               from './scripts/calendar.js'
@@ -11,11 +12,17 @@ import { initAccount }                from './scripts/account.js'
 import { initRsvp }                   from './scripts/rsvp.js'
 import { initGuestbook }              from './scripts/guestbook.js'
 
+// config.js 값을 DOM에 반영 (가장 먼저 실행)
+initContent()
+
 // 히어로 배경 이미지 (Supabase Storage)
 initHero()
 
 // 배경 음악
 initMusic()
+
+// 히어로 인트로 타이프라이터
+initTypewriter()
 
 // 스크롤 애니메이션 초기화
 initAnimations()

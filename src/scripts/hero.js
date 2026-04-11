@@ -8,15 +8,20 @@ export async function initHero() {
     const { createClient } = await import('@supabase/supabase-js')
     const supabase = createClient(url, anonKey)
 
-    const { storageBucket, storagePath } = CONFIG.hero
-    const { data } = supabase.storage.from(storageBucket).getPublicUrl(storagePath)
+    // 히어로 배경 이미지
+    const hero = CONFIG.hero
+    const { data: heroData } = supabase.storage.from(hero.storageBucket).getPublicUrl(hero.storagePath)
+    if (heroData?.publicUrl) {
+      const heroImg = document.querySelector('.hero__bg-img')
+      if (heroImg) heroImg.src = heroData.publicUrl
+    }
 
-    if (data?.publicUrl) {
-      // 히어로 배경 + D-Day 배너 이미지 동시 적용
-      const heroImg  = document.querySelector('.hero__bg-img')
+    // D-Day 배너 이미지 (별도 파일)
+    const countdown = CONFIG.countdown
+    const { data: countdownData } = supabase.storage.from(countdown.storageBucket).getPublicUrl(countdown.storagePath)
+    if (countdownData?.publicUrl) {
       const bannerImg = document.getElementById('dday-banner-img')
-      if (heroImg)   heroImg.src   = data.publicUrl
-      if (bannerImg) bannerImg.src = data.publicUrl
+      if (bannerImg) bannerImg.src = countdownData.publicUrl
     }
   } catch (err) {
     console.warn('[Hero] Supabase Storage 로드 실패, fallback 사용:', err.message)

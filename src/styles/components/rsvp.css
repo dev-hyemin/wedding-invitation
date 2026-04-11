@@ -103,7 +103,7 @@
 .custom-select__option.is-selected {
   color: var(--color-primary-dark);
   font-weight: 500;
-  background: #fffde7;
+  background: var(--color-accent);
 }
 
 .custom-select__option.is-selected::after {

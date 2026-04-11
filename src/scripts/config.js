@@ -21,14 +21,16 @@ export const CONFIG = {
 
   wedding: {
     // 반드시 ISO 형식으로 기입하세요
-    datetime: '2026-05-16T14:00:00',
-    dateDisplay: '2026년 5월 16일 토요일 오후 2시',
-    venue: '그랜드볼룸 웨딩홀',
-    hall: '3층 그랜드홀',
-    address: '서울특별시 강남구 테헤란로 123',
+    datetime: '2026-06-20T13:00:00',
+    dateDisplay: '2026년 6월 20일 토요일 오후 2시',
+    // D-Day 배너에 표시되는 날짜 (날짜만)
+    dateShort: '2026년 6월 20일',
+    venue: '구리교회',
+    hall: '3층 대강당',
+    address: '경기 구리시 경춘로276번길 11-9',
     // 지도 좌표 (구글 지도에서 확인)
-    lat: 37.499743,
-    lng: 127.031477,
+    lat: 37.6027134,
+    lng: 127.1463076,
   },
 
   accounts: {
@@ -47,8 +49,14 @@ export const CONFIG = {
   // Supabase 미설정 시 fallback 경로의 로컬 이미지가 사용됩니다.
   hero: {
     storageBucket: 'gallery',
-    storagePath:   'hero/hero-bg.jpg',
+    storagePath:   'hero/hero-bg.jpeg',
     fallback:      '/src/assets/images/hero-bg.jpg',
+  },
+
+  countdown: {
+    storageBucket: 'gallery',
+    storagePath:   'hero/countdown-bg.jpeg',
+    fallback:      '/src/assets/images/countdown-bg.jpg',
   },
 
   // Supabase Storage 사용 시 bucket 이름을 설정하면 됩니다.
@@ -69,6 +77,8 @@ export const CONFIG = {
   // Formspree 엔드포인트 (https://formspree.io 에서 발급)
   rsvp: {
     formspreeEndpoint: import.meta.env.VITE_FORMSPREE_ENDPOINT || '',
+    // RSVP 섹션 안내 문구
+    deadline: '6월 1일까지 알려주시면 감사하겠습니다.',
   },
 
   // Supabase 설정 (https://supabase.com 에서 발급)
@@ -79,8 +89,8 @@ export const CONFIG = {
 
   // 카카오맵 지도 퍼가기 (map.kakao.com → 장소 검색 → 지도 퍼가기)
   kakaomap: {
-    timestamp: '1775844961551',
-    key:       'kutbtynwt9s',
+    timestamp: '1775918608921',
+    key:       '2a4a94ngyaaq',
   },
 
   // 교통 안내 텍스트

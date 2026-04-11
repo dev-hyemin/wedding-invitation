@@ -16,12 +16,19 @@ async function fetchStorageImages() {
 
     const { data: files, error } = await supabase.storage
       .from(storageBucket)
-      .list(folder, { sortBy: { column: 'name', order: 'asc' } })
+      .list(folder)
 
     if (error || !files?.length) return null
 
-    // 폴더·숨김 파일 제외
-    const imageFiles = files.filter(f => f.id && !f.name.startsWith('.'))
+    // 폴더·숨김 파일 제외 후 파일명 앞 숫자 기준 정렬 (1, 2, 10... 순)
+    const imageFiles = files
+      .filter(f => f.id && !f.name.startsWith('.'))
+      .sort((a, b) => {
+        const numA = parseInt(a.name.replace(/^[^\d]+/, ''), 10)
+        const numB = parseInt(b.name.replace(/^[^\d]+/, ''), 10)
+        if (!isNaN(numA) && !isNaN(numB)) return numA - numB
+        return a.name.localeCompare(b.name)
+      })
 
     return imageFiles.map((file, i) => {
       const path = folder ? `${folder}/${file.name}` : file.name

@@ -16,15 +16,15 @@ export function initAccount() {
     })
   })
 
-  // 계좌번호 복사
-  document.querySelectorAll('.btn--copy').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const number = btn.dataset.account
-      copyToClipboard(number).then(() => {
-        showToast('계좌번호가 복사되었습니다.')
-      }).catch(() => {
-        showToast('복사에 실패했습니다. 직접 입력해주세요.')
-      })
+  // 계좌번호 복사 (이벤트 위임: 카드가 동적으로 렌더링되므로)
+  document.addEventListener('click', e => {
+    const btn = e.target.closest('.btn--copy')
+    if (!btn) return
+    const number = btn.dataset.account
+    copyToClipboard(number).then(() => {
+      showToast('계좌번호가 복사되었습니다.')
+    }).catch(() => {
+      showToast('복사에 실패했습니다. 직접 입력해주세요.')
     })
   })
 }

@@ -1,26 +1,26 @@
 :root {
   /* ── 색상 팔레트 ── */
-  --color-primary:      #D4A017;   /* 골든 옐로우 */
-  --color-primary-dark: #9A6F00;   /* 다크 앰버 */
-  --color-secondary:    #F0C040;   /* 미디엄 옐로우 */
-  --color-accent:       #FFF8E1;   /* 연노랑 */
-  --color-bg:           #FFFFFF;   /* 화이트 */
-  --color-bg-alt:       #FFFFFF;   /* 화이트 */
-  --color-surface:      #FFFFFF;
+  --color-primary:      #7A9078;   /* 세이지 그린 */
+  --color-primary-dark: #4E6250;   /* 다크 포레스트 세이지 */
+  --color-secondary:    #A8BCA6;   /* 라이트 세이지 */
+  --color-accent:       #ECE8DF;   /* 웜 크림 액센트 */
+  --color-bg:           #F3EDE3;   /* 웜 크림 배경 */
+  --color-bg-alt:       #F3EDE3;   /* 웜 크림 배경 */
+  --color-surface:      #FDFAF6;   /* 오프화이트 (카드 표면) */
   --color-text:         #2C2C2C;   /* 다크 차콜 */
-  --color-text-light:   #7A7A7A;
-  --color-text-muted:   #AAAAAA;
-  --color-border:       #F5E6A3;   /* 연노랑 보더 */
-  --color-danger:       #D64A4A;
-  --color-success:      #5A9E6F;
+  --color-text-light:   #7A7468;   /* 웜 그레이 */
+  --color-text-muted:   #B0A898;   /* 뮤트 베이지 그레이 */
+  --color-border:       #D8D0C3;   /* 웜 베이지 보더 */
+  --color-danger:       #C0645A;
+  --color-success:      #5A8E68;
 
   /* ── rgba 포커스 링 (CSS에서 직접 사용) ── */
-  --color-focus-ring:   rgba(212, 160, 23, 0.20);
+  --color-focus-ring:   rgba(122, 144, 120, 0.25);
 
   /* ── JS 파티클 색상 (animations.js, guestbook.js, rsvp.js에서 읽어옴) ── */
-  --particle-1: rgba(255, 233, 71, 0.537);  /* 골든 옐로우 */
-  --particle-2: rgba(255, 255, 255, 0.90);  /* 화이트 */
-  --particle-3: rgba(255, 236, 153, 0.80);  /* 연노랑 */
+  --particle-1: rgba(122, 144, 120, 0.65);  /* 세이지 그린 */
+  --particle-2: rgba(253, 250, 246, 0.90);  /* 오프화이트 */
+  --particle-3: rgba(168, 188, 166, 0.70);  /* 라이트 세이지 */
 
   /* ── 타이포그래피 ── */
   --font-serif:  'Gowun Dodum', 'Apple SD Gothic Neo', sans-serif;

@@ -32,13 +32,27 @@
   color: var(--color-primary-dark);
   text-align: center;
   line-height: 1.4;
-  animation: introTextIn 1.4s ease-out forwards;
-  opacity: 0;
 }
 
-@keyframes introTextIn {
-  0%   { opacity: 0; letter-spacing: 0.5em; }
-  100% { opacity: 1; letter-spacing: 0.3em; }
+/* 타이프라이터 커서 */
+.intro-cursor {
+  display: inline-block;
+  width: 2px;
+  height: 0.85em;
+  background: var(--color-primary-dark);
+  margin-left: 4px;
+  vertical-align: middle;
+  animation: cursorBlink 0.7s step-end infinite;
+}
+
+.intro-cursor--hidden {
+  opacity: 0;
+  animation: none;
+}
+
+@keyframes cursorBlink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0; }
 }
 
 @keyframes introFadeOut {

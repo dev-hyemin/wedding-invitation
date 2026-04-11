@@ -22,7 +22,7 @@
 
 .dday-banner__content {
   position: absolute;
-  bottom: var(--space-10);
+  top: var(--space-20);
   left: 50%;
   transform: translateX(-50%);
   text-align: center;

@@ -7,7 +7,7 @@
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.9);
+  background: rgba(243, 237, 227, 0.92);
   color: var(--color-primary-dark);
   box-shadow: var(--shadow-md);
   display: flex;
@@ -19,7 +19,7 @@
 
 .music-btn:hover {
   transform: scale(1.1);
-  background: #fff;
+  background: var(--color-surface);
 }
 
 /* ── 전체 레이아웃 래퍼 ── */
@@ -54,14 +54,6 @@ body {
   text-align: center;
   letter-spacing: 0.15em;
   margin-bottom: var(--space-2);
-}
-
-.section__subtitle {
-  font-size: var(--font-size-sm);
-  color: var(--color-text-light);
-  text-align: center;
-  line-height: 1.8;
-  margin-bottom: var(--space-8);
 }
 
 /* ── 구분선 ── */
