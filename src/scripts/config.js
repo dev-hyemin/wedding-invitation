@@ -77,8 +77,6 @@ export const CONFIG = {
   // Formspree 엔드포인트 (https://formspree.io 에서 발급)
   rsvp: {
     formspreeEndpoint: import.meta.env.VITE_FORMSPREE_ENDPOINT || '',
-    // RSVP 섹션 안내 문구
-    deadline: '6월 1일까지 알려주시면 감사하겠습니다.',
   },
 
   // Supabase 설정 (https://supabase.com 에서 발급)
