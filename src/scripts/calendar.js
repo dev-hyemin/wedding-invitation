@@ -67,7 +67,6 @@ function buildCalendar(year, month, weddingDay) {
   return `
     <div class="cal">
       <p class="cal__header">
-        <span class="cal__year">${year}</span>
         <span class="cal__month">${MONTH_NAMES[month]}</span>
       </p>
       <div class="cal__grid">

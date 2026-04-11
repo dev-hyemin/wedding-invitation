@@ -1,6 +1,22 @@
 /* ── 예식 안내 섹션 ── */
 .section--ceremony {
   background: var(--color-bg);
+  text-align: center;
+}
+
+.ceremony__datetime {
+  font-family: var(--font-serif);
+  font-size: var(--font-size-md);
+  color: var(--color-text);
+  letter-spacing: 0.05em;
+  margin-bottom: var(--space-2);
+}
+
+.ceremony__venue {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-light);
+  letter-spacing: 0.05em;
+  margin-bottom: var(--space-8);
 }
 
 .ceremony-card {
@@ -48,14 +64,3 @@
   line-height: 1.6;
 }
 
-/* 길찾기 버튼 */
-.ceremony-actions {
-  display: flex;
-  gap: var(--space-3);
-  justify-content: center;
-}
-
-.ceremony-actions .btn {
-  flex: 1;
-  max-width: 160px;
-}

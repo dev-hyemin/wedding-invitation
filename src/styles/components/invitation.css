@@ -20,6 +20,27 @@
   line-height: 2;
 }
 
+.invitation__text--verse {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+  font-family: var(--font-serif);
+  font-style: italic;
+  line-height: 2;
+  margin-top: var(--space-4);
+}
+
+.invitation__text--verse span {
+  display: block;
+  font-size: var(--font-size-xs);
+  letter-spacing: 0.05em;
+  margin-top: var(--space-1);
+}
+
+.invitation__text strong {
+  color: var(--color-primary-dark);
+  font-weight: 600;
+}
+
 /* 가족 정보 */
 .family-info {
   margin-top: var(--space-10);

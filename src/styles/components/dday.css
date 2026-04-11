@@ -1,0 +1,56 @@
+/* ── D-Day 배너 ── */
+.dday-banner {
+  position: relative;
+  width: 100%;
+  max-width: var(--container-max);
+  aspect-ratio: 3 / 4;
+}
+
+.dday-banner__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
+
+.dday-banner__overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.40);
+}
+
+.dday-banner__content {
+  position: absolute;
+  bottom: var(--space-10);
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  color: #fff;
+  width: 100%;
+}
+
+.dday-banner__label {
+  font-family: var(--font-en);
+  font-size: var(--font-size-xs);
+  letter-spacing: 0.3em;
+  opacity: 0.8;
+  margin-bottom: var(--space-2);
+  font-style: italic;
+}
+
+.dday-banner__dday {
+  font-family: var(--font-en);
+  font-size: clamp(2rem, 10vw, 3rem);
+  font-weight: 300;
+  letter-spacing: 0.15em;
+  line-height: 1;
+  margin-bottom: var(--space-3);
+}
+
+.dday-banner__date {
+  font-family: var(--font-serif);
+  font-size: var(--font-size-sm);
+  letter-spacing: 0.08em;
+  opacity: 0.85;
+}

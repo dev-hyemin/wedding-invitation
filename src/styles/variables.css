@@ -5,7 +5,7 @@
   --color-secondary:    #F0C040;   /* 미디엄 옐로우 */
   --color-accent:       #FFF8E1;   /* 연노랑 */
   --color-bg:           #FFFFFF;   /* 화이트 */
-  --color-bg-alt:       #FFFDF0;   /* 아주 연한 노랑 */
+  --color-bg-alt:       #FFFFFF;   /* 화이트 */
   --color-surface:      #FFFFFF;
   --color-text:         #2C2C2C;   /* 다크 차콜 */
   --color-text-light:   #7A7A7A;
@@ -53,7 +53,7 @@
 
   /* ── 레이아웃 ── */
   --container-max: 480px;
-  --section-padding-y: var(--space-16);
+  --section-padding-y: var(--space-12);
 
   /* ── 반경 ── */
   --radius-sm:   4px;

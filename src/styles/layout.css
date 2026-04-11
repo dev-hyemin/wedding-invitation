@@ -1,3 +1,27 @@
+/* ── 음악 버튼 ── */
+.music-btn {
+  position: fixed;
+  bottom: var(--space-6);
+  right: var(--space-6);
+  z-index: var(--z-toast);
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.9);
+  color: var(--color-primary-dark);
+  box-shadow: var(--shadow-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(4px);
+  transition: transform var(--transition-fast), background var(--transition-fast);
+}
+
+.music-btn:hover {
+  transform: scale(1.1);
+  background: #fff;
+}
+
 /* ── 전체 레이아웃 래퍼 ── */
 body {
   display: flex;

@@ -1,7 +1,31 @@
 /* ── 지도 섹션 ── */
 .section--map {
   padding: 0;
+  padding-top: var(--space-12);
   background: var(--color-bg-alt);
+}
+
+/* ── 장소 정보 ── */
+.map-venue {
+  text-align: center;
+  margin-bottom: var(--space-6);
+}
+
+.map-venue__name {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-light);
+  margin-bottom: var(--space-1);
+}
+
+.map-venue__hall {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-light);
+  margin-bottom: var(--space-2);
+}
+
+.map-venue__address {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-light);
 }
 
 .map__container {
@@ -62,4 +86,16 @@
 
 .transport-content--active {
   display: block;
+}
+
+.ceremony-actions {
+  display: flex;
+  gap: var(--space-3);
+  justify-content: center;
+  padding: var(--space-5) 0;
+}
+
+.ceremony-actions .btn {
+  flex: 1;
+  max-width: 160px;
 }

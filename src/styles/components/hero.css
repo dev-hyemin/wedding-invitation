@@ -73,7 +73,7 @@
   );
 }
 
-/* ── 상단 레이블 ── */
+/* ── 상단 레이블 + 이름 ── */
 .hero__content {
   position: relative;
   z-index: 1;
@@ -86,11 +86,33 @@
   font-family: var(--font-en);
   font-size: var(--font-size-sm);
   letter-spacing: 0.25em;
-  opacity: 0.85;
+  opacity: 0.75;
   font-style: italic;
+  margin-bottom: var(--space-5);
 }
 
-/* ── 하단 날짜 ── */
+.hero__names {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-4);
+}
+
+.hero__name {
+  font-family: var(--font-serif);
+  font-size: clamp(1.6rem, 7vw, 2.4rem);
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.3);
+}
+
+.hero__heart {
+  font-size: clamp(1rem, 4vw, 1.4rem);
+  color: var(--color-primary);
+  opacity: 0.9;
+}
+
+/* ── 하단 날짜 + 장소 ── */
 .hero__bottom {
   position: absolute;
   bottom: var(--space-16);
@@ -100,10 +122,33 @@
 }
 
 .hero__date {
+  display: block;
   font-family: var(--font-serif);
   font-size: var(--font-size-xs);
   letter-spacing: 0.08em;
   opacity: 0.85;
+  margin-bottom: var(--space-1);
+}
+
+.hero__venue {
+  font-size: var(--font-size-xs);
+  letter-spacing: 0.05em;
+  opacity: 0.7;
+}
+
+/* ── D-day 배지 ── */
+.hero__dday {
+  position: absolute;
+  top: var(--space-8);
+  right: var(--space-8);
+  z-index: 1;
+  font-family: var(--font-en);
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  color: #fff;
+  opacity: 0.9;
+  animation: contentIn 0.8s ease-out 2.6s both;
 }
 
 @keyframes contentIn {
