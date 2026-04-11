@@ -17,7 +17,7 @@
 .dday-banner__overlay {
   position: absolute;
   inset: 0;
-  background: rgba(0, 0, 0, 0.40);
+  background: rgba(0, 0, 0, 0.065);
 }
 
 .dday-banner__content {
@@ -34,7 +34,7 @@
   font-family: var(--font-dday);
   font-size: var(--font-size-xs);
   letter-spacing: 0.3em;
-  opacity: 0.8;
+  /* opacity: 0.8; */
   margin-bottom: var(--space-2);
 }
 
