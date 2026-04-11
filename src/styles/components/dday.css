@@ -36,11 +36,11 @@
   letter-spacing: 0.3em;
   opacity: 0.8;
   margin-bottom: var(--space-2);
-  font-style: italic;
+  /* font-style: italic; */
 }
 
 .dday-banner__dday {
-  font-family: var(--font-en);
+  font-family: var(--font-sans);
   font-size: clamp(2rem, 10vw, 3rem);
   font-weight: 300;
   letter-spacing: 0.15em;

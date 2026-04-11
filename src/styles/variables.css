@@ -23,9 +23,9 @@
   --particle-3: rgba(168, 188, 166, 0.70);  /* 라이트 세이지 */
 
   /* ── 타이포그래피 ── */
-  --font-serif:  'Gowun Dodum', 'Apple SD Gothic Neo', sans-serif;
-  --font-sans:   'Escoredream', 'Gowun Dodum', 'Apple SD Gothic Neo', sans-serif;
-  --font-en:     'Apple SD Gothic Neo', sans-serif, 'OkMallangW', cursive;
+  --font-serif:  'Nanum Gothic', 'Apple SD Gothic Neo', sans-serif;
+  --font-sans:   'Nanum Gothic', 'Apple SD Gothic Neo', sans-serif;
+  --font-en:     'Playfair Display', 'Apple SD Gothic Neo', sans-serif, 'OkMallangW', cursive;
   --font-intro:  var(--font-en);   /* Our Wedding 인트로 텍스트 전용 폰트 */
 
   --font-size-xs:    0.75rem;   /* 12px */

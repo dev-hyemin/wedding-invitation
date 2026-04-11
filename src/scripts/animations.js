@@ -7,7 +7,7 @@ export function initTypewriter() {
   const cursor = document.querySelector('.intro-cursor')
   if (!typed || !cursor) return
 
-  const lines   = ['Our', 'Wedding']
+  const lines   = ['We are', 'Getting', 'Married']
   const charMs  = 110   // 글자당 속도
   const pauseMs = 320   // 줄 사이 쉬는 시간
 
