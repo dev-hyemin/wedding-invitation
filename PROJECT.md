@@ -34,43 +34,51 @@
 wedding/
 ├── .github/
 │   └── workflows/
-│       └── deploy.yml          # GitHub Pages 자동 배포
+│       └── deploy.yml              # GitHub Pages 자동 배포
 ├── src/
-│   ├── main.js                 # 진입점 (모든 모듈 오케스트레이션)
+│   ├── main.js                     # 진입점 (모든 모듈 오케스트레이션)
+│   ├── assets/
+│   │   ├── audio/
+│   │   │   └── bgm.mp3             # 배경 음악 파일 (직접 추가 필요)
+│   │   └── images/
+│   │       ├── hero-bg.jpg         # 히어로 배경 fallback 이미지
+│   │       └── gallery/            # 갤러리 fallback 이미지
 │   ├── scripts/
-│   │   ├── config.js           # 청첩장 데이터 중앙 설정 (이름/날짜/계좌 등)
-│   │   ├── theme.js            # CSS 변수 → JS 브릿지 (색상 단일 출처)
-│   │   ├── particles.js        # 버튼 burst 파티클 유틸 (MIT © 2022 Evan Jin)
-│   │   ├── animations.js       # AOS 초기화 + 하트 파티클
-│   │   ├── hero.js             # 히어로 배경 이미지 (Supabase Storage)
-│   │   ├── calendar.js         # 캘린더 + 결혼식 날 하트 표시
-│   │   ├── countdown.js        # D-Day 카운트다운
-│   │   ├── gallery.js          # Swiper 갤러리 (Supabase Storage, 수동 스와이프)
-│   │   ├── map.js              # 카카오맵 roughmap + 교통 안내 탭
-│   │   ├── account.js          # 계좌번호 탭 + 클립보드 복사
-│   │   ├── rsvp.js             # RSVP 폼 (Formspree 연동)
-│   │   ├── guestbook.js        # 방명록 (Supabase DB CRUD)
-│   │   └── toast.js            # 토스트 알림 유틸리티
+│   │   ├── config.js               # 청첩장 데이터 중앙 설정 (이름/날짜/계좌 등)
+│   │   ├── theme.js                # CSS 변수 → JS 브릿지 (색상 단일 출처)
+│   │   ├── particles.js            # 버튼 burst 파티클 유틸 (MIT © 2022 Evan Jin)
+│   │   ├── animations.js           # AOS 초기화 + 하트 파티클
+│   │   ├── hero.js                 # 히어로/배너 배경 이미지 (Supabase Storage)
+│   │   ├── music.js                # 배경 음악 재생/정지
+│   │   ├── calendar.js             # 캘린더 + 결혼식 날 하트 표시
+│   │   ├── countdown.js            # D-n 카운트다운 (배너에 표시)
+│   │   ├── gallery.js              # Swiper 갤러리 (Supabase Storage, 수동 스와이프)
+│   │   ├── map.js                  # 카카오맵 roughmap + 교통 안내 탭
+│   │   ├── account.js              # 계좌번호 탭 + 클립보드 복사
+│   │   ├── rsvp.js                 # RSVP 폼 (Formspree 연동)
+│   │   ├── guestbook.js            # 방명록 (Supabase DB CRUD)
+│   │   └── toast.js                # 토스트 알림 유틸리티
 │   └── styles/
-│       ├── main.css            # 전체 CSS import 진입점
-│       ├── variables.css       # 디자인 토큰 (색상/폰트/간격) — 단일 출처
-│       ├── reset.css           # 브라우저 기본 스타일 초기화
-│       ├── layout.css          # 공통 레이아웃, 버튼, 폼, 토스트
-│       ├── animations.css      # 글로벌 키프레임 정의
+│       ├── main.css                # 전체 CSS import 진입점
+│       ├── variables.css           # 디자인 토큰 (색상/폰트/간격) — 단일 출처
+│       ├── reset.css               # 브라우저 기본 스타일 초기화
+│       ├── layout.css              # 공통 레이아웃, 버튼, 폼, 토스트, 음악 버튼
+│       ├── animations.css          # 글로벌 키프레임 정의
 │       └── components/
 │           ├── hero.css
 │           ├── invitation.css
 │           ├── calendar.css
+│           ├── dday.css            # D-Day 사진 배너
 │           ├── gallery.css
 │           ├── ceremony.css
 │           ├── map.css
 │           ├── account.css
 │           ├── rsvp.css
 │           └── guestbook.css
-├── index.html                  # 단일 페이지 (9개 섹션)
+├── index.html                      # 단일 페이지
 ├── package.json
 ├── vite.config.js
-├── .env.example                # 환경 변수 템플릿
+├── .env.example                    # 환경 변수 템플릿
 └── .gitignore
 ```
 
@@ -80,15 +88,15 @@ wedding/
 
 | # | 섹션 | 주요 기능 |
 |---|---|---|
-| 1 | 히어로 | Our Wedding 인트로 애니메이션, 배경 이미지(Supabase), 하트 파티클 |
-| 2 | 초대 인사말 | 청첩장 본문, 양가 부모님 정보 |
+| 1 | 히어로 | Our Wedding 인트로 애니메이션, 배경 이미지(Supabase), 신랑신부 이름, 하트 파티클 |
+| 2 | 초대 인사말 | 뿌리/가지 문구, 마태복음 19:6 인용, 양가 부모님 정보 |
 | 3 | 갤러리 | Swiper 슬라이더, 수동 스와이프, 무한 루프 (Supabase Storage) |
-| 4 | 캘린더 | 결혼식 날 하트 표시, D-Day 카운트다운 |
-| 5 | 예식 안내 | 일시/장소 카드, 카카오/네이버 길찾기 버튼 |
-| 6 | 지도 | 카카오맵 roughmap, 자가용/대중교통/주차 안내 탭 |
-| 7 | 마음 전하기 | 신랑·신부측 계좌번호, 클립보드 복사 |
-| 8 | RSVP | 참석 여부 폼, Formspree 전송, burst 파티클 효과 |
-| 9 | 방명록 | Supabase DB CRUD, 비밀번호 삭제, 페이지네이션 |
+| 4 | 예식 안내 | 날짜·장소 텍스트 + 달력 통합 (카드 없음) |
+| — | D-Day 배너 | 사진 위 Wedding Day / D-n / 날짜 표시 |
+| 5 | 오시는 길 | 장소명·홀·주소, 카카오맵 roughmap, 길찾기 버튼, 교통 안내 탭 |
+| 6 | 마음 전하실 곳 | 신랑·신부측 계좌번호, 클립보드 복사 |
+| 7 | RSVP | 참석 여부 폼, Formspree 전송, burst 파티클 효과 |
+| 8 | 방명록 | Supabase DB CRUD, 비밀번호 삭제, 10개씩 페이지네이션 |
 
 ---
 
@@ -134,10 +142,20 @@ create policy "delete own" on guestbook for delete using (true);
 
 | 버킷명 | 용도 | 설정 |
 |---|---|---|
+| `hero` | 히어로 배경 이미지 + D-Day 배너 | Public |
 | `gallery` | 갤러리 사진 | Public, SELECT 정책 필요 |
-| `hero` | 히어로 배경 이미지 | Public |
 
 > 갤러리 버킷은 파일 목록 조회(`list()`)를 위해 Storage → Policies에서 SELECT 권한을 public으로 열어야 합니다.
+> 히어로/배너 이미지는 동일한 파일(`hero-bg.jpg`)을 사용합니다.
+
+---
+
+## 배경 음악 설정
+
+`src/assets/audio/bgm.mp3` 경로에 음악 파일을 넣으면 자동으로 적용됩니다.
+
+- 우측 하단 고정 버튼으로 재생/정지 가능
+- 자동재생은 브라우저 정책상 불가 → 사용자가 직접 재생
 
 ---
 
@@ -168,12 +186,12 @@ create policy "delete own" on guestbook for delete using (true);
 | `--color-primary-dark` | 호버/포커스용 진한 메인 컬러 |
 | `--color-secondary` | 버튼 배경 |
 | `--color-accent` | 연한 포인트 색상 |
-| `--color-bg` / `--color-bg-alt` | 섹션 배경 |
+| `--color-bg` / `--color-bg-alt` | 섹션 배경 (현재 모두 흰색) |
 | `--color-border` | 테두리 |
 | `--color-focus-ring` | 포커스 링 (rgba) |
 | `--particle-1` ~ `--particle-3` | 하트 파티클 색상 |
 
-JS에서 색상이 필요한 경우 `src/scripts/theme.js`를 통해 CSS 변수를 읽어 사용합니다 (confetti, burst 파티클 등).
+JS에서 색상이 필요한 경우 `src/scripts/theme.js`를 통해 CSS 변수를 읽어 사용합니다 (burst 파티클 등).
 
 ---
 
@@ -262,4 +280,4 @@ npm run dev
 
 ### 갤러리 이미지가 안 불러와질 때
 
-Supabase Storage → gallery 버킷 → Policies에서 `objects` 테이블의 SELECT 권한을 public으로 열어야 합니다. 히어로 이미지는 `getPublicUrl()`을 사용하므로 별도 정책 불필요.
+Supabase Storage → gallery 버킷 → Policies에서 `objects` 테이블의 SELECT 권한을 public으로 열어야 합니다. 히어로/배너 이미지는 `getPublicUrl()`을 사용하므로 별도 정책 불필요.
