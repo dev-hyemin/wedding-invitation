@@ -8,6 +8,10 @@
   padding-bottom: var(--space-6);
 }
 
+.section--gallery .section__title {
+  margin-bottom: var(--space-3);
+}
+
 /* 로딩 스켈레톤 */
 @keyframes shimmer {
   0%   { background-position: -400px 0; }

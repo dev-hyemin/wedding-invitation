@@ -23,10 +23,11 @@
   --particle-3: rgba(168, 188, 166, 0.70);  /* 라이트 세이지 */
 
   /* ── 타이포그래피 ── */
-  --font-serif:  'Nanum Gothic', 'Apple SD Gothic Neo', sans-serif;
-  --font-sans:   'Nanum Gothic', 'Apple SD Gothic Neo', sans-serif;
-  --font-en:     'Playfair Display', 'Apple SD Gothic Neo', sans-serif, 'OkMallangW', cursive;
-  --font-intro:  var(--font-en);   /* Our Wedding 인트로 텍스트 전용 폰트 */
+  --font-serif:  'Gowun Batang', serif;
+  --font-sans:   'Gowun Batang', 'Apple SD Gothic Neo', sans-serif;
+  --font-en:     'Playfair Display', 'Apple SD Gothic Neo', sans-serif, cursive;
+  --font-intro:  'Imperial Script', cursive;   /* 히어로 인트로 손글씨 전용 폰트 */
+  --font-dday:   'Fredoka', sans-serif;   /* D-Day 배너 전용 폰트 (config.js에서 덮어씀) */
 
   --font-size-xs:    0.75rem;   /* 12px */
   --font-size-sm:    0.875rem;  /* 14px */

@@ -16,10 +16,12 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link
     rel="stylesheet"
-    href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=Nanum+Gothic:wght@400;700&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Gowun+Batang&family=Gowun+Dodum&family=Nanum+Gothic:wght@400;700&display=swap"
   />
   <link href="https://fonts.googleapis.com/css2?family=Imperial+Script&family=Lobster&family=Nanum+Gothic&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Imperial+Script&family=Lobster&family=Nanum+Gothic&family=Nanum+Myeongjo&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300..700&family=Imperial+Script&family=Lobster&family=Nanum+Gothic&family=Nanum+Myeongjo&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+
 
   <title></title>
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
@@ -45,7 +47,11 @@
   <section id="hero" class="section section--hero">
     <!-- 인트로 오버레이 -->
     <div class="hero__intro" id="hero-intro">
-      <p class="hero__intro-text"><span class="intro-typed"></span><span class="intro-cursor"></span></p>
+      <p class="hero__intro-text">
+        <span class="intro-line">We are</span>
+        <span class="intro-line">Getting</span>
+        <span class="intro-line">Married</span>
+      </p>
     </div>
 
     <div class="hero__bg">
@@ -159,8 +165,11 @@
     <div class="container">
       <h2 class="section__title" data-aos="fade-up">오시는 길</h2>
       <div class="map-venue" data-aos="fade-up" data-aos-delay="100">
-        <p class="map-venue__name" id="map-venue-name"></p>
-        <p class="map-venue__hall" id="map-venue-hall"></p>
+        <p class="map-venue__name-hall">
+          <span id="map-venue-name"></span>
+          <span class="map-venue__sep"> · </span>
+          <span id="map-venue-hall"></span>
+        </p>
         <p class="map-venue__address" id="map-venue-address"></p>
       </div>
     </div>
@@ -206,7 +215,7 @@
   ================================ -->
   <section id="gallery" class="section section--gallery">
     <div class="container">
-      <h2 class="section__title" data-aos="fade-up">Gallery</h2>
+      <h2 class="section__title" data-aos="fade-up">갤러리</h2>
     </div>
 
     <!-- Swiper 슬라이더 (슬라이드는 gallery.js에서 동적 생성) -->

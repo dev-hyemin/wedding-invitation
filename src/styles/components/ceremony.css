@@ -5,7 +5,7 @@
 }
 
 .ceremony__datetime {
-  font-family: var(--font-serif);
+  font-family: var(--font-sans);
   font-size: var(--font-size-md);
   color: var(--color-text);
   letter-spacing: 0.05em;
@@ -13,6 +13,7 @@
 }
 
 .ceremony__venue {
+  font-family: var(--font-sans);
   font-size: var(--font-size-sm);
   color: var(--color-text-light);
   letter-spacing: 0.05em;

@@ -7,20 +7,19 @@
 
 /* ── 장소 정보 ── */
 .map-venue {
+  font-family: var(--font-sans);
   text-align: center;
   margin-bottom: var(--space-6);
 }
 
-.map-venue__name {
-  font-size: var(--font-size-sm);
-  color: var(--color-text-light);
-  margin-bottom: var(--space-1);
-}
-
-.map-venue__hall {
+.map-venue__name-hall {
   font-size: var(--font-size-sm);
   color: var(--color-text-light);
   margin-bottom: var(--space-2);
+}
+
+.map-venue__sep {
+  opacity: 0.5;
 }
 
 .map-venue__address {

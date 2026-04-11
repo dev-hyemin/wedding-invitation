@@ -1,7 +1,7 @@
 import './styles/main.css'
 
 import { initContent }                from './scripts/content.js'
-import { initAnimations, initPetals, initTypewriter } from './scripts/animations.js'
+import { initAnimations, initPetals } from './scripts/animations.js'
 import { initHero }                   from './scripts/hero.js'
 import { initMusic }                  from './scripts/music.js'
 import { initCalendar }               from './scripts/calendar.js'
@@ -20,9 +20,6 @@ initHero()
 
 // 배경 음악
 initMusic()
-
-// 히어로 인트로 타이프라이터
-initTypewriter()
 
 // 스크롤 애니메이션 초기화
 initAnimations()

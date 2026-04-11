@@ -1,46 +1,6 @@
 import AOS from 'aos'
 import { theme } from './theme.js'
 
-// ── 타이프라이터 (히어로 인트로) ──────────────────────────────
-export function initTypewriter() {
-  const typed  = document.querySelector('.intro-typed')
-  const cursor = document.querySelector('.intro-cursor')
-  if (!typed || !cursor) return
-
-  const lines   = ['We are', 'Getting', 'Married']
-  const charMs  = 110   // 글자당 속도
-  const pauseMs = 320   // 줄 사이 쉬는 시간
-
-  let lineIdx = 0
-  let charIdx = 0
-
-  function typeNext() {
-    if (lineIdx >= lines.length) {
-      // 타이핑 완료 → 커서 제거
-      setTimeout(() => cursor.classList.add('intro-cursor--hidden'), 500)
-      return
-    }
-
-    const line = lines[lineIdx]
-    if (charIdx < line.length) {
-      typed.innerHTML += line[charIdx]
-      charIdx++
-      setTimeout(typeNext, charMs)
-    } else {
-      // 줄 끝 → 다음 줄로
-      lineIdx++
-      charIdx = 0
-      if (lineIdx < lines.length) {
-        typed.innerHTML += '<br>'
-        setTimeout(typeNext, pauseMs)
-      } else {
-        setTimeout(() => cursor.classList.add('intro-cursor--hidden'), 500)
-      }
-    }
-  }
-
-  typeNext()
-}
 
 export function initAnimations() {
   AOS.init({

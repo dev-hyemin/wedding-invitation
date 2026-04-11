@@ -21,38 +21,32 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  animation: introFadeOut 1s ease-in 2.2s forwards;
+  animation: introFadeOut 1s ease-in 3.2s forwards;
 }
 
 .hero__intro-text {
   font-family: var(--font-intro);
-  font-size: clamp(2rem, 10vw, 3.5rem);
-  font-weight: 300;
-  letter-spacing: 0.3em;
+  font-size: clamp(2.5rem, 12vw, 4.5rem);
+  font-weight: 400;
   color: var(--color-primary-dark);
   text-align: center;
-  line-height: 1.4;
+  letter-spacing: 0.15em;  /* 글자 간격 */
+  line-height: 2;           /* 위아래 줄 간격 */
 }
 
-/* 타이프라이터 커서 */
-.intro-cursor {
-  display: inline-block;
-  width: 2px;
-  height: 0.85em;
-  background: var(--color-primary-dark);
-  margin-left: 4px;
-  vertical-align: middle;
-  animation: cursorBlink 0.7s step-end infinite;
+/* 손글씨 reveal: 라인별 왼쪽 → 오른쪽 */
+.intro-line {
+  display: block;
+  clip-path: inset(0 100% 0 0);
 }
 
-.intro-cursor--hidden {
-  opacity: 0;
-  animation: none;
-}
+.intro-line:nth-child(1) { animation: handwrite 1s cubic-bezier(0.4, 0, 0.2, 1) 0.2s forwards; }
+.intro-line:nth-child(2) { animation: handwrite 1s cubic-bezier(0.4, 0, 0.2, 1) 1.0s forwards; }
+.intro-line:nth-child(3) { animation: handwrite 1s cubic-bezier(0.4, 0, 0.2, 1) 1.8s forwards; }
 
-@keyframes cursorBlink {
-  0%, 100% { opacity: 1; }
-  50%       { opacity: 0; }
+@keyframes handwrite {
+  from { clip-path: inset(0 100% 0 0); }
+  to   { clip-path: inset(0 0% 0 0); }
 }
 
 @keyframes introFadeOut {
@@ -93,7 +87,7 @@
   z-index: 1;
   text-align: center;
   padding: var(--space-20) var(--space-4) 0;
-  animation: contentIn 0.8s ease-out 2.6s both;
+  animation: contentIn 0.8s ease-out 3.8s both;
 }
 
 .hero__label {
@@ -133,7 +127,7 @@
   bottom: var(--space-16);
   left: var(--space-8);
   z-index: 1;
-  animation: contentIn 0.8s ease-out 2.8s both;
+  animation: contentIn 0.8s ease-out 4.0s both;
 }
 
 .hero__date {
@@ -163,7 +157,7 @@
   letter-spacing: 0.05em;
   color: #fff;
   opacity: 0.9;
-  animation: contentIn 0.8s ease-out 2.6s both;
+  animation: contentIn 0.8s ease-out 3.8s both;
 }
 
 @keyframes contentIn {
