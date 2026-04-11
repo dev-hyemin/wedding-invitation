@@ -86,7 +86,7 @@
   position: relative;
   z-index: 1;
   text-align: center;
-  padding: var(--space-20) var(--space-4) 0;
+  padding: calc(var(--space-20) + var(--space-12)) var(--space-4) 0;
   animation: contentIn 0.8s ease-out 3.8s both;
 }
 
@@ -124,7 +124,7 @@
 /* ── 하단 날짜 + 장소 ── */
 .hero__bottom {
   position: absolute;
-  bottom: var(--space-16);
+  bottom: var(--space-20);
   left: var(--space-8);
   z-index: 1;
   animation: contentIn 0.8s ease-out 4.0s both;
@@ -133,14 +133,14 @@
 .hero__date {
   display: block;
   font-family: var(--font-serif);
-  font-size: var(--font-size-xs);
+  font-size: var(--font-size-base);
   letter-spacing: 0.08em;
   opacity: 0.85;
   margin-bottom: var(--space-1);
 }
 
 .hero__venue {
-  font-size: var(--font-size-xs);
+  font-size: var(--font-size-sm);
   letter-spacing: 0.05em;
   opacity: 0.7;
 }
