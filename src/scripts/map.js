@@ -1,7 +1,27 @@
 import { CONFIG } from './config.js'
 
 export function initMap() {
+  initKakaoMap()
   setNaviLinks()
+}
+
+function initKakaoMap() {
+  const { timestamp, key } = CONFIG.kakaomap
+  const container = document.getElementById('map-container')
+  if (!container) return
+
+  const mapDiv = document.createElement('div')
+  mapDiv.id = `daumRoughmapContainer${timestamp}`
+  mapDiv.className = 'root_daum_roughmap root_daum_roughmap_landing'
+  container.appendChild(mapDiv)
+
+  const loaderScript = document.createElement('script')
+  loaderScript.className = 'daum_roughmap_loader_script'
+  loaderScript.src = 'https://ssl.daumcdn.net/dmaps/map_js_init/roughmapLoader.js'
+  loaderScript.onload = () => {
+    new window.daum.roughmap.Lander({ timestamp, key }).render()
+  }
+  container.appendChild(loaderScript)
 }
 
 function setNaviLinks() {
