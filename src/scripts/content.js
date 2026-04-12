@@ -14,8 +14,8 @@ export function initContent() {
 
   // ── 히어로 ────────────────────────────────────────────────
   const heroNames = document.querySelectorAll('.hero__name')
-  if (heroNames[0]) heroNames[0].textContent = groom.englishName
-  if (heroNames[1]) heroNames[1].textContent = bride.englishName
+  if (heroNames[0]) heroNames[0].textContent = groom.englishName.split(' ').slice(1).join(' ')
+  if (heroNames[1]) heroNames[1].textContent = bride.englishName.split(' ').slice(1).join(' ')
   const heroDate = document.getElementById('hero-date')
   if (heroDate) {
     heroDate.innerHTML = wedding.dateDisplay.replace(/(오전|오후)/, '<br>$1')
