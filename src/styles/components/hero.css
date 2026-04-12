@@ -86,7 +86,7 @@
   position: relative;
   z-index: 1;
   text-align: center;
-  padding: calc(var(--space-20) + var(--space-12)) var(--space-4) 0;
+  padding: calc(var(--space-20) + var(--space-6)) var(--space-4) 0;
   animation: contentIn 0.8s ease-out 3.8s both;
 }
 
@@ -94,9 +94,9 @@
   font-family: var(--font-en);
   font-size: var(--font-size-xl);
   letter-spacing: 0.2em;
-  opacity: 0.75;
+  opacity: 0.65;
   /* font-style: italic; */
-  margin-bottom: var(--space-5);
+  margin-bottom: 0.75rem;
 }
 
 .hero__names {
