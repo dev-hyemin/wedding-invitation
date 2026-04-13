@@ -71,7 +71,10 @@ function renderTransport(transport) {
   const render = (id, text) => {
     const el = document.getElementById(id)
     if (!el) return
-    el.innerHTML = text.split('\n').map(line => `<p>${line}</p>`).join('')
+    el.innerHTML = text.split('\n').map(line => {
+      if (/^\p{Emoji}/u.test(line)) return `<p class="transport-section-title">${line}</p>`
+      return `<p>${line}</p>`
+    }).join('')
   }
   render('tab-car', transport.car)
   render('tab-public', transport.public)

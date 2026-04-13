@@ -86,6 +86,16 @@
   color: var(--color-text-light);
 }
 
+.transport-content .transport-section-title {
+  color: var(--color-text);
+  font-weight: 500;
+  margin-top: var(--space-5);
+}
+
+.transport-content .transport-section-title:first-child {
+  margin-top: 0;
+}
+
 .transport-content--active {
   display: block;
 }
