@@ -76,8 +76,9 @@ function renderTransport(transport) {
       return `<p>${line}</p>`
     }).join('')
   }
+  render('tab-bus', transport.bus)
+  render('tab-subway', transport.subway)
   render('tab-car', transport.car)
-  render('tab-public', transport.public)
   render('tab-parking', transport.parking)
 }
 
