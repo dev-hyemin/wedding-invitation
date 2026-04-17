@@ -35,7 +35,7 @@ export const CONFIG = {
 
   accounts: {
     groom: [
-      { bank: '국민은행', name: '김덕림 (신랑)', number: '1640401-04-362945' },
+      { bank: '국민은행', name: '김덕림 (신랑)', number: '640401-04-362945' },
       { bank: '농협은행', name: '김대중 (신랑 부)', number: '717120-56-008617' },
       { bank: '농협은행', name: '강지행 (신랑 모)', number: '721082-52-125076' },
     ],
