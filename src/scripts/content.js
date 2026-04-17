@@ -79,7 +79,6 @@ function renderTransport(transport) {
   render('tab-bus', transport.bus)
   render('tab-subway', transport.subway)
   render('tab-car', transport.car)
-  render('tab-parking', transport.parking)
 }
 
 function renderAccounts(accounts) {
