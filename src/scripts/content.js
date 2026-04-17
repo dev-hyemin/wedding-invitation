@@ -47,7 +47,7 @@ export function initContent() {
 
   // ── 푸터 ──────────────────────────────────────────────────
   const year = new Date(wedding.datetime).getFullYear()
-  setText('#footer-copy', `© ${year} ${groom.name} & ${bride.name}. All rights reserved.`)
+  setText('#footer-copy', `© 2026 __teiubesc. All rights reserved.`)
 }
 
 // ── 헬퍼 ──────────────────────────────────────────────────────

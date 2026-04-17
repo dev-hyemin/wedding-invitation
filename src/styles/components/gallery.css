@@ -1,7 +1,6 @@
 /* ── 갤러리 섹션 ── */
 .section--gallery {
   background: var(--color-bg-alt);
-  padding-bottom: 0;
 }
 
 .section--gallery .container {
