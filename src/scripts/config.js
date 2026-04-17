@@ -4,25 +4,25 @@
  */
 export const CONFIG = {
   groom: {
-    name: '김민준',
-    englishName: 'Kim Min-jun',
-    father: '김부친',
-    mother: '김모친',
+    name: '김덕림',
+    englishName: 'Kim Deok-rim',
+    father: '김대중',
+    mother: '강지행',
     phone: '010-1234-5678',
   },
 
   bride: {
-    name: '이서연',
-    englishName: 'Lee Seo-yeon',
-    father: '이부친',
-    mother: '이모친',
+    name: '이진주',
+    englishName: 'Lee Jin-joo',
+    father: '이광호',
+    mother: '한지은',
     phone: '010-9876-5432',
   },
 
   wedding: {
     // 반드시 ISO 형식으로 기입하세요
-    datetime: '2026-06-20T13:00:00',
-    dateDisplay: '2026년 6월 20일 토요일 오후 2시',
+    datetime: '2026-06-20T12:30:00',
+    dateDisplay: '2026년 6월 20일 토요일 오후 12시 30분',
     // D-Day 배너에 표시되는 날짜 (날짜만)
     dateShort: '2026년 6월 20일',
     venue: '구리교회',
@@ -35,12 +35,13 @@ export const CONFIG = {
 
   accounts: {
     groom: [
-      { bank: '국민은행', name: '김민준 (신랑)', number: '123-456-78901234' },
-      { bank: '신한은행', name: '김부친 (신랑 부)', number: '110-234-567890' },
+      { bank: '국민은행', name: '김덕림 (신랑)', number: '1640401-04-362945' },
+      { bank: '농협은행', name: '김대중 (신랑 부)', number: '717120-56-008617' },
+      { bank: '농협은행', name: '강지행 (신랑 모)', number: '721082-52-125076' },
     ],
     bride: [
-      { bank: '하나은행', name: '이서연 (신부)', number: '234-5678-90123' },
-      { bank: '우리은행', name: '이부친 (신부 부)', number: '1002-345-678901' },
+      { bank: '카카오뱅크', name: '이진주 (신부)', number: '3333-07-9175153' },
+      { bank: '우리은행', name: '이광호 (신부 부)', number: '1002-156-133983' },
     ],
   },
 
@@ -49,7 +50,7 @@ export const CONFIG = {
   // Supabase 미설정 시 fallback 경로의 로컬 이미지가 사용됩니다.
   hero: {
     storageBucket: 'gallery',
-    storagePath:   'hero/hero-bg.jpeg',
+    storagePath:   'hero/hero.jpeg',
     fallback:      '/src/assets/images/hero-bg.jpg',
   },
 
@@ -95,7 +96,6 @@ export const CONFIG = {
   transport: {
     bus:     '롯데백화점 하차\n일반버스: 1-4, 10-5, 165, 166-1, 167-1, 23, 30, 65, 65-1, 9, 93, 95, 97번\n직행버스: 1115-6, 1330-2, 1330-4, 8409, 8005번',
     subway:  '지하철 8호선, 경의중앙선\n구리역 하차 → 롯데백화점 출구 → 길 건너편 (총 2분 소요)',
-    car:     '강남대로에서 테헤란로 방면으로 직진, 우측 건물 지하주차장 이용',
-    parking: '지하 1~3층 주차장 이용 가능 (2시간 무료)\n이후 30분당 2,000원',
+    car:     '미정',
   },
 }
