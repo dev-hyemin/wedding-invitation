@@ -55,38 +55,53 @@ function renderItems(grid, images, from, to, onClickItem) {
   })
 }
 
+// ── 인접 이미지 엘리먼트 생성 헬퍼 ──
+function makeAdjacentImg(src, offsetX) {
+  const img = document.createElement('img')
+  img.src = src
+  img.style.cssText = `position:absolute;inset:0;width:100%;height:100%;object-fit:contain;user-select:none;pointer-events:none;transform:translateX(${offsetX})`
+  return img
+}
+
 // ── 라이트박스 ──
 function initLightbox(images) {
   const lightbox = document.getElementById('lightbox')
+  const track    = document.getElementById('lightbox-track')
   const imgEl    = document.getElementById('lightbox-img')
   const closeBtn = document.getElementById('lightbox-close')
   const counter  = document.getElementById('lightbox-counter')
-  if (!lightbox || !imgEl) return
+  if (!lightbox || !imgEl || !track) return
 
   let current = 0
-  let touchStartX = 0
-  let isAnimating = false
+  let prevEl = null
+  let nextEl = null
 
+  function updateCounter() {
+    if (counter) counter.textContent = `${current + 1} / ${images.length}`
+  }
+
+  function cleanAdjacent() {
+    prevEl?.remove(); prevEl = null
+    nextEl?.remove(); nextEl = null
+  }
+
+  // 키보드/클릭용 즉시 전환
   function slideTo(index, direction) {
-    if (isAnimating) return
     const next = (index + images.length) % images.length
     if (next === current) return
-    isAnimating = true
 
-    const track = document.getElementById('lightbox-track')
     const inX  = direction === 'left' ? '100%' : '-100%'
     const outX = direction === 'left' ? '-100%' : '100%'
 
-    const nextImg = document.createElement('img')
-    nextImg.src = images[next].src
-    nextImg.style.cssText = `position:absolute;inset:0;width:100%;height:100%;object-fit:contain;user-select:none;pointer-events:none;transform:translateX(${inX})`
-    track.appendChild(nextImg)
+    const incoming = makeAdjacentImg(images[next].src, inX)
+    incoming.style.transition = 'none'
+    track.appendChild(incoming)
 
     requestAnimationFrame(() => requestAnimationFrame(() => {
-      imgEl.style.transition  = 'transform 0.35s ease'
-      imgEl.style.transform   = `translateX(${outX})`
-      nextImg.style.transition = 'transform 0.35s ease'
-      nextImg.style.transform  = 'translateX(0)'
+      imgEl.style.transition   = 'transform 0.35s ease'
+      imgEl.style.transform    = `translateX(${outX})`
+      incoming.style.transition = 'transform 0.35s ease'
+      incoming.style.transform  = 'translateX(0)'
     }))
 
     setTimeout(() => {
@@ -95,17 +110,18 @@ function initLightbox(images) {
       imgEl.alt = images[current].alt
       imgEl.style.transition = ''
       imgEl.style.transform  = ''
-      nextImg.remove()
-      if (counter) counter.textContent = `${current + 1} / ${images.length}`
-      isAnimating = false
+      incoming.remove()
+      updateCounter()
     }, 370)
   }
 
-  function show(index, direction = 'left') {
+  function show(index) {
     current = (index + images.length) % images.length
     imgEl.src = images[current].src
     imgEl.alt = images[current].alt
-    if (counter) counter.textContent = `${current + 1} / ${images.length}`
+    imgEl.style.transition = ''
+    imgEl.style.transform  = ''
+    updateCounter()
   }
 
   function open(index) {
@@ -119,34 +135,97 @@ function initLightbox(images) {
     lightbox.classList.remove('lightbox--open')
     lightbox.setAttribute('aria-hidden', 'true')
     document.body.style.overflow = ''
+    cleanAdjacent()
   }
 
   closeBtn?.addEventListener('click', close)
+  lightbox.addEventListener('click', e => { if (e.target === lightbox) close() })
 
-  // 터치 스와이프
-  lightbox.addEventListener('touchstart', e => {
-    touchStartX = e.touches[0].clientX
-  }, { passive: true })
-  lightbox.addEventListener('touchend', e => {
-    const dx = e.changedTouches[0].clientX - touchStartX
-    if (Math.abs(dx) < 40) return
-    dx < 0
-      ? slideTo(current + 1, 'left')
-      : slideTo(current - 1, 'right')
-  }, { passive: true })
-
-  // 배경 클릭 닫기
-  lightbox.addEventListener('click', e => {
-    if (e.target === lightbox) close()
-  })
-
-  // 키보드
   document.addEventListener('keydown', e => {
     if (!lightbox.classList.contains('lightbox--open')) return
     if (e.key === 'Escape')     close()
     if (e.key === 'ArrowLeft')  slideTo(current - 1, 'right')
     if (e.key === 'ArrowRight') slideTo(current + 1, 'left')
   })
+
+  // ── 드래그 팔로우 스와이프 ──
+  let startX = 0
+  let currentX = 0
+  let dragging = false
+
+  track.addEventListener('touchstart', e => {
+    startX = currentX = e.touches[0].clientX
+    dragging = true
+
+    // 인접 이미지 미리 배치
+    cleanAdjacent()
+    const prevIdx = (current - 1 + images.length) % images.length
+    const nextIdx = (current + 1) % images.length
+    prevEl = makeAdjacentImg(images[prevIdx].src, '-100%')
+    nextEl = makeAdjacentImg(images[nextIdx].src, '100%')
+    track.appendChild(prevEl)
+    track.appendChild(nextEl)
+
+    imgEl.style.transition = 'none'
+    prevEl.style.transition = 'none'
+    nextEl.style.transition = 'none'
+  }, { passive: true })
+
+  track.addEventListener('touchmove', e => {
+    if (!dragging) return
+    e.preventDefault()
+    currentX = e.touches[0].clientX
+    const dx = currentX - startX
+
+    imgEl.style.transform = `translateX(${dx}px)`
+    prevEl.style.transform = `translateX(calc(-100% + ${dx}px))`
+    nextEl.style.transform = `translateX(calc(100% + ${dx}px))`
+  }, { passive: false })
+
+  track.addEventListener('touchend', () => {
+    if (!dragging) return
+    dragging = false
+
+    const dx = currentX - startX
+    const threshold = 60
+    const transition = 'transform 0.3s ease'
+
+    imgEl.style.transition = transition
+    prevEl.style.transition = transition
+    nextEl.style.transition = transition
+
+    if (dx < -threshold) {
+      // 다음으로 완성
+      const nextIdx = (current + 1) % images.length
+      imgEl.style.transform = 'translateX(-100%)'
+      nextEl.style.transform = 'translateX(0)'
+      setTimeout(() => {
+        current = nextIdx
+        imgEl.src = images[current].src
+        imgEl.style.transition = ''; imgEl.style.transform = ''
+        cleanAdjacent()
+        updateCounter()
+      }, 300)
+    } else if (dx > threshold) {
+      // 이전으로 완성
+      const prevIdx = (current - 1 + images.length) % images.length
+      imgEl.style.transform = 'translateX(100%)'
+      prevEl.style.transform = 'translateX(0)'
+      setTimeout(() => {
+        current = prevIdx
+        imgEl.src = images[current].src
+        imgEl.style.transition = ''; imgEl.style.transform = ''
+        cleanAdjacent()
+        updateCounter()
+      }, 300)
+    } else {
+      // 제자리로 복귀
+      imgEl.style.transform = 'translateX(0)'
+      prevEl.style.transform = 'translateX(-100%)'
+      nextEl.style.transform = 'translateX(100%)'
+      setTimeout(() => cleanAdjacent(), 300)
+    }
+  }, { passive: true })
 
   return open
 }
@@ -160,7 +239,7 @@ export async function initGallery() {
   const storageImages = await fetchStorageImages()
   const images = storageImages ?? CONFIG.gallery.fallback
 
-  // 전체 이미지 즉시 프리로드 (GC 방지를 위해 배열에 보관)
+  // 전체 이미지 즉시 프리로드 (GC 방지용 배열 보관)
   const _preloadCache = images.map(({ src }) => { const i = new Image(); i.src = src; return i })
 
   const openLightbox = initLightbox(images)
