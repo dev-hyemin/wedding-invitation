@@ -157,18 +157,22 @@ function initLightbox(images) {
     startX = currentX = e.touches[0].clientX
     dragging = true
 
-    // 인접 이미지 미리 배치
+    // 인접 이미지 디코딩 완료 후 배치 (깜빡임 방지)
     cleanAdjacent()
     const prevIdx = (current - 1 + images.length) % images.length
     const nextIdx = (current + 1) % images.length
+
     prevEl = makeAdjacentImg(images[prevIdx].src, '-100%')
     nextEl = makeAdjacentImg(images[nextIdx].src, '100%')
-    track.appendChild(prevEl)
-    track.appendChild(nextEl)
 
-    imgEl.style.transition = 'none'
-    prevEl.style.transition = 'none'
-    nextEl.style.transition = 'none'
+    Promise.all([prevEl.decode().catch(() => {}), nextEl.decode().catch(() => {})]).then(() => {
+      if (!dragging) return
+      track.appendChild(prevEl)
+      track.appendChild(nextEl)
+      imgEl.style.transition = 'none'
+      prevEl.style.transition = 'none'
+      nextEl.style.transition = 'none'
+    })
   }, { passive: true })
 
   track.addEventListener('touchmove', e => {

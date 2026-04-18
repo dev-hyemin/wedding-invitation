@@ -1,6 +1,7 @@
 import './styles/main.css'
 
 import { initContent }                from './scripts/content.js'
+import AOS from 'aos'
 import { initAnimations/*, initPetals*/ } from './scripts/animations.js'
 import { initHero }                   from './scripts/hero.js'
 import { initMusic }                  from './scripts/music.js'
@@ -12,9 +13,12 @@ import { initAccount }                from './scripts/account.js'
 import { initRsvp }                   from './scripts/rsvp.js'
 import { initGuestbook }              from './scripts/guestbook.js'
 
-// 인트로 애니메이션 동안 스크롤 비활성화 (3.6s 후 해제)
+// 인트로 애니메이션 동안 스크롤 비활성화, 해제 후 AOS 포지션 재계산
 document.body.style.overflow = 'hidden'
-setTimeout(() => { document.body.style.overflow = '' }, 2600)
+setTimeout(() => {
+  document.body.style.overflow = ''
+  AOS.refresh()
+}, 2600)
 
 // config.js 값을 DOM에 반영 (가장 먼저 실행)
 initContent()
