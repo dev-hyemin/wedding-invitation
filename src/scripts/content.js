@@ -7,10 +7,8 @@ import { CONFIG } from './config.js'
 export function initContent() {
   const { groom, bride, wedding, accounts, transport } = CONFIG
 
-  // ── <title> & OG 메타 ──────────────────────────────────────
+  // ── <title> ────────────────────────────────────────────────
   document.title = `${groom.name} ♥ ${bride.name}`
-  setMeta('og:title', `${groom.name} & ${bride.name}의 결혼식에 초대합니다`)
-  setMeta('og:description', `${wedding.dateDisplay} · ${wedding.venue}`)
 
   // ── 히어로 ────────────────────────────────────────────────
   const heroNames = document.querySelectorAll('.hero__name')
@@ -62,10 +60,6 @@ function setAttr(selector, attr, value) {
   if (el) el.setAttribute(attr, value)
 }
 
-function setMeta(property, content) {
-  const el = document.querySelector(`meta[property="${property}"]`)
-  if (el) el.setAttribute('content', content)
-}
 
 function renderTransport(transport) {
   const render = (id, text) => {
