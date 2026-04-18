@@ -12,6 +12,15 @@ import { initAccount }                from './scripts/account.js'
 import { initRsvp }                   from './scripts/rsvp.js'
 import { initGuestbook }              from './scripts/guestbook.js'
 
+// 인트로 애니메이션 동안 스크롤 비활성화
+document.body.style.overflow = 'hidden'
+const introEl = document.getElementById('hero-intro')
+if (introEl) {
+  introEl.addEventListener('animationend', () => {
+    document.body.style.overflow = ''
+  }, { once: true })
+}
+
 // config.js 값을 DOM에 반영 (가장 먼저 실행)
 initContent()
 
