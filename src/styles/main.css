@@ -13,9 +13,6 @@
 /* ── AOS (Animate On Scroll) ── */
 @import 'aos/dist/aos.css';
 
-/* ── Swiper ── */
-@import 'swiper/css';
-@import 'swiper/css/pagination';
 
 /* ── Components ── */
 @import './components/hero.css';

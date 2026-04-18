@@ -1,18 +1,33 @@
 import { showToast } from './toast.js'
 
 export function initAccount() {
-  // 신랑/신부 탭 전환
-  const tabs  = document.querySelectorAll('.account-tab')
-  const lists = document.querySelectorAll('.account-list')
+  // 신랑/신부 아코디언 토글
+  document.querySelectorAll('.account-accordion__btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const isOpen = btn.classList.contains('account-accordion__btn--open')
+      const body = document.getElementById(`account-${btn.dataset.side}`)
+      if (!body) return
 
-  tabs.forEach(tab => {
-    tab.addEventListener('click', () => {
-      tabs.forEach(t  => t.classList.remove('account-tab--active'))
-      lists.forEach(l => l.classList.remove('account-list--active'))
+      btn.classList.toggle('account-accordion__btn--open', !isOpen)
 
-      tab.classList.add('account-tab--active')
-      const target = document.getElementById(`account-${tab.dataset.side}`)
-      if (target) target.classList.add('account-list--active')
+      if (!isOpen) {
+        // 펼치기: scrollHeight까지 확장 후 auto로
+        body.style.display = 'flex'
+        body.classList.add('account-accordion__body--open')
+        const h = body.scrollHeight
+        body.style.height = '0'
+        requestAnimationFrame(() => { body.style.height = h + 'px' })
+        body.addEventListener('transitionend', () => { body.style.height = 'auto' }, { once: true })
+      } else {
+        // 접기: 현재 높이에서 0으로
+        body.style.height = body.scrollHeight + 'px'
+        requestAnimationFrame(() => { body.style.height = '0' })
+        body.addEventListener('transitionend', () => {
+          body.classList.remove('account-accordion__body--open')
+          body.style.height = ''
+          body.style.display = ''
+        }, { once: true })
+      }
     })
   })
 

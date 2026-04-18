@@ -1,10 +1,10 @@
 /* ── 음악 버튼 ── */
 .music-btn {
-  position: fixed;
+  position: absolute;
   top: var(--space-6);
   right: var(--space-6);
-  z-index: var(--z-toast);
-  color: var(--color-primary-dark);
+  z-index: 2;
+  color: #fff;
   opacity: 0.75;
   transition: opacity var(--transition-fast), transform var(--transition-fast);
 }

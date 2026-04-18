@@ -56,7 +56,7 @@ export const CONFIG = {
 
   countdown: {
     storageBucket: 'gallery',
-    storagePath:   'hero/countdown-bg.jpeg',
+    storagePath:   'hero/countdown.jpeg',
     fallback:      '/src/assets/images/countdown-bg.jpg',
   },
 
