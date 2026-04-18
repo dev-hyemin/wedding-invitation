@@ -155,8 +155,8 @@ export async function initGallery() {
   const storageImages = await fetchStorageImages()
   const images = storageImages ?? CONFIG.gallery.fallback
 
-  // 전체 이미지 즉시 프리로드
-  images.forEach(({ src }) => { new Image().src = src })
+  // 전체 이미지 즉시 프리로드 (GC 방지를 위해 배열에 보관)
+  const _preloadCache = images.map(({ src }) => { const i = new Image(); i.src = src; return i })
 
   const openLightbox = initLightbox(images)
   const collapseBtn  = document.getElementById('gallery-collapse-btn')
