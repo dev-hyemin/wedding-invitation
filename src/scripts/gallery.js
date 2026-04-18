@@ -73,27 +73,32 @@ function initLightbox(images) {
     if (next === current) return
     isAnimating = true
 
+    const track = document.getElementById('lightbox-track')
+    const inX  = direction === 'left' ? '100%' : '-100%'
     const outX = direction === 'left' ? '-100%' : '100%'
-    const inX  = direction === 'left' ? '100%'  : '-100%'
 
-    const nextImg = new Image()
+    const nextImg = document.createElement('img')
     nextImg.src = images[next].src
-    nextImg.style.cssText = `position:absolute;inset:0;width:100%;height:100%;object-fit:contain;transform:translateX(${inX});transition:transform 0.3s ease`
-    lightbox.appendChild(nextImg)
+    nextImg.style.cssText = `position:absolute;inset:0;width:100%;height:100%;object-fit:contain;user-select:none;pointer-events:none;transform:translateX(${inX})`
+    track.appendChild(nextImg)
 
-    imgEl.style.transition = `transform 0.3s ease`
-    imgEl.style.transform  = `translateX(${outX})`
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+      imgEl.style.transition  = 'transform 0.35s ease'
+      imgEl.style.transform   = `translateX(${outX})`
+      nextImg.style.transition = 'transform 0.35s ease'
+      nextImg.style.transform  = 'translateX(0)'
+    }))
 
     setTimeout(() => {
-      imgEl.src = images[next].src
-      imgEl.alt = images[next].alt
+      current = next
+      imgEl.src = images[current].src
+      imgEl.alt = images[current].alt
       imgEl.style.transition = ''
       imgEl.style.transform  = ''
       nextImg.remove()
-      current = next
       if (counter) counter.textContent = `${current + 1} / ${images.length}`
       isAnimating = false
-    }, 300)
+    }, 370)
   }
 
   function show(index, direction = 'left') {
