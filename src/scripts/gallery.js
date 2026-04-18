@@ -49,7 +49,6 @@ function renderItems(grid, images, from, to, onClickItem) {
     const el = document.createElement('img')
     el.src = img.src
     el.alt = img.alt
-    el.loading = 'lazy'
     el.addEventListener('click', () => onClickItem(globalIdx))
     item.appendChild(el)
     grid.appendChild(item)
@@ -58,16 +57,46 @@ function renderItems(grid, images, from, to, onClickItem) {
 
 // ── 라이트박스 ──
 function initLightbox(images) {
-  const lightbox  = document.getElementById('lightbox')
-  const imgEl     = document.getElementById('lightbox-img')
-  const closeBtn  = document.getElementById('lightbox-close')
-  const counter   = document.getElementById('lightbox-counter')
+  const lightbox = document.getElementById('lightbox')
+  const imgEl    = document.getElementById('lightbox-img')
+  const closeBtn = document.getElementById('lightbox-close')
+  const counter  = document.getElementById('lightbox-counter')
   if (!lightbox || !imgEl) return
 
   let current = 0
   let touchStartX = 0
+  let isAnimating = false
 
-  function show(index) {
+  function slideTo(index, direction) {
+    if (isAnimating) return
+    const next = (index + images.length) % images.length
+    if (next === current) return
+    isAnimating = true
+
+    const outX = direction === 'left' ? '-100%' : '100%'
+    const inX  = direction === 'left' ? '100%'  : '-100%'
+
+    const nextImg = new Image()
+    nextImg.src = images[next].src
+    nextImg.style.cssText = `position:absolute;inset:0;width:100%;height:100%;object-fit:contain;transform:translateX(${inX});transition:transform 0.3s ease`
+    lightbox.appendChild(nextImg)
+
+    imgEl.style.transition = `transform 0.3s ease`
+    imgEl.style.transform  = `translateX(${outX})`
+
+    setTimeout(() => {
+      imgEl.src = images[next].src
+      imgEl.alt = images[next].alt
+      imgEl.style.transition = ''
+      imgEl.style.transform  = ''
+      nextImg.remove()
+      current = next
+      if (counter) counter.textContent = `${current + 1} / ${images.length}`
+      isAnimating = false
+    }, 300)
+  }
+
+  function show(index, direction = 'left') {
     current = (index + images.length) % images.length
     imgEl.src = images[current].src
     imgEl.alt = images[current].alt
@@ -96,7 +125,9 @@ function initLightbox(images) {
   lightbox.addEventListener('touchend', e => {
     const dx = e.changedTouches[0].clientX - touchStartX
     if (Math.abs(dx) < 40) return
-    dx < 0 ? show(current + 1) : show(current - 1)
+    dx < 0
+      ? slideTo(current + 1, 'left')
+      : slideTo(current - 1, 'right')
   }, { passive: true })
 
   // 배경 클릭 닫기
@@ -107,9 +138,9 @@ function initLightbox(images) {
   // 키보드
   document.addEventListener('keydown', e => {
     if (!lightbox.classList.contains('lightbox--open')) return
-    if (e.key === 'Escape')      close()
-    if (e.key === 'ArrowLeft')   show(current - 1)
-    if (e.key === 'ArrowRight')  show(current + 1)
+    if (e.key === 'Escape')     close()
+    if (e.key === 'ArrowLeft')  slideTo(current - 1, 'right')
+    if (e.key === 'ArrowRight') slideTo(current + 1, 'left')
   })
 
   return open
@@ -124,16 +155,18 @@ export async function initGallery() {
   const storageImages = await fetchStorageImages()
   const images = storageImages ?? CONFIG.gallery.fallback
 
-  const openLightbox = initLightbox(images)
+  // 전체 이미지 즉시 프리로드
+  images.forEach(({ src }) => { new Image().src = src })
 
-  const collapseBtn = document.getElementById('gallery-collapse-btn')
+  const openLightbox = initLightbox(images)
+  const collapseBtn  = document.getElementById('gallery-collapse-btn')
   let shownCount = 0
 
   const hasMore = images.length > PAGE_SIZE
 
   function updateButtons(expanded) {
-    if (moreBtn)     moreBtn.style.display     = expanded ? 'none' : (hasMore ? '' : 'none')
-    if (collapseBtn) collapseBtn.style.display  = expanded ? '' : 'none'
+    if (moreBtn)     moreBtn.style.display    = expanded ? 'none' : (hasMore ? '' : 'none')
+    if (collapseBtn) collapseBtn.style.display = expanded ? '' : 'none'
   }
 
   function showMore() {
@@ -155,16 +188,6 @@ export async function initGallery() {
   renderItems(grid, images, 0, PAGE_SIZE, openLightbox)
   shownCount = Math.min(PAGE_SIZE, images.length)
   updateButtons(false)
-
-  // 첫 9장 렌더 후 나머지 이미지 백그라운드 프리로드
-  if (images.length > PAGE_SIZE) {
-    requestIdleCallback(() => {
-      images.slice(PAGE_SIZE).forEach(({ src }) => {
-        const img = new Image()
-        img.src = src
-      })
-    }, { timeout: 3000 })
-  }
 
   moreBtn?.addEventListener('click', showMore)
   collapseBtn?.addEventListener('click', collapse)

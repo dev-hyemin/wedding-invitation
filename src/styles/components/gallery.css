@@ -114,6 +114,8 @@
   border-radius: var(--radius-sm);
   user-select: none;
   pointer-events: none;
+  position: relative;
+  will-change: transform;
 }
 
 .lightbox__counter {
