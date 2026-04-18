@@ -89,11 +89,11 @@ function renderAccounts(accounts) {
 function renderAccountList(id, list) {
   const container = document.getElementById(id)
   if (!container) return
-  container.innerHTML = list.map(({ bank, name, number }) => `
+  container.innerHTML = list.map(({ bank, role, name, number }) => `
     <div class="account-card">
       <div class="account-card__info">
         <span class="account-card__bank">${bank}</span>
-        <span class="account-card__name">${name}</span>
+        <span class="account-card__name"><strong>${role}</strong> ${name}</span>
         <span class="account-card__number">${number}</span>
       </div>
       <button class="btn btn--copy" data-account="${number}" aria-label="계좌번호 복사">
