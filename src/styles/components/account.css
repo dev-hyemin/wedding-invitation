@@ -89,7 +89,6 @@
 .account-card__name {
   font-size: var(--font-size-sm);
   color: var(--color-text);
-  font-weight: 700;
 }
 
 .account-card__number {
