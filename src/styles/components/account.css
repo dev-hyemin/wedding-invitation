@@ -3,43 +3,64 @@
   background: var(--color-bg);
 }
 
-/* 신랑/신부 탭 */
-.account-tabs {
+/* 신랑/신부 아코디언 */
+.account-accordion {
   display: flex;
-  gap: var(--space-2);
-  justify-content: center;
-  margin-bottom: var(--space-6);
-  background: var(--color-border);
-  border-radius: var(--radius-full);
-  padding: var(--space-1);
+  flex-direction: column;
+  gap: var(--space-3);
 }
 
-.account-tab {
-  flex: 1;
-  padding: var(--space-2) var(--space-4);
-  border-radius: var(--radius-full);
+.account-accordion__item {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+
+.account-accordion__btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-4) var(--space-5);
   font-size: var(--font-size-sm);
-  color: var(--color-text-light);
+  font-weight: 500;
+  color: var(--color-text);
+  background: var(--color-surface);
   transition: background var(--transition-fast), color var(--transition-fast);
-  text-align: center;
 }
 
-.account-tab--active {
-  background: var(--color-surface);
+.account-accordion__btn--open {
   color: var(--color-primary-dark);
-  font-weight: 500;
-  box-shadow: var(--shadow-sm);
+}
+
+.account-accordion__chevron {
+  flex-shrink: 0;
+  color: var(--color-text-light);
+  transition: transform var(--transition-fast);
+}
+
+.account-accordion__btn--open .account-accordion__chevron {
+  transform: rotate(180deg);
+  color: var(--color-primary);
 }
 
 /* 계좌 목록 */
-.account-list {
+.account-accordion__body {
   display: none;
   flex-direction: column;
-  gap: var(--space-4);
+  background: var(--color-surface);
+  overflow: hidden;
+  transition: height 0.3s ease;
 }
 
-.account-list--active {
+.account-accordion__body--open {
   display: flex;
+  border-top: 1px solid var(--color-border);
+}
+
+/* 카드 사이 점선 구분선 */
+.account-accordion__body .account-card + .account-card {
+  border-top: 1px dashed var(--color-border);
 }
 
 /* 계좌 카드 */
@@ -48,11 +69,8 @@
   align-items: center;
   justify-content: space-between;
   gap: var(--space-4);
-  padding: var(--space-5) var(--space-6);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-lg);
+  padding: var(--space-4) var(--space-5);
   background: var(--color-surface);
-  box-shadow: var(--shadow-sm);
 }
 
 .account-card__info {

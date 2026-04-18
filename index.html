@@ -29,15 +29,6 @@
   <audio id="bg-music" loop preload="none">
     <source src="/src/assets/audio/bgm.mp3" type="audio/mpeg" />
   </audio>
-  <button class="music-btn" id="music-btn" aria-label="음악 재생/정지">
-    <svg class="music-btn__icon music-btn__icon--play" viewBox="0 0 24 24" fill="currentColor" width="18" height="18">
-      <path d="M9 19V6l12 6.5z"/>
-    </svg>
-    <svg class="music-btn__icon music-btn__icon--pause" viewBox="0 0 24 24" fill="currentColor" width="18" height="18" style="display:none">
-      <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>
-    </svg>
-  </button>
-
   <!-- ================================
        SECTION 1: 히어로 (Hero)
   ================================ -->
@@ -50,6 +41,15 @@
         <span class="intro-line">Married</span>
       </p>
     </div>
+
+    <button class="music-btn" id="music-btn" aria-label="음악 재생/정지">
+      <svg class="music-btn__icon music-btn__icon--play" viewBox="0 0 24 24" fill="currentColor" width="18" height="18">
+        <path d="M9 19V6l12 6.5z"/>
+      </svg>
+      <svg class="music-btn__icon music-btn__icon--pause" viewBox="0 0 24 24" fill="currentColor" width="18" height="18" style="display:none">
+        <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>
+      </svg>
+    </button>
 
     <div class="hero__bg">
       <img
@@ -221,19 +221,36 @@
       <h2 class="section__title" data-aos="fade-up">갤러리</h2>
     </div>
 
-    <!-- Swiper 슬라이더 (슬라이드는 gallery.js에서 동적 생성) -->
-    <div class="swiper gallery-swiper" data-aos="fade-up" data-aos-delay="200">
-      <div class="swiper-wrapper" id="gallery-wrapper">
-        <!-- 로딩 스켈레톤 -->
-        <div class="swiper-slide gallery-skeleton"></div>
+    <div class="container">
+      <!-- 그리드 (이미지는 gallery.js에서 동적 생성) -->
+      <div class="gallery-grid" id="gallery-grid" data-aos="fade-up" data-aos-delay="200">
+        <div class="gallery-skeleton"></div>
+        <div class="gallery-skeleton"></div>
+        <div class="gallery-skeleton"></div>
       </div>
-      <div class="swiper-pagination"></div>
+      <div class="gallery-more-wrap">
+        <button class="gallery-arrow-btn" id="gallery-more-btn" style="display:none" aria-label="더보기">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="22" height="22">
+            <polyline points="6 9 12 15 18 9"/>
+          </svg>
+        </button>
+        <button class="gallery-arrow-btn" id="gallery-collapse-btn" style="display:none" aria-label="접기">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="22" height="22">
+            <polyline points="18 15 12 9 6 15"/>
+          </svg>
+        </button>
+      </div>
     </div>
 
     <!-- 라이트박스 -->
-    <div class="lightbox" id="lightbox" aria-hidden="true">
-      <button class="lightbox__close" id="lightbox-close" aria-label="닫기">&times;</button>
+    <div class="lightbox" id="lightbox" aria-hidden="true" role="dialog" aria-modal="true">
+      <button class="lightbox__close" id="lightbox-close" aria-label="닫기">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="24" height="24">
+          <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+        </svg>
+      </button>
       <img class="lightbox__img" id="lightbox-img" src="" alt="" />
+      <p class="lightbox__counter" id="lightbox-counter"></p>
     </div>
   </section>
 
@@ -244,15 +261,28 @@
     <div class="container">
       <h2 class="section__title" data-aos="fade-up">마음 전하실 곳</h2>
 
-      <!-- 신랑/신부 탭 -->
-      <div class="account-tabs" data-aos="fade-up" data-aos-delay="200">
-        <button class="account-tab account-tab--active" data-side="groom">신랑측</button>
-        <button class="account-tab" data-side="bride">신부측</button>
+      <!-- 신랑/신부 아코디언 -->
+      <div class="account-accordion" data-aos="fade-up" data-aos-delay="200">
+        <div class="account-accordion__item">
+          <button class="account-accordion__btn account-accordion__btn--open" data-side="groom">
+            신랑측
+            <svg class="account-accordion__chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16" aria-hidden="true">
+              <polyline points="6 9 12 15 18 9"/>
+            </svg>
+          </button>
+          <!-- 카드는 content.js에서 동적 렌더링 -->
+          <div class="account-accordion__body account-accordion__body--open" id="account-groom"></div>
+        </div>
+        <div class="account-accordion__item">
+          <button class="account-accordion__btn" data-side="bride">
+            신부측
+            <svg class="account-accordion__chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16" aria-hidden="true">
+              <polyline points="6 9 12 15 18 9"/>
+            </svg>
+          </button>
+          <div class="account-accordion__body" id="account-bride"></div>
+        </div>
       </div>
-
-      <!-- 카드는 content.js에서 동적 렌더링 -->
-      <div class="account-list account-list--active" id="account-groom"></div>
-      <div class="account-list" id="account-bride"></div>
     </div>
   </section>
 

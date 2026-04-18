@@ -1,6 +1,6 @@
-import Swiper from 'swiper'
-import { Pagination } from 'swiper/modules'
 import { CONFIG } from './config.js'
+
+const PAGE_SIZE = 9
 
 // ── Supabase Storage에서 이미지 URL 목록 가져오기 ──
 async function fetchStorageImages() {
@@ -20,7 +20,6 @@ async function fetchStorageImages() {
 
     if (error || !files?.length) return null
 
-    // 폴더·숨김 파일 제외 후 파일명 앞 숫자 기준 정렬 (1, 2, 10... 순)
     const imageFiles = files
       .filter(f => f.id && !f.name.startsWith('.'))
       .sort((a, b) => {
@@ -41,45 +40,122 @@ async function fetchStorageImages() {
   }
 }
 
-// ── 슬라이드 DOM 생성 ──
-function buildSlides(wrapper, images) {
-  wrapper.innerHTML = ''
-  images.forEach(({ src, alt }) => {
-    const slide = document.createElement('div')
-    slide.className = 'swiper-slide'
-    const img = document.createElement('img')
-    img.src = src
-    img.alt = alt
-    img.loading = 'lazy'
-    slide.appendChild(img)
-    wrapper.appendChild(slide)
+// ── 그리드 아이템 렌더링 ──
+function renderItems(grid, images, from, to, onClickItem) {
+  images.slice(from, to).forEach((img, localIdx) => {
+    const globalIdx = from + localIdx
+    const item = document.createElement('div')
+    item.className = 'gallery-item'
+    const el = document.createElement('img')
+    el.src = img.src
+    el.alt = img.alt
+    el.loading = 'lazy'
+    el.addEventListener('click', () => onClickItem(globalIdx))
+    item.appendChild(el)
+    grid.appendChild(item)
   })
 }
 
-// ── Swiper 초기화 ──
-function initSwiper(wrapper) {
-  return new Swiper('.gallery-swiper', {
-    modules: [Pagination],
-    loop: true,
-    pagination: {
-      el: '.swiper-pagination',
-      clickable: true,
-    },
-    grabCursor: true,
-    slidesPerView: 1,
-    spaceBetween: 0,
+// ── 라이트박스 ──
+function initLightbox(images) {
+  const lightbox  = document.getElementById('lightbox')
+  const imgEl     = document.getElementById('lightbox-img')
+  const closeBtn  = document.getElementById('lightbox-close')
+  const counter   = document.getElementById('lightbox-counter')
+  if (!lightbox || !imgEl) return
+
+  let current = 0
+  let touchStartX = 0
+
+  function show(index) {
+    current = (index + images.length) % images.length
+    imgEl.src = images[current].src
+    imgEl.alt = images[current].alt
+    if (counter) counter.textContent = `${current + 1} / ${images.length}`
+  }
+
+  function open(index) {
+    show(index)
+    lightbox.classList.add('lightbox--open')
+    lightbox.setAttribute('aria-hidden', 'false')
+    document.body.style.overflow = 'hidden'
+  }
+
+  function close() {
+    lightbox.classList.remove('lightbox--open')
+    lightbox.setAttribute('aria-hidden', 'true')
+    document.body.style.overflow = ''
+  }
+
+  closeBtn?.addEventListener('click', close)
+
+  // 터치 스와이프
+  lightbox.addEventListener('touchstart', e => {
+    touchStartX = e.touches[0].clientX
+  }, { passive: true })
+  lightbox.addEventListener('touchend', e => {
+    const dx = e.changedTouches[0].clientX - touchStartX
+    if (Math.abs(dx) < 40) return
+    dx < 0 ? show(current + 1) : show(current - 1)
+  }, { passive: true })
+
+  // 배경 클릭 닫기
+  lightbox.addEventListener('click', e => {
+    if (e.target === lightbox) close()
   })
+
+  // 키보드
+  document.addEventListener('keydown', e => {
+    if (!lightbox.classList.contains('lightbox--open')) return
+    if (e.key === 'Escape')      close()
+    if (e.key === 'ArrowLeft')   show(current - 1)
+    if (e.key === 'ArrowRight')  show(current + 1)
+  })
+
+  return open
 }
 
 // ── 진입점 ──
 export async function initGallery() {
-  const wrapper = document.getElementById('gallery-wrapper')
-  if (!wrapper) return
+  const grid    = document.getElementById('gallery-grid')
+  const moreBtn = document.getElementById('gallery-more-btn')
+  if (!grid) return
 
-  // Supabase Storage에서 먼저 시도, 실패 시 fallback
   const storageImages = await fetchStorageImages()
   const images = storageImages ?? CONFIG.gallery.fallback
 
-  buildSlides(wrapper, images)
-  initSwiper(wrapper)
+  const openLightbox = initLightbox(images)
+
+  const collapseBtn = document.getElementById('gallery-collapse-btn')
+  let shownCount = 0
+
+  const hasMore = images.length > PAGE_SIZE
+
+  function updateButtons(expanded) {
+    if (moreBtn)     moreBtn.style.display     = expanded ? 'none' : (hasMore ? '' : 'none')
+    if (collapseBtn) collapseBtn.style.display  = expanded ? '' : 'none'
+  }
+
+  function showMore() {
+    renderItems(grid, images, shownCount, images.length, openLightbox)
+    shownCount = images.length
+    updateButtons(true)
+  }
+
+  function collapse() {
+    grid.innerHTML = ''
+    shownCount = 0
+    renderItems(grid, images, 0, PAGE_SIZE, openLightbox)
+    shownCount = PAGE_SIZE
+    updateButtons(false)
+    grid.scrollIntoView({ behavior: 'smooth', block: 'start' })
+  }
+
+  grid.innerHTML = ''
+  renderItems(grid, images, 0, PAGE_SIZE, openLightbox)
+  shownCount = Math.min(PAGE_SIZE, images.length)
+  updateButtons(false)
+
+  moreBtn?.addEventListener('click', showMore)
+  collapseBtn?.addEventListener('click', collapse)
 }
