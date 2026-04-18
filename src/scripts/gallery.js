@@ -156,6 +156,16 @@ export async function initGallery() {
   shownCount = Math.min(PAGE_SIZE, images.length)
   updateButtons(false)
 
+  // 첫 9장 렌더 후 나머지 이미지 백그라운드 프리로드
+  if (images.length > PAGE_SIZE) {
+    requestIdleCallback(() => {
+      images.slice(PAGE_SIZE).forEach(({ src }) => {
+        const img = new Image()
+        img.src = src
+      })
+    }, { timeout: 3000 })
+  }
+
   moreBtn?.addEventListener('click', showMore)
   collapseBtn?.addEventListener('click', collapse)
 }
