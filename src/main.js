@@ -14,7 +14,7 @@ import { initGuestbook }              from './scripts/guestbook.js'
 
 // 인트로 애니메이션 동안 스크롤 비활성화 (3.6s 후 해제)
 document.body.style.overflow = 'hidden'
-setTimeout(() => { document.body.style.overflow = '' }, 3600)
+setTimeout(() => { document.body.style.overflow = '' }, 2600)
 
 // config.js 값을 DOM에 반영 (가장 먼저 실행)
 initContent()
