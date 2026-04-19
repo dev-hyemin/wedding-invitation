@@ -146,7 +146,13 @@ function initLightbox(images) {
   }
 
   closeBtn?.addEventListener('click', close)
-  lightbox.addEventListener('click', e => { if (e.target === lightbox) close() })
+
+  // 이미지·닫기버튼 외 영역 클릭 시 닫기 (스와이프 후 제외)
+  let wasDragged = false
+  lightbox.addEventListener('click', e => {
+    if (wasDragged) { wasDragged = false; return }
+    if (!e.target.closest('#lightbox-img') && !e.target.closest('#lightbox-close')) close()
+  })
 
   document.addEventListener('keydown', e => {
     if (!lightbox.classList.contains('lightbox--open')) return
@@ -203,7 +209,7 @@ function initLightbox(images) {
     nextEl.style.transition = transition
 
     if (dx < -threshold) {
-      // 다음으로 완성
+      wasDragged = true
       const nextIdx = (current + 1) % images.length
       imgEl.style.transform = `translateX(calc(-100% - ${SLIDE_GAP}))`
       nextEl.style.transform = 'translateX(0)'
@@ -215,7 +221,7 @@ function initLightbox(images) {
         updateCounter()
       }, 300)
     } else if (dx > threshold) {
-      // 이전으로 완성
+      wasDragged = true
       const prevIdx = (current - 1 + images.length) % images.length
       imgEl.style.transform = `translateX(calc(100% + ${SLIDE_GAP}))`
       prevEl.style.transform = 'translateX(0)'
