@@ -42,6 +42,7 @@ export const CONFIG = {
     bride: [
       { bank: '카카오뱅크', role: '신부',   name: '이진주', number: '3333-07-9175153' },
       { bank: '우리은행',  role: '아버지', name: '이광호', number: '1002-156-133983' },
+      { bank: '국민은행',  role: '어머니', name: '한지은', number: '058102-04-227527' },
     ],
   },
 
