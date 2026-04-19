@@ -63,6 +63,8 @@ export function initRsvp() {
       }
 
       localStorage.setItem(STORAGE_DATA_KEY, JSON.stringify(formData))
+      submit.classList.remove('btn--loading')
+      submit.disabled = false
       showSuccess()
 
     } catch {
