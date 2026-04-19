@@ -2,55 +2,68 @@ import { CONFIG } from './config.js'
 import { showToast } from './toast.js'
 import { burstParticles } from './particles.js'
 
-const STORAGE_KEY = 'rsvp_submitted'
+const STORAGE_KEY      = 'rsvp_id'
+const STORAGE_DATA_KEY = 'rsvp_data'
+
+async function getSupabase() {
+  const { url, anonKey } = CONFIG.supabase
+  if (!url || !anonKey) return null
+  const { createClient } = await import('@supabase/supabase-js')
+  return createClient(url, anonKey)
+}
 
 export function initRsvp() {
   const form    = document.getElementById('rsvp-form')
   const success = document.getElementById('rsvp-success')
   const submit  = document.getElementById('rsvp-submit')
+  const editBtn = document.getElementById('rsvp-edit-btn')
 
   if (!form) return
 
-  // 커스텀 셀렉트 초기화
   form.querySelectorAll('.form-select').forEach(initCustomSelect)
 
-  // 이미 제출한 경우
   if (localStorage.getItem(STORAGE_KEY)) {
-    form.hidden = true
-    if (success) success.hidden = false
-    return
+    showSuccess()
   }
+
+  editBtn?.addEventListener('click', () => {
+    const saved = JSON.parse(localStorage.getItem(STORAGE_DATA_KEY) || '{}')
+    prefillForm(form, saved)
+    form.hidden = false
+    if (success) success.hidden = true
+  })
 
   form.addEventListener('submit', async e => {
     e.preventDefault()
-
     if (!validate(form)) return
 
     burstParticles(submit)
     submit.classList.add('btn--loading')
     submit.disabled = true
 
-    const data = new FormData(form)
+    const formData  = Object.fromEntries(new FormData(form))
+    const payload   = { ...formData, headcount: parseInt(formData.headcount) || null }
+    const savedId   = localStorage.getItem(STORAGE_KEY)
 
     try {
-      const endpoint = CONFIG.rsvp.formspreeEndpoint
+      const supabase = await getSupabase()
 
-      if (endpoint) {
-        const res = await fetch(endpoint, {
-          method:  'POST',
-          headers: { Accept: 'application/json' },
-          body:    data,
-        })
-        if (!res.ok) throw new Error('전송 실패')
+      if (supabase) {
+        if (savedId && savedId !== 'dev-mode') {
+          const { error } = await supabase.from('rsvp').update(payload).eq('id', savedId)
+          if (error) throw error
+        } else {
+          const { data, error } = await supabase.from('rsvp').insert(payload).select('id').single()
+          if (error) throw error
+          localStorage.setItem(STORAGE_KEY, data.id)
+        }
       } else {
-        // 개발용: 실제 전송 없이 성공 처리
         await new Promise(r => setTimeout(r, 800))
+        if (!savedId) localStorage.setItem(STORAGE_KEY, 'dev-mode')
       }
 
-      localStorage.setItem(STORAGE_KEY, '1')
-      form.hidden = true
-      if (success) success.hidden = false
-
+      localStorage.setItem(STORAGE_DATA_KEY, JSON.stringify(formData))
+      showSuccess()
 
     } catch {
       showToast('전송에 실패했습니다. 잠시 후 다시 시도해주세요.')
@@ -58,19 +71,36 @@ export function initRsvp() {
       submit.disabled = false
     }
   })
+
+  function showSuccess() {
+    form.hidden = true
+    if (success) success.hidden = false
+  }
+}
+
+function prefillForm(form, data) {
+  const nameEl = form.querySelector('#rsvp-name')
+  if (nameEl && data.name) nameEl.value = data.name
+
+  ;['side', 'attend', 'meal'].forEach(field => {
+    if (!data[field]) return
+    const radio = form.querySelector(`input[name="${field}"][value="${data[field]}"]`)
+    if (radio) radio.checked = true
+  })
+
+  const select = form.querySelector('#rsvp-headcount')
+  if (select && data.headcount) select.value = data.headcount
 }
 
 function initCustomSelect(selectEl) {
   const options = Array.from(selectEl.options)
 
-  // 래퍼 삽입
   const wrapper = document.createElement('div')
   wrapper.className = 'custom-select-wrapper'
   selectEl.parentNode.insertBefore(wrapper, selectEl)
   wrapper.appendChild(selectEl)
   selectEl.hidden = true
 
-  // 트리거 (닫힌 상태 표시)
   const trigger = document.createElement('div')
   trigger.className = 'custom-select__trigger'
   trigger.setAttribute('role', 'button')
@@ -81,7 +111,6 @@ function initCustomSelect(selectEl) {
       <polyline points="6 9 12 15 18 9"/>
     </svg>`
 
-  // 드롭다운 목록
   const dropdown = document.createElement('ul')
   dropdown.className = 'custom-select__dropdown'
   dropdown.setAttribute('role', 'listbox')
@@ -109,7 +138,6 @@ function initCustomSelect(selectEl) {
   box.appendChild(dropdown)
   wrapper.appendChild(box)
 
-  // 열기 / 닫기
   trigger.addEventListener('click', e => {
     e.stopPropagation()
     wrapper.classList.toggle('is-open')
@@ -138,4 +166,3 @@ function validate(form) {
   }
   return true
 }
-

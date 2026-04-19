@@ -147,4 +147,9 @@
   font-size: var(--font-size-lg);
   color: var(--color-text);
   line-height: 1.8;
+  margin-bottom: var(--space-6);
+}
+
+#rsvp-edit-btn {
+  margin-top: var(--space-2);
 }
