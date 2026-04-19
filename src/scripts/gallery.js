@@ -55,11 +55,16 @@ function renderItems(grid, images, from, to, onClickItem) {
   })
 }
 
+const SLIDE_GAP = '16px'
+
 // ── 인접 이미지 엘리먼트 생성 헬퍼 ──
-function makeAdjacentImg(src, offsetX) {
+function makeAdjacentImg(src, side) {
   const img = document.createElement('img')
   img.src = src
-  img.style.cssText = `position:absolute;inset:0;width:100%;height:100%;object-fit:contain;user-select:none;pointer-events:none;transform:translateX(${offsetX})`
+  const tx = side === 'prev'
+    ? `calc(-100% - ${SLIDE_GAP})`
+    : `calc(100% + ${SLIDE_GAP})`
+  img.style.cssText = `position:absolute;inset:0;width:100%;height:100%;object-fit:contain;user-select:none;pointer-events:none;transform:translateX(${tx})`
   return img
 }
 
@@ -90,17 +95,19 @@ function initLightbox(images) {
     const next = (index + images.length) % images.length
     if (next === current) return
 
-    const inX  = direction === 'left' ? '100%' : '-100%'
-    const outX = direction === 'left' ? '-100%' : '100%'
+    const side   = direction === 'left' ? 'next' : 'prev'
+    const outX   = direction === 'left'
+      ? `calc(-100% - ${SLIDE_GAP})`
+      : `calc(100% + ${SLIDE_GAP})`
 
-    const incoming = makeAdjacentImg(images[next].src, inX)
+    const incoming = makeAdjacentImg(images[next].src, side)
     incoming.style.transition = 'none'
     track.appendChild(incoming)
 
     requestAnimationFrame(() => requestAnimationFrame(() => {
-      imgEl.style.transition   = 'transform 0.35s ease'
-      imgEl.style.transform    = `translateX(${outX})`
-      incoming.style.transition = 'transform 0.35s ease'
+      imgEl.style.transition    = 'transform 0.3s ease'
+      imgEl.style.transform     = `translateX(${outX})`
+      incoming.style.transition = 'transform 0.3s ease'
       incoming.style.transform  = 'translateX(0)'
     }))
 
@@ -112,7 +119,7 @@ function initLightbox(images) {
       imgEl.style.transform  = ''
       incoming.remove()
       updateCounter()
-    }, 370)
+    }, 320)
   }
 
   function show(index) {
@@ -157,37 +164,34 @@ function initLightbox(images) {
     startX = currentX = e.touches[0].clientX
     dragging = true
 
-    // 인접 이미지 디코딩 완료 후 배치 (깜빡임 방지)
+    // 프리로드된 이미지 → decode 대기 없이 즉시 DOM에 배치
     cleanAdjacent()
     const prevIdx = (current - 1 + images.length) % images.length
     const nextIdx = (current + 1) % images.length
 
-    prevEl = makeAdjacentImg(images[prevIdx].src, '-100%')
-    nextEl = makeAdjacentImg(images[nextIdx].src, '100%')
+    prevEl = makeAdjacentImg(images[prevIdx].src, 'prev')
+    nextEl = makeAdjacentImg(images[nextIdx].src, 'next')
+    track.appendChild(prevEl)
+    track.appendChild(nextEl)
 
-    Promise.all([prevEl.decode().catch(() => {}), nextEl.decode().catch(() => {})]).then(() => {
-      if (!dragging) return
-      track.appendChild(prevEl)
-      track.appendChild(nextEl)
-      imgEl.style.transition = 'none'
-      prevEl.style.transition = 'none'
-      nextEl.style.transition = 'none'
-    })
+    imgEl.style.transition = 'none'
+    prevEl.style.transition = 'none'
+    nextEl.style.transition = 'none'
   }, { passive: true })
 
   track.addEventListener('touchmove', e => {
-    if (!dragging) return
+    if (!dragging || !prevEl || !nextEl) return
     e.preventDefault()
     currentX = e.touches[0].clientX
     const dx = currentX - startX
 
     imgEl.style.transform = `translateX(${dx}px)`
-    prevEl.style.transform = `translateX(calc(-100% + ${dx}px))`
-    nextEl.style.transform = `translateX(calc(100% + ${dx}px))`
+    prevEl.style.transform = `translateX(calc(-100% - ${SLIDE_GAP} + ${dx}px))`
+    nextEl.style.transform = `translateX(calc(100% + ${SLIDE_GAP} + ${dx}px))`
   }, { passive: false })
 
   track.addEventListener('touchend', () => {
-    if (!dragging) return
+    if (!dragging || !prevEl || !nextEl) return
     dragging = false
 
     const dx = currentX - startX
@@ -201,7 +205,7 @@ function initLightbox(images) {
     if (dx < -threshold) {
       // 다음으로 완성
       const nextIdx = (current + 1) % images.length
-      imgEl.style.transform = 'translateX(-100%)'
+      imgEl.style.transform = `translateX(calc(-100% - ${SLIDE_GAP}))`
       nextEl.style.transform = 'translateX(0)'
       setTimeout(() => {
         current = nextIdx
@@ -213,7 +217,7 @@ function initLightbox(images) {
     } else if (dx > threshold) {
       // 이전으로 완성
       const prevIdx = (current - 1 + images.length) % images.length
-      imgEl.style.transform = 'translateX(100%)'
+      imgEl.style.transform = `translateX(calc(100% + ${SLIDE_GAP}))`
       prevEl.style.transform = 'translateX(0)'
       setTimeout(() => {
         current = prevIdx
