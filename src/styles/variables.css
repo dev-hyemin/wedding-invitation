@@ -1,3 +1,24 @@
+@font-face {
+  font-family: 'PrettyMinkyung';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/naverfont_08@1.0/Mingyung.woff') format('woff');
+  font-weight: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'LeftHandedPeopleAreBeautifulToo';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/naverfont_09@1.0/Pretty_Left_handed.woff') format('woff');
+  font-weight: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Masitneun';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/naverfont_11@1.0/Yammy.woff') format('woff');
+  font-weight: normal;
+  font-display: swap;
+}
+
 :root {
   /* ── 색상 팔레트 ── */
   --color-primary:      #7A9078;   /* 세이지 그린 */
@@ -24,12 +45,14 @@
   --particle-3: rgba(168, 188, 166, 0.70);  /* 라이트 세이지 */
 
   /* ── 타이포그래피 ── */
-  --font-serif:  'Gowun Batang', serif;
+  --font-serif:  'Gowun Batang', serif; 
   --font-sans:   'Gowun Batang', 'Apple SD Gothic Neo', sans-serif;
   --font-en:     'Gowun Batang', 'Apple SD Gothic Neo', sans-serif, cursive;
-  --font-intro:  'Playfair Display', cursive;   /* 히어로 인트로 손글씨 전용 폰트 */
-  --font-dday:   'Fredoka', sans-serif;   /* D-Day 배너 전용 폰트 (config.js에서 덮어씀) */
-
+  --font-intro:       'Playfair Display', cursive;   /* 히어로 인트로 손글씨 전용 폰트 */
+  --font-dday:        'Fredoka', sans-serif;         /* D-Day 배너 전용 폰트 */
+  --font-hero:        'LeftHandedPeopleAreBeautifulToo', sans-serif;  /* 히어로 영역 공통 */
+  /* 사용 가능 폰트: 'PrettyMinkyung', 'LeftHandedPeopleAreBeautifulToo', 'Masitneun' */
+  
   --font-size-xs:    0.75rem;   /* 12px */
   --font-size-sm:    0.875rem;  /* 14px */
   --font-size-base:  1rem;      /* 16px */
