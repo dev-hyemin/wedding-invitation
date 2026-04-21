@@ -80,20 +80,20 @@
 }
 
 .account-card__bank {
-  font-size: var(--font-size-xs);
+  font-size: var(--font-size-sm);
   color: var(--color-primary-dark);
   font-weight: 500;
   letter-spacing: 0.05em;
 }
 
 .account-card__name {
-  font-size: var(--font-size-sm);
+  font-size: var(--font-size-md);
   color: var(--color-text);
 }
 
 .account-card__number {
   font-family: monospace;
-  font-size: var(--font-size-xs);
+  font-size: var(--font-size-sm);
   color: var(--color-text-light);
   letter-spacing: 0.04em;
   word-break: break-all;
