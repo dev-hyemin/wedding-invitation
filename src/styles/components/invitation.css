@@ -65,7 +65,8 @@
 }
 
 .family-info__parents {
-  color: var(--color-text-light);
+  color: var(--color-text);
+  font-weight: 500;
 }
 
 .family-info__role {
