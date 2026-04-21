@@ -87,13 +87,13 @@
 }
 
 .account-card__name {
-  font-size: var(--font-size-md);
+  font-size: var(--font-size-sm);
   color: var(--color-text);
 }
 
 .account-card__number {
   font-family: monospace;
-  font-size: var(--font-size-sm);
+  font-size: var(--font-size-xs);
   color: var(--color-text-light);
   letter-spacing: 0.04em;
   word-break: break-all;
