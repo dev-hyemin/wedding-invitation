@@ -70,7 +70,7 @@
 }
 
 .family-info__role {
-  color: var(--color-text-muted);
+  color: var(--color-text-light);
   font-size: var(--font-size-xs);
 }
 
