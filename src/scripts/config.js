@@ -46,33 +46,21 @@ export const CONFIG = {
     ],
   },
 
-  // 히어로 배경 이미지 (Supabase Storage)
-  // storageBucket: 버킷 이름, storagePath: 버킷 내 파일 경로
-  // Supabase 미설정 시 fallback 경로의 로컬 이미지가 사용됩니다.
+  // 히어로 배경 이미지 경로 (public/images/ 기준)
   hero: {
-    storageBucket: 'gallery',
-    storagePath:   'hero/hero.jpeg',
-    fallback:      '/src/assets/images/hero-bg.jpg',
+    src: '/images/hero.jpg',
   },
 
   countdown: {
-    storageBucket: 'gallery',
-    storagePath:   'hero/countdown.jpeg',
-    fallback:      '/src/assets/images/countdown-bg.jpg',
+    src: '/images/countdown.jpg',
   },
 
-  // Supabase Storage 사용 시 bucket 이름을 설정하면 됩니다.
-  // Supabase 미설정 시 fallback 배열의 로컬 이미지가 사용됩니다.
+  // 갤러리 이미지 목록 (public/images/gallery/ 에 파일 추가 후 여기에 등록)
   gallery: {
-    // Supabase Storage 버킷 이름
-    storageBucket: 'gallery',
-    // 버킷 내 폴더 경로 (루트라면 빈 문자열)
-    storageFolder: '',
-    // Supabase 미설정 시 표시할 로컬 이미지 (fallback)
-    fallback: [
-      { src: '/src/assets/images/gallery/gallery-01.jpg', alt: '커플 사진 1' },
-      { src: '/src/assets/images/gallery/gallery-02.jpg', alt: '커플 사진 2' },
-      { src: '/src/assets/images/gallery/gallery-03.jpg', alt: '커플 사진 3' },
+    images: [
+      { src: '/images/gallery/01.jpg', alt: '커플 사진 1' },
+      { src: '/images/gallery/02.jpg', alt: '커플 사진 2' },
+      { src: '/images/gallery/03.jpg', alt: '커플 사진 3' },
     ],
   },
 

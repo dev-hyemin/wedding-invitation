@@ -2,42 +2,9 @@ import { CONFIG } from './config.js'
 
 const PAGE_SIZE = 9
 
-// ── Supabase Storage에서 이미지 URL 목록 가져오기 ──
-async function fetchStorageImages() {
-  const { url, anonKey } = CONFIG.supabase
-  if (!url || !anonKey) return null
-
-  try {
-    const { createClient } = await import('@supabase/supabase-js')
-    const supabase = createClient(url, anonKey)
-
-    const { storageBucket, storageFolder } = CONFIG.gallery
-    const folder = storageFolder || ''
-
-    const { data: files, error } = await supabase.storage
-      .from(storageBucket)
-      .list(folder)
-
-    if (error || !files?.length) return null
-
-    const imageFiles = files
-      .filter(f => f.id && !f.name.startsWith('.'))
-      .sort((a, b) => {
-        const numA = parseInt(a.name.replace(/^[^\d]+/, ''), 10)
-        const numB = parseInt(b.name.replace(/^[^\d]+/, ''), 10)
-        if (!isNaN(numA) && !isNaN(numB)) return numA - numB
-        return a.name.localeCompare(b.name)
-      })
-
-    return imageFiles.map((file, i) => {
-      const path = folder ? `${folder}/${file.name}` : file.name
-      const { data } = supabase.storage.from(storageBucket).getPublicUrl(path)
-      return { src: data.publicUrl, alt: `커플 사진 ${i + 1}` }
-    })
-  } catch (err) {
-    console.warn('[Gallery] Supabase Storage 로드 실패, fallback 사용:', err.message)
-    return null
-  }
+// ── 로컬 이미지 목록 가져오기 ──
+function fetchImages() {
+  return CONFIG.gallery.images
 }
 
 // ── 그리드 아이템 렌더링 ──
@@ -245,16 +212,15 @@ function initLightbox(images) {
 }
 
 // ── 진입점 ──
-export async function initGallery() {
+export function initGallery() {
   const grid    = document.getElementById('gallery-grid')
   const moreBtn = document.getElementById('gallery-more-btn')
   if (!grid) return
 
-  const storageImages = await fetchStorageImages()
-  const images = storageImages ?? CONFIG.gallery.fallback
+  const images = fetchImages()
 
-  // 전체 이미지 즉시 프리로드 (GC 방지용 배열 보관)
-  const _preloadCache = images.map(({ src }) => { const i = new Image(); i.src = src; return i })
+  // 화면에 표시되는 첫 PAGE_SIZE개만 프리로드
+  const _preloadCache = images.slice(0, PAGE_SIZE).map(({ src }) => { const i = new Image(); i.src = src; return i })
 
   const openLightbox = initLightbox(images)
   const collapseBtn  = document.getElementById('gallery-collapse-btn')
