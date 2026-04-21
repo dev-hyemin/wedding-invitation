@@ -24,7 +24,7 @@
 
 .map-venue__address {
   font-size: var(--font-size-sm);
-  color: var(--color-text-light);
+  color: var(--color-text);
 }
 
 .map__container {
