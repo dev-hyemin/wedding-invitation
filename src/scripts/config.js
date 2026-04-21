@@ -58,9 +58,9 @@ export const CONFIG = {
   // 갤러리 이미지 목록 (public/images/gallery/ 에 파일 추가 후 여기에 등록)
   gallery: {
     images: [
-      { src: '/images/gallery/01.jpg', alt: '커플 사진 1' },
-      { src: '/images/gallery/02.jpg', alt: '커플 사진 2' },
-      { src: '/images/gallery/03.jpg', alt: '커플 사진 3' },
+      { src: '/images/gallery/v01.jpg', alt: '커플 사진 1' },
+      { src: '/images/gallery/v02.jpg', alt: '커플 사진 2' },
+      { src: '/images/gallery/v03.jpg', alt: '커플 사진 3' },
     ],
   },
 
