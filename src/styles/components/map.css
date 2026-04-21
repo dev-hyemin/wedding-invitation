@@ -74,11 +74,15 @@
 
 .transport-content {
   display: none;
-  font-size: var(--font-size-md);
+  font-size: var(--font-size-sm);
   color: var(--color-text);
   line-height: 1.8;
   padding: var(--space-4) 0;
   padding-bottom: var(--space-10);
+}
+
+.transport-content p:first-child {
+  font-weight: 500;
 }
 
 .transport-content p + p {
