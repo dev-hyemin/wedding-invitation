@@ -48,11 +48,11 @@ export const CONFIG = {
 
   // 히어로 배경 이미지 경로 (public/images/ 기준)
   hero: {
-    src: '/images/hero.jpg',
+    src: '/images/hero.jpeg',
   },
 
   countdown: {
-    src: '/images/countdown.jpg',
+    src: '/images/countdown.jpeg',
   },
 
   // 갤러리 이미지 목록 (public/images/gallery/ 에 파일 추가 후 여기에 등록)
@@ -61,6 +61,22 @@ export const CONFIG = {
       { src: '/images/gallery/v01.jpg', alt: '커플 사진 1' },
       { src: '/images/gallery/v02.jpg', alt: '커플 사진 2' },
       { src: '/images/gallery/v03.jpg', alt: '커플 사진 3' },
+      { src: '/images/gallery/v05.jpg', alt: '커플 사진 5' },
+      { src: '/images/gallery/v06.jpg', alt: '커플 사진 6' },
+      { src: '/images/gallery/v07.jpg', alt: '커플 사진 7' },
+      { src: '/images/gallery/v08.jpg', alt: '커플 사진 8' },
+      { src: '/images/gallery/v09.jpg', alt: '커플 사진 9' },
+      { src: '/images/gallery/v10.jpg', alt: '커플 사진 10' },
+      { src: '/images/gallery/v11.jpg', alt: '커플 사진 11' },
+      { src: '/images/gallery/v12.jpg', alt: '커플 사진 12' },
+      { src: '/images/gallery/v13.jpg', alt: '커플 사진 13' },
+      { src: '/images/gallery/v14.jpg', alt: '커플 사진 14' },
+      { src: '/images/gallery/v15.jpg', alt: '커플 사진 15' },
+      { src: '/images/gallery/v16.jpg', alt: '커플 사진 16' },
+      { src: '/images/gallery/v17.jpg', alt: '커플 사진 17' },
+      { src: '/images/gallery/v18.jpg', alt: '커플 사진 18' },
+      { src: '/images/gallery/v19.jpg', alt: '커플 사진 19' },
+      { src: '/images/gallery/v20.jpg', alt: '커플 사진 20' },
     ],
   },
 
