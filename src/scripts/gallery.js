@@ -16,7 +16,6 @@ function renderItems(grid, images, from, to, onClickItem) {
     const el = document.createElement('img')
     el.src = img.src
     el.alt = img.alt
-    el.loading = 'lazy'
     el.addEventListener('click', () => onClickItem(globalIdx))
     item.appendChild(el)
     grid.appendChild(item)
@@ -220,8 +219,8 @@ export function initGallery() {
 
   const images = fetchImages()
 
-  // 화면에 표시되는 첫 PAGE_SIZE개만 프리로드
-  const _preloadCache = images.slice(0, PAGE_SIZE).map(({ src }) => { const i = new Image(); i.src = src; return i })
+  // 전체 이미지 프리로드 (GC 방지용 배열 보관)
+  const _preloadCache = images.map(({ src }) => { const i = new Image(); i.src = src; return i })
 
   const openLightbox = initLightbox(images)
   const collapseBtn  = document.getElementById('gallery-collapse-btn')
