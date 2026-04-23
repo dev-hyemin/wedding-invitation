@@ -422,7 +422,20 @@
         <p class="guestbook-empty" id="guestbook-empty">아직 방명록이 없습니다.</p>
       </div>
 
-      <button class="btn btn--text" id="guestbook-load-more" hidden>더 보기</button>
+      <button class="btn btn--ghost btn--sm guestbook-view-all-btn" id="guestbook-view-all" hidden>전체보기</button>
+    </div>
+
+    <!-- 전체보기 모달 -->
+    <div class="modal" id="guestbook-modal" aria-hidden="true">
+      <div class="modal__backdrop" id="guestbook-modal-backdrop"></div>
+      <div class="modal__box modal__box--tall" role="dialog" aria-modal="true">
+        <div class="modal__header">
+          <h3 class="modal__title">방명록</h3>
+          <button class="modal__close" id="guestbook-modal-close" aria-label="닫기">✕</button>
+        </div>
+        <div class="guestbook-modal-list" id="guestbook-modal-list"></div>
+        <button class="btn btn--text" id="guestbook-modal-load-more" hidden>더 보기</button>
+      </div>
     </div>
 
     <!-- 삭제 확인 모달 -->
