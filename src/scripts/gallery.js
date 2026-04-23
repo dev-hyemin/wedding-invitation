@@ -16,6 +16,7 @@ function renderItems(grid, images, from, to, onClickItem) {
     const el = document.createElement('img')
     el.src = img.src
     el.alt = img.alt
+    el.loading = 'lazy'
     el.addEventListener('click', () => onClickItem(globalIdx))
     item.appendChild(el)
     grid.appendChild(item)

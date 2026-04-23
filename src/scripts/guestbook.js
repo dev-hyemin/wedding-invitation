@@ -2,7 +2,7 @@ import { CONFIG } from './config.js'
 import { showToast } from './toast.js'
 import { burstParticles } from './particles.js'
 
-const PAGE_SIZE = 10
+const PAGE_SIZE = 4
 
 let supabase     = null
 let offset       = 0
