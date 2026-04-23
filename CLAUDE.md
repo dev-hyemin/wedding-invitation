@@ -94,13 +94,11 @@ Supabase 연동 (구체적 스키마는 guestbook.js 참고)
 
 ## 주요 구현 패턴
 
-### 갤러리 라이트박스 스와이프
-- `touchstart`: 인접 이미지(prevEl·nextEl) 즉시 DOM에 추가
-- `touchmove`: 세 이미지를 `translateX`로 함께 이동 (passive: false)
-- `touchend`: threshold(60px) 초과 시 슬라이드 완성, 미만 시 복귀
-- `wasDragged` 플래그로 스와이프 후 배경 클릭 오동작 방지
-- `SLIDE_GAP = '16px'` 이미지 간 간격
-- 첫 PAGE_SIZE(9)장만 프리로드 (초기 로딩 최적화)
+### 갤러리
+- 첫 9장 그리드 표시, 더보기로 전체 펼침
+- 페이지 로드 시 전체 이미지 프리로드 (`_preloadCache`) — 더보기 클릭 시 네트워크 재요청 없음
+- 라이트박스 배경 클릭으로 닫기, `wasDragged` 플래그로 스와이프 후 오동작 방지
+- 스와이프: `touchstart`에 인접 이미지 즉시 추가, `touchmove`로 세 이미지 동시 이동, `SLIDE_GAP = '16px'`
 
 ### 배경 음악 자동재생
 브라우저 autoplay 정책으로 인해 `audio.play()` 실패 시 첫 터치/클릭 이벤트에서 재생 시작.
@@ -113,6 +111,13 @@ Supabase 연동 (구체적 스키마는 guestbook.js 참고)
 1. 최초 제출 → Supabase INSERT → `rsvp_id`(UUID)를 localStorage에 저장
 2. "참석 여부 변경" 클릭 → 이전 답변을 localStorage에서 읽어 폼 사전 입력
 3. 재제출 → `rsvp_id` 기준으로 Supabase UPDATE
+
+### 방명록
+- 섹션에 최신 **3개** 표시 (`PAGE_SIZE = 3`)
+- **전체보기** 버튼 클릭 시 모달 팝업으로 전체 목록 스크롤 (10개씩 더보기)
+- 3개 이하일 때는 전체보기 버튼 숨김
+- 삭제 시 섹션·모달 양쪽 동기화 후 미리보기 새로고침
+- Supabase Free 플랜: 7일 미활성 시 자동 일시정지 → 청첩장 발송 전 대시보드 접속으로 해제
 
 ### 폰트 구조
 - `--font-hero`: 히어로 영역 전용 (label·name·date) — `variables.css`에서 교체
