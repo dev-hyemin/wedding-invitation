@@ -46,27 +46,18 @@ export const CONFIG = {
     ],
   },
 
-  // 히어로 배경 이미지 (Supabase Storage)
-  // storageBucket: 버킷 이름, storagePath: 버킷 내 파일 경로
-  // Supabase 미설정 시 fallback 경로의 로컬 이미지가 사용됩니다.
+  // 히어로 배경 이미지 경로 (public/images/ 기준)
   hero: {
-    storageBucket: 'gallery',
-    storagePath:   'hero/hero.jpeg',
-    fallback:      '/images/hero.jpeg',
+    src: '/images/hero.jpeg',
   },
 
   countdown: {
-    storageBucket: 'gallery',
-    storagePath:   'hero/countdown.jpeg',
-    fallback:      '/images/countdown.jpeg',
+    src: '/images/countdown.jpeg',
   },
 
-  // Supabase Storage 버킷에서 갤러리 이미지를 자동으로 불러옵니다.
-  // Supabase 미설정 시 fallback 배열의 로컬 이미지가 사용됩니다.
+  // 갤러리 이미지 목록 (public/images/gallery/ 에 파일 추가 후 여기에 등록)
   gallery: {
-    storageBucket: 'gallery',
-    storageFolder: '',
-    fallback: [],
+    images: [],
   },
 
   // Formspree 엔드포인트 (https://formspree.io 에서 발급)
