@@ -21,28 +21,28 @@
 
 :root {
   /* ── 색상 팔레트 ── */
-  --color-primary:      #7A9078;   /* 세이지 그린 */
-  --color-primary-mid:  #647964;   /* 미드 세이지 (primary ↔ dark 중간) */
-  --color-primary-dark: #4E6250;   /* 다크 포레스트 세이지 */
-  --color-secondary:    #A8BCA6;   /* 라이트 세이지 */
-  --color-accent:       #ECE8DF;   /* 웜 크림 액센트 */
-  --color-bg:           #F3EDE3;   /* 웜 크림 배경 */
-  --color-bg-alt:       #F3EDE3;   /* 웜 크림 배경 */
-  --color-surface:      #FDFAF6;   /* 오프화이트 (카드 표면) */
+  --color-primary:      #4D7CAE;   /* 스카이 블루 */
+  --color-primary-mid:  #3F6E9F;   /* 미드 블루 */
+  --color-primary-dark: #2F5880;   /* 딥 네이비 블루 */
+  --color-secondary:    #A3BDD6;   /* 라이트 블루 */
+  --color-accent:       #F5A06E;   /* 웜 오렌지 액센트 */
+  --color-bg:           #F3F7FB;   /* 라이트 블루 배경 */
+  --color-bg-alt:       #EAF1F8;   /* 라이트 블루 배경 alt */
+  --color-surface:      #FDFEFF;   /* 오프화이트 (카드 표면) */
   --color-text:         #2C2C2C;   /* 다크 차콜 */
-  --color-text-light:   #7A7468;   /* 웜 그레이 */
-  --color-text-muted:   #B0A898;   /* 뮤트 베이지 그레이 */
-  --color-border:       #D8D0C3;   /* 웜 베이지 보더 */
+  --color-text-light:   #6B7A8A;   /* 쿨 그레이 */
+  --color-text-muted:   #9BAAB8;   /* 뮤트 블루 그레이 */
+  --color-border:       #C8D8E8;   /* 라이트 블루 보더 */
   --color-danger:       #C0645A;
   --color-success:      #5A8E68;
 
   /* ── rgba 포커스 링 (CSS에서 직접 사용) ── */
-  --color-focus-ring:   rgba(122, 144, 120, 0.25);
+  --color-focus-ring:   rgba(77, 124, 174, 0.25);
 
   /* ── JS 파티클 색상 (animations.js, guestbook.js, rsvp.js에서 읽어옴) ── */
-  --particle-1: rgba(122, 144, 120, 0.65);  /* 세이지 그린 */
+  --particle-1: rgba(77, 124, 174, 0.65);   /* 블루 */
   --particle-2: rgba(253, 250, 246, 0.90);  /* 오프화이트 */
-  --particle-3: rgba(168, 188, 166, 0.70);  /* 라이트 세이지 */
+  --particle-3: rgba(245, 160, 110, 0.70);  /* 오렌지 */
 
   /* ── 타이포그래피 ── */
   --font-serif:  'Gowun Batang', serif; 
