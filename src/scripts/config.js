@@ -21,10 +21,10 @@ export const CONFIG = {
 
   wedding: {
     // 반드시 ISO 형식으로 기입하세요
-    datetime: '2026-06-20T12:30:00',
-    dateDisplay: '2026년 6월 20일 토요일 오후 12시 30분',
+    datetime: '2026-10-24T13:00:00',
+    dateDisplay: '2026년 10월 24일 토요일 오후 1시',
     // D-Day 배너에 표시되는 날짜 (날짜만)
-    dateShort: '2026년 6월 20일',
+    dateShort: '2026년 10월 24일',
     venue: '구리교회',
     hall: '3층 대강당',
     address: '경기 구리시 경춘로276번길 11-9',
