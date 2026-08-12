@@ -4,19 +4,19 @@
  */
 export const CONFIG = {
   groom: {
-    name: '김덕림',
-    englishName: 'Kim Deok-rim',
-    father: '김대중',
-    mother: '강지행',
-    phone: '010-1234-5678',
+    name: '임현섭',
+    englishName: 'Lim Hyun-seop',
+    father: '임경현',
+    mother: '한미자',
+    phone: '010-7919-6905',
   },
 
   bride: {
-    name: '이진주',
-    englishName: 'Lee Jin-joo',
-    father: '이광호',
-    mother: '한지은',
-    phone: '010-9876-5432',
+    name: '이수진',
+    englishName: 'Lee Su-jin',
+    father: '이황연',
+    mother: '김혜경',
+    phone: '010-9119-1318',
   },
 
   wedding: {
@@ -35,14 +35,14 @@ export const CONFIG = {
 
   accounts: {
     groom: [
-      { bank: '국민은행',  role: '신랑',   name: '김덕림', number: '640401-04-362945' },
-      { bank: '농협은행',  role: '아버지', name: '김대중', number: '717120-56-008617' },
-      { bank: '농협은행',  role: '어머니', name: '강지행', number: '721082-52-125076' },
+      { bank: '국민은행', role: '신랑',   name: '임현섭', number: '793302-01-289362' },
+      { bank: '신한은행', role: '아버지', name: '임경현', number: '110-050-563719' },
+      { bank: '신한은행', role: '어머니', name: '임경현', number: '110-050-563719' },
     ],
     bride: [
-      { bank: '카카오뱅크', role: '신부',   name: '이진주', number: '3333-07-9175153' },
-      { bank: '우리은행',  role: '아버지', name: '이광호', number: '1002-156-133983' },
-      { bank: '국민은행',  role: '어머니', name: '한지은', number: '058102-04-227527' },
+      { bank: '우리은행', role: '신부',   name: '이수진', number: '1002-152-992836' },
+      { bank: '신한은행', role: '아버지', name: '이황연', number: '110-413-446091' },
+      { bank: '우리은행', role: '어머니', name: '김혜경', number: '071-442372-02-001' },
     ],
   },
 
@@ -57,27 +57,7 @@ export const CONFIG = {
 
   // 갤러리 이미지 목록 (public/images/gallery/ 에 파일 추가 후 여기에 등록)
   gallery: {
-    images: [
-      { src: '/images/gallery/v01.jpg', alt: '커플 사진 1' },
-      { src: '/images/gallery/v02.jpg', alt: '커플 사진 2' },
-      { src: '/images/gallery/v03.jpg', alt: '커플 사진 3' },
-      { src: '/images/gallery/v05.jpg', alt: '커플 사진 5' },
-      { src: '/images/gallery/v06.jpg', alt: '커플 사진 6' },
-      { src: '/images/gallery/v07.jpg', alt: '커플 사진 7' },
-      { src: '/images/gallery/v08.jpg', alt: '커플 사진 8' },
-      { src: '/images/gallery/v09.jpg', alt: '커플 사진 9' },
-      { src: '/images/gallery/v10.jpg', alt: '커플 사진 10' },
-      { src: '/images/gallery/v11.jpg', alt: '커플 사진 11' },
-      { src: '/images/gallery/v12.jpg', alt: '커플 사진 12' },
-      { src: '/images/gallery/v13.jpg', alt: '커플 사진 13' },
-      { src: '/images/gallery/v14.jpg', alt: '커플 사진 14' },
-      { src: '/images/gallery/v15.jpg', alt: '커플 사진 15' },
-      { src: '/images/gallery/v16.jpg', alt: '커플 사진 16' },
-      { src: '/images/gallery/v17.jpg', alt: '커플 사진 17' },
-      { src: '/images/gallery/v18.jpg', alt: '커플 사진 18' },
-      { src: '/images/gallery/v19.jpg', alt: '커플 사진 19' },
-      { src: '/images/gallery/v20.jpg', alt: '커플 사진 20' },
-    ],
+    images: [],
   },
 
   // Formspree 엔드포인트 (https://formspree.io 에서 발급)
