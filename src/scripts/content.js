@@ -71,8 +71,46 @@ function renderTransport(transport) {
     }).join('')
   }
   render('tab-bus', transport.bus)
-  render('tab-subway', transport.subway)
   render('tab-car', transport.car)
+  renderSubwayWithToggle('tab-subway', transport.subway)
+}
+
+function renderSubwayWithToggle(id, text) {
+  const el = document.getElementById(id)
+  if (!el) return
+
+  const toHtml = line => {
+    if (/^\p{Emoji}/u.test(line)) return `<p class="transport-section-title">${line}</p>`
+    return `<p>${line}</p>`
+  }
+
+  const lines = text.split('\n')
+
+  // 두 번째 📍 역부터 접기
+  let emojiCount = 0
+  let splitIdx = lines.length
+  for (let i = 0; i < lines.length; i++) {
+    if (/^\p{Emoji}/u.test(lines[i])) {
+      emojiCount++
+      if (emojiCount === 2) { splitIdx = i; break }
+    }
+  }
+
+  const visible = lines.slice(0, splitIdx)
+  const hidden  = lines.slice(splitIdx)
+
+  el.innerHTML =
+    visible.map(toHtml).join('') +
+    `<div class="transport-more" id="subway-more">${hidden.map(toHtml).join('')}</div>` +
+    `<button class="transport-more-btn" id="subway-more-btn" aria-expanded="false">더보기 ▾</button>`
+
+  document.getElementById('subway-more-btn').addEventListener('click', function () {
+    const more = document.getElementById('subway-more')
+    const expanded = this.getAttribute('aria-expanded') === 'true'
+    this.setAttribute('aria-expanded', String(!expanded))
+    more.classList.toggle('transport-more--open')
+    this.textContent = expanded ? '더보기 ▾' : '접기 ▴'
+  })
 }
 
 function renderAccounts(accounts) {
