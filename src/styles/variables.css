@@ -1,3 +1,26 @@
+/* 안창호체 */
+@font-face {
+  font-family: 'AnchangHo';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2402_1@1.0/KCC-Ahnchangho.woff2') format('woff2');
+  font-weight: normal;
+  font-display: swap;
+}
+
+/* 고신고딕 — CDN URL 확인 후 교체 예정 */
+@font-face {
+  font-family: 'GoshinGothic';
+  src: url('') format('woff2');
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'GoshinGothic';
+  src: url('') format('woff2');
+  font-weight: 600;
+  font-display: swap;
+}
+
 @font-face {
   font-family: 'PrettyMinkyung';
   src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/naverfont_08@1.0/Mingyung.woff') format('woff');
