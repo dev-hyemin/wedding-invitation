@@ -101,8 +101,8 @@ export const CONFIG = {
 
   // 카카오맵 지도 퍼가기 (map.kakao.com → 장소 검색 → 지도 퍼가기)
   kakaomap: {
-    timestamp: '1786685436260',
-    key:       'sxhjgphrn4f',
+    timestamp: '1786691639551',
+    key:       'sxjc7yf7ewu',
   },
 
   // 교통 안내 텍스트
