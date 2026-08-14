@@ -18,7 +18,7 @@
   color: var(--color-text-muted, var(--color-text-light));
   opacity: 0.7;
   margin-top: var(--space-4);
-  margin-bottom: var(--space-8);
+  margin-bottom: var(--space-12);
   letter-spacing: 0.02em;
 }
 

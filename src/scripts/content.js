@@ -86,15 +86,10 @@ function renderSubwayWithToggle(id, text) {
 
   const lines = text.split('\n')
 
-  // 두 번째 📍 역부터 접기
-  let emojiCount = 0
-  let splitIdx = lines.length
-  for (let i = 0; i < lines.length; i++) {
-    if (/^\p{Emoji}/u.test(lines[i])) {
-      emojiCount++
-      if (emojiCount === 2) { splitIdx = i; break }
-    }
-  }
+  // 첫 번째 📍 역 헤더 + 첫 번째 노선 한 줄까지 표시, 그 이후 접기
+  let firstEmojiIdx = lines.findIndex(l => /^\p{Emoji}/u.test(l))
+  let splitIdx = firstEmojiIdx + 2  // 역 헤더(+0) + 첫 노선(+1) → +2부터 숨김
+  if (firstEmojiIdx < 0) splitIdx = lines.length
 
   const visible = lines.slice(0, splitIdx)
   const hidden  = lines.slice(splitIdx)
@@ -102,14 +97,14 @@ function renderSubwayWithToggle(id, text) {
   el.innerHTML =
     visible.map(toHtml).join('') +
     `<div class="transport-more" id="subway-more">${hidden.map(toHtml).join('')}</div>` +
-    `<button class="transport-more-btn" id="subway-more-btn" aria-expanded="false">더보기 ▾</button>`
+    `<button class="transport-more-btn" id="subway-more-btn" aria-expanded="false">더보기</button>`
 
   document.getElementById('subway-more-btn').addEventListener('click', function () {
     const more = document.getElementById('subway-more')
     const expanded = this.getAttribute('aria-expanded') === 'true'
     this.setAttribute('aria-expanded', String(!expanded))
     more.classList.toggle('transport-more--open')
-    this.textContent = expanded ? '더보기 ▾' : '접기 ▴'
+    this.textContent = expanded ? '더보기' : '접기'
   })
 }
 

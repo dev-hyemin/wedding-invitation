@@ -113,11 +113,13 @@
 
 /* 지하철 더보기 토글 */
 .transport-more {
-  display: none;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease;
 }
 
 .transport-more--open {
-  display: block;
+  max-height: 600px;
 }
 
 .transport-more-btn {
