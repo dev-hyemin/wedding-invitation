@@ -5,11 +5,17 @@ import { burstParticles } from './particles.js'
 const STORAGE_KEY      = 'rsvp_id'
 const STORAGE_DATA_KEY = 'rsvp_data'
 
-async function getSupabase() {
-  const { url, anonKey } = CONFIG.supabase
-  if (!url || !anonKey) return null
-  const { createClient } = await import('@supabase/supabase-js')
-  return createClient(url, anonKey)
+let firestoreDb = null
+
+async function getDb() {
+  if (firestoreDb) return firestoreDb
+  const { apiKey, authDomain, projectId } = CONFIG.firebase
+  if (!apiKey || !projectId) return null
+  const { initializeApp, getApps } = await import('firebase/app')
+  const { getFirestore }           = await import('firebase/firestore')
+  if (!getApps().length) initializeApp({ apiKey, authDomain, projectId })
+  firestoreDb = getFirestore()
+  return firestoreDb
 }
 
 export function initRsvp() {
@@ -41,21 +47,25 @@ export function initRsvp() {
     submit.classList.add('btn--loading')
     submit.disabled = true
 
-    const formData  = Object.fromEntries(new FormData(form))
-    const payload   = { ...formData, headcount: parseInt(formData.headcount) || null }
-    const savedId   = localStorage.getItem(STORAGE_KEY)
+    const formData = Object.fromEntries(new FormData(form))
+    const payload  = { ...formData, headcount: parseInt(formData.headcount) || null }
+    const savedId  = localStorage.getItem(STORAGE_KEY)
 
     try {
-      const supabase = await getSupabase()
+      const db = await getDb()
 
-      if (supabase) {
+      if (db) {
+        const { collection, doc, addDoc, updateDoc, serverTimestamp } =
+          await import('firebase/firestore')
+
         if (savedId && savedId !== 'dev-mode') {
-          const { error } = await supabase.from('rsvp').update(payload).eq('id', savedId)
-          if (error) throw error
+          await updateDoc(doc(db, 'rsvp', savedId), payload)
         } else {
-          const { data, error } = await supabase.from('rsvp').insert(payload).select('id').single()
-          if (error) throw error
-          localStorage.setItem(STORAGE_KEY, data.id)
+          const ref = await addDoc(collection(db, 'rsvp'), {
+            ...payload,
+            created_at: serverTimestamp(),
+          })
+          localStorage.setItem(STORAGE_KEY, ref.id)
         }
       } else {
         await new Promise(r => setTimeout(r, 800))
