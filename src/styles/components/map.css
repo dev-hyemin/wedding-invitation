@@ -121,15 +121,23 @@
 }
 
 .transport-more-btn {
-  margin-top: var(--space-3);
-  font-size: var(--font-size-xs);
-  color: var(--color-primary-dark);
+  display: block;
+  margin: var(--space-4) auto 0;
+  padding: var(--space-2) var(--space-6);
+  font-size: var(--font-size-sm);
   font-weight: 500;
-  background: none;
-  border: none;
+  color: var(--color-primary-dark);
+  background: transparent;
+  border: 1px solid var(--color-primary-dark);
+  border-radius: var(--radius-full);
   cursor: pointer;
-  padding: 0;
-  letter-spacing: 0.02em;
+  letter-spacing: 0.04em;
+  transition: background var(--transition-fast), color var(--transition-fast);
+}
+
+.transport-more-btn:active {
+  background: var(--color-primary-dark);
+  color: #fff;
 }
 
 /* 길찾기 아이콘 버튼 */
