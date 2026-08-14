@@ -46,13 +46,13 @@ export const CONFIG = {
     ],
   },
 
-  // 히어로 배경 이미지 경로 (public/images/ 기준)
+  // 히어로 배경 이미지 경로 (public/ 기준)
   hero: {
-    src: '/images/hero.jpeg',
+    src: '/hero.jpeg',
   },
 
   countdown: {
-    src: '/images/countdown.jpeg',
+    src: '/countdown.jpeg',
   },
 
   // 갤러리 이미지 목록 (public/images/gallery/ 에 파일 추가 후 여기에 등록)
