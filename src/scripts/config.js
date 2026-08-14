@@ -21,16 +21,16 @@ export const CONFIG = {
 
   wedding: {
     // 반드시 ISO 형식으로 기입하세요
-    datetime: '2026-06-20T12:30:00',
-    dateDisplay: '2026년 6월 20일 토요일 오후 12시 30분',
+    datetime: '2026-10-24T13:00:00',
+    dateDisplay: '2026년 10월 24일 토요일 오후 1시',
     // D-Day 배너에 표시되는 날짜 (날짜만)
-    dateShort: '2026년 6월 20일',
-    venue: '구리교회',
-    hall: '3층 대강당',
-    address: '경기 구리시 경춘로276번길 11-9',
+    dateShort: '2026년 10월 24일',
+    venue: '서울중랑교회',
+    hall: '12층 대강당',
+    address: '서울 중랑구 동일로140길 33',
     // 지도 좌표 (구글 지도에서 확인)
-    lat: 37.6027134,
-    lng: 127.1463076,
+    lat: 37.5970000,
+    lng: 127.0860000,
   },
 
   accounts: {
@@ -57,7 +57,27 @@ export const CONFIG = {
 
   // 갤러리 이미지 목록 (public/images/gallery/ 에 파일 추가 후 여기에 등록)
   gallery: {
-    images: [],
+    images: [
+      '/images/gallery/v01.jpg',
+      '/images/gallery/v02.jpg',
+      '/images/gallery/v03.jpg',
+      '/images/gallery/v05.jpg',
+      '/images/gallery/v06.jpg',
+      '/images/gallery/v07.jpg',
+      '/images/gallery/v08.jpg',
+      '/images/gallery/v09.jpg',
+      '/images/gallery/v10.jpg',
+      '/images/gallery/v11.jpg',
+      '/images/gallery/v12.jpg',
+      '/images/gallery/v13.jpg',
+      '/images/gallery/v14.jpg',
+      '/images/gallery/v15.jpg',
+      '/images/gallery/v16.jpg',
+      '/images/gallery/v17.jpg',
+      '/images/gallery/v18.jpg',
+      '/images/gallery/v19.jpg',
+      '/images/gallery/v20.jpg',
+    ],
   },
 
   // Formspree 엔드포인트 (https://formspree.io 에서 발급)
