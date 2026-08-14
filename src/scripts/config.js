@@ -65,10 +65,17 @@ export const CONFIG = {
     formspreeEndpoint: import.meta.env.VITE_FORMSPREE_ENDPOINT || '',
   },
 
-  // Supabase 설정 (https://supabase.com 에서 발급)
+  // Supabase 설정 (RSVP 전용, https://supabase.com 에서 발급)
   supabase: {
     url:     import.meta.env.VITE_SUPABASE_URL || '',
     anonKey: import.meta.env.VITE_SUPABASE_ANON_KEY || '',
+  },
+
+  // Firebase 설정 (방명록 전용, https://console.firebase.google.com 에서 발급)
+  firebase: {
+    apiKey:     import.meta.env.VITE_FIREBASE_API_KEY     || '',
+    authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN || '',
+    projectId:  import.meta.env.VITE_FIREBASE_PROJECT_ID  || '',
   },
 
   // 카카오맵 지도 퍼가기 (map.kakao.com → 장소 검색 → 지도 퍼가기)
