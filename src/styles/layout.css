@@ -129,12 +129,14 @@ body {
   font-size: var(--font-size-xs);
   color: var(--color-text-light);
   background: var(--color-bg-alt);
-  transition: background var(--transition-fast);
+  transition: background var(--transition-fast), border-color var(--transition-fast), color var(--transition-fast);
   flex-shrink: 0;
 }
 
-.btn--copy:hover {
-  background: var(--color-accent);
+.btn--copy--copied {
+  background: rgba(245, 160, 110, 0.18);
+  border-color: var(--color-accent);
+  color: var(--color-accent);
 }
 
 .btn--ghost {

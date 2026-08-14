@@ -38,6 +38,9 @@ export function initAccount() {
     const number = btn.dataset.account
     copyToClipboard(number).then(() => {
       showToast('계좌번호가 복사되었습니다.')
+      btn.classList.add('btn--copy--copied')
+      clearTimeout(btn._copyTimer)
+      btn._copyTimer = setTimeout(() => btn.classList.remove('btn--copy--copied'), 1500)
     }).catch(() => {
       showToast('복사에 실패했습니다. 직접 입력해주세요.')
     })
