@@ -124,7 +124,7 @@
 
 .transport-more-btn {
   display: block;
-  margin: var(--space-4) auto 0;
+  margin: var(--space-8) auto 0;
   padding: var(--space-2) var(--space-6);
   font-size: var(--font-size-sm);
   font-weight: 500;
