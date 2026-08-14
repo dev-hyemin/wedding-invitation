@@ -4,7 +4,7 @@ const PAGE_SIZE = 9
 
 // ── 로컬 이미지 목록 가져오기 ──
 function fetchImages() {
-  return CONFIG.gallery.images
+  return CONFIG.gallery.images.map((src, i) => ({ src, alt: `갤러리 ${i + 1}` }))
 }
 
 // ── 그리드 아이템 렌더링 ──
