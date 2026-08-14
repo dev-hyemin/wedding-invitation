@@ -59,7 +59,8 @@ export function initRsvp() {
           await import('firebase/firestore')
 
         if (savedId && savedId !== 'dev-mode') {
-          await updateDoc(doc(db, 'rsvp', savedId), payload)
+          const { setDoc } = await import('firebase/firestore')
+          await setDoc(doc(db, 'rsvp', savedId), { ...payload, updated_at: serverTimestamp() }, { merge: true })
         } else {
           const ref = await addDoc(collection(db, 'rsvp'), {
             ...payload,

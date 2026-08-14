@@ -38,9 +38,8 @@
   position: relative;
   width: 100%;
   height: 280px;
-  background: var(--color-bg);
   overflow: hidden;
-  padding: var(--space-2) var(--space-4);
+  padding: 0;
 }
 
 
