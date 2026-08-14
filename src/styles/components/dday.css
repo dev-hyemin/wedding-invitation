@@ -1,5 +1,6 @@
 /* ── D-Day 섹션: 오시는 길과 배경색 통일, 하단 여백 제거 ── */
 .section--dday {
+  padding-top: 0;
   padding-bottom: 0;
   background: var(--color-bg-alt);
 }
