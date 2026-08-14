@@ -26,18 +26,6 @@ export function initTransportTabs() {
   const tabs     = document.querySelectorAll('.transport-tab')
   const contents = document.querySelectorAll('.transport-content')
 
-  // 가장 긴 탭 높이 측정 후 컨테이너 min-height 고정
-  let maxHeight = 0
-  contents.forEach(c => {
-    const prev = c.style.display
-    c.style.display = 'block'
-    maxHeight = Math.max(maxHeight, c.scrollHeight)
-    c.style.display = prev
-  })
-  if (maxHeight > 0) {
-    contents.forEach(c => { c.style.minHeight = maxHeight + 'px' })
-  }
-
   tabs.forEach(tab => {
     tab.addEventListener('click', () => {
       tabs.forEach(t => t.classList.remove('transport-tab--active'))
