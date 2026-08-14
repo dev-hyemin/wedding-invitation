@@ -15,12 +15,16 @@ export function initMusic() {
     return audio.play().then(() => setPlaying(true)).catch(() => {})
   }
 
-  // 첫 사용자 인터랙션 시 자동 재생
-  // touchend: iOS Safari에서 스크롤(touchstart)과 탭(touchend) 구분
-  function onFirstInteraction() {
-    document.removeEventListener('click',    onFirstInteraction)
-    document.removeEventListener('touchend', onFirstInteraction)
-    playAudio()
+  function onFirstInteraction(e) {
+    // 음악 버튼 탭은 버튼 핸들러에서 직접 처리
+    if (btn.contains(e.target)) return
+    audio.play()
+      .then(() => {
+        document.removeEventListener('click',    onFirstInteraction)
+        document.removeEventListener('touchend', onFirstInteraction)
+        setPlaying(true)
+      })
+      .catch(() => {})  // 실패 시 리스너 유지 → 다음 인터랙션에서 재시도
   }
 
   audio.play().then(() => {
@@ -32,7 +36,6 @@ export function initMusic() {
 
   btn.addEventListener('click', e => {
     e.stopPropagation()
-    // 버튼 클릭은 직접 처리 — document 리스너 해제
     document.removeEventListener('click',    onFirstInteraction)
     document.removeEventListener('touchend', onFirstInteraction)
 
