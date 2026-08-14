@@ -1,5 +1,9 @@
 import './styles/main.css'
 
+// 브라우저 스크롤 복원 비활성화 — 페이지 열 때 항상 맨 위에서 시작
+if ('scrollRestoration' in history) history.scrollRestoration = 'manual'
+window.scrollTo(0, 0)
+
 import { initContent }                from './scripts/content.js'
 import AOS from 'aos'
 import { initAnimations/*, initPetals*/ } from './scripts/animations.js'
