@@ -105,6 +105,27 @@
   display: block;
 }
 
+/* 지하철 더보기 토글 */
+.transport-more {
+  display: none;
+}
+
+.transport-more--open {
+  display: block;
+}
+
+.transport-more-btn {
+  margin-top: var(--space-3);
+  font-size: var(--font-size-xs);
+  color: var(--color-primary-dark);
+  font-weight: 500;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  letter-spacing: 0.02em;
+}
+
 /* 길찾기 아이콘 버튼 */
 .map-navi-btns {
   display: flex;
