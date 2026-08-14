@@ -16,7 +16,7 @@ function setNaviLinks() {
     kakaoBtn.rel = 'noopener noreferrer'
   }
   if (naverBtn) {
-    naverBtn.href = `https://map.naver.com/v5/directions/-/-/-/transit?destination=${lng},${lat},${encodeURIComponent(venue)},${encodeURIComponent(address)}`
+    naverBtn.href = `https://map.naver.com/v5/directions/-/-/-/transit?destination=${lng},${lat},${encodeURIComponent(venue)}`
     naverBtn.target = '_blank'
     naverBtn.rel = 'noopener noreferrer'
   }
