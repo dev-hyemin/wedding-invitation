@@ -51,6 +51,16 @@
   transform: scale(1.04);
 }
 
+/* 추가 이미지 슬라이드 래퍼 */
+.gallery-extra-wrap {
+  max-height: 0;
+  overflow: hidden;
+}
+
+.gallery-extra-grid {
+  margin-top: 2px;
+}
+
 /* 더보기 / 접기 화살표 버튼 */
 .gallery-more-wrap {
   display: flex;
