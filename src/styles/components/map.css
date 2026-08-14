@@ -25,6 +25,13 @@
 .map-venue__address {
   font-size: var(--font-size-sm);
   color: var(--color-text);
+  margin-bottom: var(--space-1);
+}
+
+.map-venue__floors {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-light);
+  opacity: 0.8;
 }
 
 .map__container {

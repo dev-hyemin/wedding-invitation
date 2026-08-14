@@ -51,7 +51,7 @@
 .hero__names-kr {
   font-family: 'GoshinGothic', var(--font-sans);
   font-weight: 400;
-  font-size: var(--font-size-md);
+  font-size: var(--font-size-sm);
   letter-spacing: 0.12em;
   opacity: 0.92;
   margin-bottom: var(--space-3);
