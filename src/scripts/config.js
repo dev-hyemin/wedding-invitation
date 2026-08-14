@@ -27,10 +27,10 @@ export const CONFIG = {
     dateShort: '2026년 10월 24일',
     venue: '서울중랑교회',
     hall: '12층 대강당',
-    address: '주소 입력 필요',
+    address: '서울 중랑구 망우로 382',
     // 지도 좌표 (구글 지도에서 확인)
-    lat: 37.6027134,
-    lng: 127.1463076,
+    lat: 37.5980000,
+    lng: 127.0938000,
   },
 
   accounts: {
@@ -46,7 +46,7 @@ export const CONFIG = {
     ],
   },
 
-  // 히어로 배경 이미지 경로 (public/ 기준)
+  // 히어로 배경 이미지 경로 (public/images/ 기준)
   hero: {
     src: '/hero.jpeg',
   },
@@ -57,7 +57,27 @@ export const CONFIG = {
 
   // 갤러리 이미지 목록 (public/images/gallery/ 에 파일 추가 후 여기에 등록)
   gallery: {
-    images: [],
+    images: [
+      '/images/gallery/v01.jpg',
+      '/images/gallery/v02.jpg',
+      '/images/gallery/v03.jpg',
+      '/images/gallery/v05.jpg',
+      '/images/gallery/v06.jpg',
+      '/images/gallery/v07.jpg',
+      '/images/gallery/v08.jpg',
+      '/images/gallery/v09.jpg',
+      '/images/gallery/v10.jpg',
+      '/images/gallery/v11.jpg',
+      '/images/gallery/v12.jpg',
+      '/images/gallery/v13.jpg',
+      '/images/gallery/v14.jpg',
+      '/images/gallery/v15.jpg',
+      '/images/gallery/v16.jpg',
+      '/images/gallery/v17.jpg',
+      '/images/gallery/v18.jpg',
+      '/images/gallery/v19.jpg',
+      '/images/gallery/v20.jpg',
+    ],
   },
 
   // Formspree 엔드포인트 (https://formspree.io 에서 발급)
@@ -65,10 +85,17 @@ export const CONFIG = {
     formspreeEndpoint: import.meta.env.VITE_FORMSPREE_ENDPOINT || '',
   },
 
-  // Supabase 설정 (https://supabase.com 에서 발급)
+  // Supabase 설정 (RSVP 전용, https://supabase.com 에서 발급)
   supabase: {
     url:     import.meta.env.VITE_SUPABASE_URL || '',
     anonKey: import.meta.env.VITE_SUPABASE_ANON_KEY || '',
+  },
+
+  // Firebase 설정 (방명록 전용, https://console.firebase.google.com 에서 발급)
+  firebase: {
+    apiKey:     import.meta.env.VITE_FIREBASE_API_KEY     || '',
+    authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN || '',
+    projectId:  import.meta.env.VITE_FIREBASE_PROJECT_ID  || '',
   },
 
   // 카카오맵 지도 퍼가기 (map.kakao.com → 장소 검색 → 지도 퍼가기)
@@ -79,8 +106,8 @@ export const CONFIG = {
 
   // 교통 안내 텍스트
   transport: {
-    bus:     '롯데백화점 하차\n일반버스: 1-4, 10-5, 165, 166-1, 167-1, 23, 30, 65, 65-1, 9, 93, 95, 97번\n직행버스: 1115-6, 1330-2, 1330-4, 8409, 8005번',
-    subway:  '지하철 8호선, 경의중앙선\n구리역 하차 → 롯데백화점 출구 → 길 건너편 (총 2분 소요)',
-    car:     '교회 주차장이 협소하여 친인척 위주로 운영되오니 아래 공영주차장을 이용해 주세요.\n\n- [수택동 528번지] 공영주차장\n  북단: 제1공영노외주차장 / 남단: 제4·5공영노외주차장\n\n- [수택동 산 2-4] 검배근린공원공영주차장\n  ※ 검배근린공원공영주차장 이용 시 셔틀버스 운행',
+    bus:    '망우역.망우지구대 정류장 하차\n간선: 260, 270번\n지선: 2016번\n광역: 6100번',
+    subway: '경의·중앙선 / 경춘선 망우역 하차 → 도보 약 5분\n7호선 상봉역 8번 출구 → 버스(260·270번) 또는 도보 약 12분',
+    car:    '내비게이션: 서울중랑교회 또는 서울 중랑구 망우로 382\n주차: 교회 주차장 이용 가능 (주차 문의: 교회 사무실)',
   },
 }
