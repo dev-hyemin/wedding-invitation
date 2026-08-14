@@ -244,20 +244,23 @@ export function initGallery() {
     renderItems(extraGrid, images, PAGE_SIZE, images.length, openLightbox)
     shownCount = images.length
 
-    // 실제 높이 측정 후 max-height 트랜지션
-    extraWrap.style.transition = 'none'
-    extraWrap.style.maxHeight  = '0'
-    const targetH = extraGrid.scrollHeight + 2 // +2 for margin-top gap
+    // 컨테이너 높이는 즉시 확장 (reflow 애니메이션 없음)
+    extraWrap.style.maxHeight = 'none'
 
-    requestAnimationFrame(() => {
-      extraWrap.style.transition = 'max-height 0.55s ease'
-      extraWrap.style.maxHeight  = targetH + 'px'
+    // 각 아이템을 GPU 레이어(opacity+transform)로 스태거 페이드인
+    const items = Array.from(extraGrid.querySelectorAll('.gallery-item'))
+    items.forEach(item => {
+      item.style.opacity   = '0'
+      item.style.transform = 'translateY(10px)'
     })
-
-    extraWrap.addEventListener('transitionend', () => {
-      extraWrap.style.maxHeight = 'none'
-      animating = false
-    }, { once: true })
+    items.forEach((item, i) => {
+      setTimeout(() => {
+        item.style.transition = 'opacity 0.3s ease, transform 0.3s ease'
+        item.style.opacity    = '1'
+        item.style.transform  = 'translateY(0)'
+        if (i === items.length - 1) setTimeout(() => { animating = false }, 320)
+      }, i * 25)
+    })
 
     updateButtons(true)
   }
@@ -266,22 +269,33 @@ export function initGallery() {
     if (animating || !extraWrap || !extraGrid) return
     animating = true
 
-    const currentH = extraGrid.scrollHeight + 2
-    extraWrap.style.transition = 'none'
-    extraWrap.style.maxHeight  = currentH + 'px'
-
-    requestAnimationFrame(() => {
-      extraWrap.style.transition = 'max-height 0.45s ease'
-      extraWrap.style.maxHeight  = '0'
+    // 아이템 페이드아웃
+    const items = Array.from(extraGrid.querySelectorAll('.gallery-item'))
+    items.forEach(item => {
+      item.style.transition = 'opacity 0.18s ease'
+      item.style.opacity    = '0'
     })
 
-    extraWrap.addEventListener('transitionend', () => {
-      extraGrid.innerHTML = ''
-      shownCount  = PAGE_SIZE
-      animating   = false
-      updateButtons(false)
-      grid.scrollIntoView({ behavior: 'smooth', block: 'start' })
-    }, { once: true })
+    // 페이드 후 높이 접기
+    setTimeout(() => {
+      const currentH = extraWrap.scrollHeight
+      extraWrap.style.transition = 'none'
+      extraWrap.style.maxHeight  = currentH + 'px'
+
+      requestAnimationFrame(() => requestAnimationFrame(() => {
+        extraWrap.style.transition = 'max-height 0.35s ease'
+        extraWrap.style.maxHeight  = '0'
+      }))
+
+      setTimeout(() => {
+        extraGrid.innerHTML = ''
+        extraWrap.style.transition = ''
+        shownCount = PAGE_SIZE
+        animating  = false
+        updateButtons(false)
+        grid.scrollIntoView({ behavior: 'smooth', block: 'start' })
+      }, 380)
+    }, 200)
   }
 
   grid.innerHTML = ''
